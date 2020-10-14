@@ -15,6 +15,7 @@ use Revolution\Line\Messaging\BotClient;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Controllers\WebhookController;
 use Revolution\Line\Socialite\LineLoginProvider;
+use Revolution\Line\Socialite\LineNotifyProvider;
 
 class LineServiceProvider extends ServiceProvider
 {
@@ -108,6 +109,10 @@ class LineServiceProvider extends ServiceProvider
     {
         Socialite::extend('line-login', function () {
             return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
+        });
+
+        Socialite::extend('line-notify', function () {
+            return Socialite::buildProvider(LineNotifyProvider::class, config('line.notify'));
         });
     }
 

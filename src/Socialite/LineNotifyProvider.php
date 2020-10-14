@@ -5,18 +5,21 @@ namespace Revolution\Line\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
-use LINE\LINEBot;
 
-class LineLoginProvider extends AbstractProvider implements ProviderInterface
+class LineNotifyProvider extends AbstractProvider implements ProviderInterface
 {
+    /**
+     * @var string
+     */
+    protected $endpoint = 'https: //notify-bot.line.me';
+
     /**
      * The scopes being requested.
      *
      * @var array
      */
     protected $scopes = [
-        'profile',
-        'openid',
+        'notify',
     ];
 
     /**
@@ -38,7 +41,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://access.line.me/oauth2/v2.1/authorize', $state);
+        return $this->buildAuthUrlFromBase($this->endpoint.'/oauth/authorize', $state);
     }
 
     /**
@@ -46,7 +49,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return LINEBot::DEFAULT_ENDPOINT_BASE.'/oauth2/v2.1/token';
+        return $this->endpoint.'/oauth2/token';
     }
 
     /**
@@ -74,16 +77,9 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get(
-            LINEBot::DEFAULT_ENDPOINT_BASE.'/v2/profile',
-            [
-                'headers' => [
-                    'Authorization' => 'Bearer '.$token,
-                ],
-            ]
-        );
-
-        return json_decode($response->getBody(), true);
+        return [
+            'token' => $token,
+        ];
     }
 
     /**
@@ -91,14 +87,6 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        return (new User())->setRaw($user)->map(
-            [
-                'id' => $user['userId'],
-                'nickname' => $user['displayName'] ?? '',
-                'name' => $user['displayName'] ?? '',
-                'email' => '', // ?
-                'avatar' => $user['pictureUrl'] ?? '',
-            ]
-        );
+        return (new User())->setRaw($user);
     }
 }
