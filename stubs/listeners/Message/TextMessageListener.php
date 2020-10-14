@@ -4,8 +4,8 @@ namespace App\Listeners\Message;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use Revolution\Line\Facades\Bot;
 
 class TextMessageListener
 {
@@ -29,7 +29,7 @@ class TextMessageListener
     {
         $response = Bot::replyText($event->getReplyToken(), $event->getText());
 
-        if (!$response->isSucceeded()) {
+        if (! $response->isSucceeded()) {
             logger()->error(static::class.$response->getHTTPStatus(), $response->getJSONDecodedBody());
         }
     }

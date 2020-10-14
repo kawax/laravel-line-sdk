@@ -4,8 +4,8 @@ namespace App\Listeners\Message;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Event\MessageEvent\VideoMessage;
+use Revolution\Line\Facades\Bot;
 
 class VideoMessageListener
 {

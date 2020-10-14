@@ -4,8 +4,8 @@ namespace App\Listeners\Various;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Event\ThingsEvent;
+use Revolution\Line\Facades\Bot;
 
 class ThingsEventListener
 {

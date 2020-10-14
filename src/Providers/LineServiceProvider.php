@@ -36,7 +36,7 @@ class LineServiceProvider extends ServiceProvider
 
         $this->app->singleton(LINEBot::class, function ($app) {
             return new LINEBot($app->make(HTTPClient::class), [
-                'channelSecret' => config('line.bot.channel_secret')
+                'channelSecret' => config('line.bot.channel_secret'),
             ]);
         });
 
@@ -66,20 +66,20 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configurePublishing()
     {
-        if (!$this->app->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             return;
         }
 
         $this->publishes([
-            __DIR__.'/../../config/line.php' => config_path('line.php')
+            __DIR__.'/../../config/line.php' => config_path('line.php'),
         ], 'line-config');
 
         $this->publishes([
-            __DIR__.'/../../stubs/listeners' => app_path('Listeners')
+            __DIR__.'/../../stubs/listeners' => app_path('Listeners'),
         ], 'line-listeners-all');
 
         $this->publishes([
-            __DIR__.'/../../stubs/listeners/Message' => app_path('Listeners/Message')
+            __DIR__.'/../../stubs/listeners/Message' => app_path('Listeners/Message'),
         ], 'line-listeners-message');
     }
 
@@ -118,7 +118,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureMacros()
     {
-        if (!class_exists(Http::class)) {
+        if (! class_exists(Http::class)) {
             return;
         }
 

@@ -64,7 +64,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
         $response = $this->getHttpClient()->post(
             $this->getTokenUrl(),
             [
-                compact('headers', 'form_params')
+                compact('headers', 'form_params'),
             ]
         );
 
@@ -98,7 +98,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
                 'id' => $user['userId'],
                 'nickname' => $user['displayName'] ?? '',
                 'name' => $user['displayName'] ?? '',
-                'email' => '',// ?
+                'email' => '', // ?
                 'avatar' => $user['pictureUrl'] ?? '',
             ]
         );

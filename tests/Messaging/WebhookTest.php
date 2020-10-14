@@ -31,14 +31,14 @@ class WebhookTest extends TestCase
                 'timestamp' => 1462629479859,
                 'source' => [
                     'type' => 'user',
-                    'userId' => 'U4af4980629...'
+                    'userId' => 'U4af4980629...',
                 ],
                 'message' => [
                     'id' => '',
                     'type' => '',
                     'text' => '',
-                ]
-            ])
+                ],
+            ]),
         ]);
 
         $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')
