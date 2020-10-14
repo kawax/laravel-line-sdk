@@ -68,5 +68,5 @@ LINE::replyText();
 ## Demo
 https://github.com/kawax/laravel-line-project
 
-## License
+## LICENSE
 MIT
