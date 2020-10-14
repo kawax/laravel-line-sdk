@@ -3,6 +3,7 @@
 namespace Revolution\Line\Notifications;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Notifications\Notification;
 
 class LineNotifyChannel
@@ -24,7 +25,7 @@ class LineNotifyChannel
      * @param  mixed  $notifiable
      * @param  Notification  $notification
      *
-     * @return \Psr\Http\Message\ResponseInterface|null|void
+     * @return void
      */
     public function send($notifiable, Notification $notification)
     {
@@ -44,9 +45,13 @@ class LineNotifyChannel
 
         $form_params = $message->toArray();
 
-        return $this->http->post(
-            'https://notify-api.line.me/api/notify',
-            compact('headers', 'form_params')
-        );
+        try {
+            $response = $this->http->post(
+                'https://notify-api.line.me/api/notify',
+                compact('headers', 'form_params')
+            );
+        } catch (GuzzleException $e) {
+            report($e);
+        }
     }
 }
