@@ -2,7 +2,7 @@
 
 return [
     /**
-     * Messaging / Bot
+     * Messaging / Bot.
      */
     'bot' => [
         'channel_token' => env('LINE_BOT_CHANNEL_TOKEN'),
@@ -14,7 +14,7 @@ return [
     ],
 
     /**
-     * LINE Login
+     * LINE Login.
      */
     'login' => [
         'client_id' => env('LINE_LOGIN_CLIENT_ID'),

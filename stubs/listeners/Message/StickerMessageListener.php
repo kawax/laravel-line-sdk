@@ -4,9 +4,9 @@ namespace App\Listeners\Message;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Event\MessageEvent\StickerMessage;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
+use Revolution\Line\Facades\Bot;
 
 class StickerMessageListener
 {

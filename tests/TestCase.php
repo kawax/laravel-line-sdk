@@ -9,7 +9,7 @@ use Revolution\Line\Providers\LineServiceProvider;
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
-     * Load package service provider
+     * Load package service provider.
      *
      * @param  \Illuminate\Foundation\Application  $app
      *
@@ -24,7 +24,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     }
 
     /**
-     * Load package alias
+     * Load package alias.
      *
      * @param  \Illuminate\Foundation\Application  $app
      *
