@@ -7,22 +7,22 @@ class LineNotifyMessage
     /**
      * @var string
      */
-    public $message;
+    protected $message;
 
     /**
      * @var int
      */
-    public $stickerPackageId;
+    protected $stickerPackageId;
 
     /**
      * @var int
      */
-    public $stickerId;
+    protected $stickerId;
 
     /**
      * @var array
      */
-    public $options;
+    protected $options;
 
     /**
      * @param  string  $message
