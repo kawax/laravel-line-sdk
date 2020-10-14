@@ -75,7 +75,7 @@ class LineNotifyTest extends Notification
 use Revolution\Line\Notifications\LineNotifyMessage;
 
 return LineNotifyMessage::create('message')
-            ->withSticker(11537, 52002734)
+            ->withSticker(1, 1)
             ->with([
                 'imageThumbnail' => 'https://',
             ]);
@@ -83,14 +83,14 @@ return LineNotifyMessage::create('message')
 
 ```php
 return (new LineNotifyMessage())->message('message')
-            ->withSticker(11537, 52002734)
+            ->withSticker(1, 2)
             ->with([
                 'imageFullsize' => 'https://',
             ]);
 ```
 
 Only some stickers can be used.  
-https://developers.line.biz/media/messaging-api/sticker_list.pdf
+https://devdocs.line.me/files/sticker_list.pdf
 
 ## User access token
 
