@@ -93,7 +93,7 @@ class LineNotifyMessage
                 'stickerPackageId' => $this->stickerPackageId,
                 'stickerId' => $this->stickerId,
             ],
-            $this->options
+            $this->options ?? []
         );
     }
 }
