@@ -11,6 +11,7 @@ LINE_NOTIFY_PERSONAL_ACCESS_TOKEN=
 
 ## User access token
 
+Get user access token by using [Socialite](./socialite.md).
 
 ### User model
 ```php
