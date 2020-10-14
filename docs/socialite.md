@@ -129,5 +129,5 @@ Almost the same as LINE Login, but the user only has a `token`.
     }
 ```
 
-It can't be used for user registration.
+It can't be used for user registration.  
 Used to add a notification to the authenticated user.
