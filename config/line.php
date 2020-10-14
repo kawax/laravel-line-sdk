@@ -21,4 +21,11 @@ return [
         'client_secret' => env('LINE_LOGIN_CLIENT_SECRET'),
         'redirect' => env('LINE_LOGIN_REDIRECT'),
     ],
+
+    /**
+     * LINE Notify
+     */
+    'notify' => [
+        'personal_access_token' => env('LINE_NOTIFY_PERSONAL_ACCESS_TOKEN')
+    ]
 ];
