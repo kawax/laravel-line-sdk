@@ -49,7 +49,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return $this->endpoint.'/oauth2/token';
+        return $this->endpoint.'/oauth/token';
     }
 
     /**
