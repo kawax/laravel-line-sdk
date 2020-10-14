@@ -1,0 +1,197 @@
+# Messaging API / Bot
+
+## Webhook
+
+The SDK includes Webhook routing and controller.
+
+### Webhook URL
+`https://localhost/line/webhook`
+
+You can change `line/webhook` in .env
+
+```
+LINE_BOT_WEBHOOK_PATH=webhook
+```
+
+### Working with Laravel Event System
+When a Webhook event is received, Laravel event is dispatching.
+
+For Event discovery, add `shouldDiscoverEvents()` to your `EventServiceProvider`
+```php
+/**
+ * Determine if events and listeners should be automatically discovered.
+ *
+ * @return bool
+ */
+public function shouldDiscoverEvents()
+{
+    return true;
+}
+```
+No need to change $listen.
+
+Note: In production, you should run `php artisan event:cache` command.
+
+### Publishing default Listeners
+Publish to `app/Listeners`.
+
+All listeners.
+```
+php artisan vendor:publish --tag=line-listeners-all
+```
+Message event listeners only.
+```
+php artisan vendor:publish --tag=line-listeners-message
+```
+
+For example, `LINE\LINEBot\Event\MessageEvent\TextMessage` event is handled by `TextMessageListener`.
+
+### Listener@handle() must have type hint
+You can also make a new listener.
+
+```
+php artisan make:listener TextListener
+```
+
+Be sure to add a type hint that matches the event type.
+
+```php
+<?php
+
+namespace App\Listeners;
+
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use LINE\LINEBot\Event\MessageEvent\TextMessage;
+
+class TextListener
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  TextMessage  $event
+     * @return void
+     */
+    public function handle(TextMessage $event)
+    {
+        //
+    }
+}
+```
+
+### Easy to use Queue
+
+```php
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class TextMessageListener implements ShouldQueue
+{
+    //
+}
+```
+
+## Customizing
+`Bot` is Macroable, it means "You can add any method"
+
+Register at `AppServiceProvider@boot`
+```php
+use Revolution\Line\Facades\Bot;
+
+    public function boot()
+    {
+        Bot::macro('foo', function () {
+            return $this->bot()->...
+        });
+    }
+```
+Use it anywhere.
+```php
+$foo = Bot::foo();
+```
+
+### Replacing a LINEBot instance
+`Bot::bot()` returns LINEBot instance. You can swap instances with `Bot::botUsing()`
+
+```php
+$bot = new MyBot();
+
+Bot::botUsing($bot);
+```
+Accepts a Closure, too.
+```php
+Bot::botUsing(function () {
+   return new MyBot();
+});
+```
+
+### Another way not to use the Laravel Event system
+
+Make your `app/Actions/LineWebhook.php`
+
+```php
+<?php
+namespace App\Actions;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Revolution\Line\Contracts\WebhookHandler;
+use Revolution\Line\Facades\Bot;
+use LINE\LINEBot\Constant\HTTPHeader;
+use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\LINEBot\Exception\InvalidEventRequestException;
+use LINE\LINEBot\Exception\InvalidSignatureException;
+
+class LineWebhook implements WebhookHandler
+{
+    /**
+     * @param  Request  $request
+     * @return Response
+     */
+    public function __invoke(Request $request)
+    {
+        try {
+            $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
+
+            $events = Bot::parseEventRequest($request->getContent(), $signature);
+
+            collect($events)->each(function ($event) {
+                //event($event);
+                if($event instanceof TextMessage){
+                    //
+                }
+            });
+        } catch (InvalidSignatureException $e) {
+            report($e);
+            abort(400, $e->getMessage());
+        } catch (InvalidEventRequestException $e) {
+            report($e);
+            abort(400, 'Invalid event request');
+        }
+
+        return response('OK');
+    }
+}
+```
+
+Register at `AppServiceProvider@register`
+```php
+use App\Actions\LineWebhook;
+use Revolution\Line\Contracts\WebhookHandler;
+
+public function register()
+{
+    $this->app->singleton(WebhookHandler::class, LineWebhook::class);
+}
+```
+
+Anything is possible by replacing the WebhookHandler.
