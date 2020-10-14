@@ -2,6 +2,7 @@
 
 namespace Revolution\Line\Providers;
 
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -14,6 +15,7 @@ use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\BotClient;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Controllers\WebhookController;
+use Revolution\Line\Notifications\LineNotifyClient;
 use Revolution\Line\Socialite\LineLoginProvider;
 use Revolution\Line\Socialite\LineNotifyProvider;
 
@@ -31,7 +33,7 @@ class LineServiceProvider extends ServiceProvider
             'line'
         );
 
-        $this->app->singleton(HTTPClient::class, function () {
+        $this->app->singleton(HTTPClient::class, function ($app) {
             return new CurlHTTPClient(config('line.bot.channel_token'));
         });
 
@@ -42,6 +44,10 @@ class LineServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(BotFactory::class, BotClient::class);
+
+        $this->app->singleton(LineNotifyClient::class, function ($app) {
+            return new LineNotifyClient($app->make(Client::class));
+        });
 
         // Default WebhookHandler
         $this->app->singleton(WebhookHandler::class, WebhookEventDispatcher::class);
