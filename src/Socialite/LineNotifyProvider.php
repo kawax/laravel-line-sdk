@@ -11,7 +11,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    protected $endpoint = 'https: //notify-bot.line.me';
+    protected $endpoint = 'https://notify-bot.line.me';
 
     /**
      * The scopes being requested.
