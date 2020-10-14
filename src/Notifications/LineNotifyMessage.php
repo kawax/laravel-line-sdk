@@ -25,9 +25,9 @@ class LineNotifyMessage
     protected $options;
 
     /**
-     * @param  string  $message
+     * @param  string|null  $message
      */
-    public function __construct(string $message)
+    public function __construct(string $message = null)
     {
         $this->message = $message;
     }
