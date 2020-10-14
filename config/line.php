@@ -23,9 +23,9 @@ return [
     ],
 
     /**
-     * LINE Notify
+     * LINE Notify.
      */
     'notify' => [
-        'personal_access_token' => env('LINE_NOTIFY_PERSONAL_ACCESS_TOKEN')
-    ]
+        'personal_access_token' => env('LINE_NOTIFY_PERSONAL_ACCESS_TOKEN'),
+    ],
 ];

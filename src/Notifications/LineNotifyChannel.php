@@ -46,9 +46,7 @@ class LineNotifyChannel
 
         return $this->http->post(
             'https://notify-api.line.me/api/notify',
-            [
-                compact('headers', 'form_params'),
-            ]
+            compact('headers', 'form_params')
         );
     }
 }
