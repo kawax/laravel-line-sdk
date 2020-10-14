@@ -26,6 +26,9 @@ return [
      * LINE Notify.
      */
     'notify' => [
+        'client_id' => env('LINE_NOTIFY_CLIENT_ID'),
+        'client_secret' => env('LINE_NOTIFY_CLIENT_SECRET'),
+        'redirect' => env('LINE_NOTIFY_REDIRECT'),
         'personal_access_token' => env('LINE_NOTIFY_PERSONAL_ACCESS_TOKEN'),
     ],
 ];
