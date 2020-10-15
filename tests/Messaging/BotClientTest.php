@@ -5,6 +5,7 @@ namespace Tests\Messaging;
 use LINE\LINEBot;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Facades\Bot;
+use Revolution\Line\Messaging\Bot as BotAlias;
 use Revolution\Line\Messaging\BotClient;
 use Tests\TestCase;
 
@@ -37,5 +38,10 @@ class BotClientTest extends TestCase
         });
 
         $this->assertSame('test', Bot::testMacro());
+    }
+
+    public function testBotAlias()
+    {
+        $this->assertInstanceOf(LINEBot::class, BotAlias::bot());
     }
 }
