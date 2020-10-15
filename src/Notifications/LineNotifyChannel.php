@@ -29,6 +29,7 @@ class LineNotifyChannel
      * @param  Notification  $notification
      *
      * @return void
+     * @throws GuzzleException
      */
     public function send($notifiable, Notification $notification)
     {
@@ -52,13 +53,9 @@ class LineNotifyChannel
 
         $form_params = $message->toArray();
 
-        try {
-            $response = $this->http->post(
-                self::ENDPOINT,
-                compact('headers', 'form_params')
-            );
-        } catch (GuzzleException $e) {
-            report($e);
-        }
+        $this->http->post(
+            self::ENDPOINT,
+            compact('headers', 'form_params')
+        );
     }
 }
