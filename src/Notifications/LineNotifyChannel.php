@@ -8,10 +8,7 @@ use Illuminate\Notifications\Notification;
 
 class LineNotifyChannel
 {
-    /**
-     * @var string
-     */
-    protected $endpoint = 'https://notify-api.line.me/api/notify';
+    protected const ENDPOINT = 'https://notify-api.line.me/api/notify';
 
     /**
      * @var Client
@@ -19,11 +16,11 @@ class LineNotifyChannel
     protected $http;
 
     /**
-     * @param  Client  $client
+     * @param  Client  $http
      */
-    public function __construct(Client $client)
+    public function __construct(Client $http)
     {
-        $this->http = $client;
+        $this->http = $http;
     }
 
     /**
@@ -52,7 +49,7 @@ class LineNotifyChannel
 
         try {
             $response = $this->http->post(
-                $this->endpoint,
+                self::ENDPOINT,
                 compact('headers', 'form_params')
             );
         } catch (GuzzleException $e) {
