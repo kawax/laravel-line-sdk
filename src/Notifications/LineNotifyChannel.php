@@ -4,6 +4,7 @@ namespace Revolution\Line\Notifications;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Notifications\Notification;
 
 class LineNotifyChannel
@@ -35,6 +36,10 @@ class LineNotifyChannel
          * @var LineNotifyMessage $message
          */
         $message = $notification->toLineNotify($notifiable);
+
+        if (! $message instanceof Arrayable) {
+            return;
+        }
 
         if (! $token = $notifiable->routeNotificationFor('line-notify', $notification)) {
             return;

@@ -2,7 +2,9 @@
 
 namespace Revolution\Line\Notifications;
 
-class LineNotifyMessage
+use Illuminate\Contracts\Support\Arrayable;
+
+class LineNotifyMessage implements Arrayable
 {
     /**
      * @var string

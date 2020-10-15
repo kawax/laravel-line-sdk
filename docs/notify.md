@@ -64,6 +64,10 @@ class LineNotifyTest extends Notification
         ];
     }
 
+    /**
+     * @param  mixed  $notifiable
+     * @return LineNotifyMessage
+     */
     public function toLineNotify($notifiable)
     {
         return LineNotifyMessage::create($this->message);
@@ -100,6 +104,10 @@ Get user access token by using [Socialite](./socialite.md).
 
 ### User model
 ```php
+    /**
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
     public function routeNotificationForLineNotify($notification)
     {
         return $this->notify_token;
