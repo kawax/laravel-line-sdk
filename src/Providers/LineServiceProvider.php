@@ -11,6 +11,7 @@ use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use Revolution\Line\Contracts\BotFactory;
+use Revolution\Line\Contracts\NotifyFactory;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\BotClient;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
@@ -33,6 +34,7 @@ class LineServiceProvider extends ServiceProvider
             'line'
         );
 
+        // Bot
         $this->app->singleton(HTTPClient::class, function ($app) {
             return new CurlHTTPClient(config('line.bot.channel_token'));
         });
@@ -45,7 +47,8 @@ class LineServiceProvider extends ServiceProvider
 
         $this->app->singleton(BotFactory::class, BotClient::class);
 
-        $this->app->singleton(LineNotifyClient::class, function ($app) {
+        // Notify
+        $this->app->singleton(NotifyFactory::class, function ($app) {
             return new LineNotifyClient($app->make(Client::class));
         });
 

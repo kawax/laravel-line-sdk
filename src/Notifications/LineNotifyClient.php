@@ -4,8 +4,9 @@ namespace Revolution\Line\Notifications;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use Revolution\Line\Contracts\NotifyFactory;
 
-class LineNotifyClient
+class LineNotifyClient implements NotifyFactory
 {
     protected const ENDPOINT = 'https://notify-api.line.me/api/';
 
