@@ -3,7 +3,7 @@
 namespace Revolution\Line\Messaging;
 
 /**
- * Bot alias
+ * Bot alias.
  */
 class Bot extends \Revolution\Line\Facades\Bot
 {
