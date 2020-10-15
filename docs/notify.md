@@ -119,3 +119,8 @@ use App\Notifications\LineNotifyTest;
 Notification::route('line-notify', config('line.notify.personal_access_token'))
             ->notify(new LineNotifyTest('test'));
 ```
+
+## LINE Notify API
+```
+
+```
