@@ -23,7 +23,7 @@ class ReplyMessage
      * @param  LINEBot  $bot
      * @param  string  $replyToken
      */
-    public function __construct($bot, $replyToken)
+    public function __construct(LINEBot $bot, string $replyToken)
     {
         $this->bot = $bot;
         $this->replyToken = $replyToken;

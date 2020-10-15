@@ -7,11 +7,11 @@ use Revolution\Line\Messaging\ReplyMessage;
 trait Reply
 {
     /**
-     * @param  string  $replyToken
+     * @param  string  $token
      * @return ReplyMessage
      */
-    public function reply(string $replyToken)
+    public function reply(string $token)
     {
-        return new ReplyMessage($this->bot(), $replyToken);
+        return new ReplyMessage($this->bot(), $token);
     }
 }
