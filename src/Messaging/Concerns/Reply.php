@@ -8,10 +8,14 @@ trait Reply
 {
     /**
      * @param  string  $token
+     *
      * @return ReplyMessage
      */
     public function reply(string $token)
     {
-        return new ReplyMessage($this->bot(), $token);
+        return app(ReplyMessage::class, [
+            'bot' => $this->bot(),
+            'replyToken' => $token,
+        ]);
     }
 }
