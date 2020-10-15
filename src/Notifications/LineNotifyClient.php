@@ -2,7 +2,6 @@
 
 namespace Revolution\Line\Notifications;
 
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
@@ -27,7 +26,6 @@ class LineNotifyClient implements NotifyFactory
     /**
      * @param  string  $token
      * @return array
-     * @throws GuzzleException
      */
     public function status(string $token): array
     {
@@ -47,7 +45,6 @@ class LineNotifyClient implements NotifyFactory
     /**
      * @param  string  $token
      * @return array
-     * @throws GuzzleException
      */
     public function revoke(string $token): array
     {
