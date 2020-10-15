@@ -1,6 +1,6 @@
 <?php
 
-namespace Revolution\Line\Messaging\Message;
+namespace Revolution\Line\Messaging;
 
 use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder;

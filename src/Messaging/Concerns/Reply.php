@@ -2,7 +2,7 @@
 
 namespace Revolution\Line\Messaging\Concerns;
 
-use Revolution\Line\Messaging\Message\ReplyMessage;
+use Revolution\Line\Messaging\ReplyMessage;
 
 trait Reply
 {
