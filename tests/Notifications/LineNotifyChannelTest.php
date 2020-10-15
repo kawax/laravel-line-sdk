@@ -3,9 +3,9 @@
 namespace Tests\Notifications;
 
 use GuzzleHttp\Client;
-use Tests\TestCase;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Mockery;
+use Tests\TestCase;
 
 class LineNotifyChannelTest extends TestCase
 {

@@ -3,10 +3,10 @@
 namespace Tests\Notifications;
 
 use GuzzleHttp\Client;
-use Tests\TestCase;
+use GuzzleHttp\Psr7\Response;
 use Mockery;
 use Revolution\Line\Facades\LineNotify;
-use GuzzleHttp\Psr7\Response;
+use Tests\TestCase;
 
 class LineNotifyClientTest extends TestCase
 {
