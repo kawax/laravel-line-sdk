@@ -5,8 +5,6 @@ namespace Tests\Socialite;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use Laravel\Socialite\Two\User;
-use LINE\LINEBot;
 use Mockery as m;
 use Psr\Http\Message\ResponseInterface;
 use Revolution\Line\Socialite\LineNotifyProvider;

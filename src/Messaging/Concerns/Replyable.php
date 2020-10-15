@@ -2,6 +2,7 @@
 
 namespace Revolution\Line\Messaging\Concerns;
 
+use LINE\LINEBot;
 use Revolution\Line\Messaging\ReplyMessage;
 
 trait Replyable
@@ -15,7 +16,12 @@ trait Replyable
     {
         return app(ReplyMessage::class, [
             'bot' => $this->bot(),
-            'replyToken' => $token,
+            'token' => $token,
         ]);
     }
+
+    /**
+     * @return LINEBot
+     */
+    abstract public function bot();
 }

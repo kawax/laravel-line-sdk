@@ -17,16 +17,16 @@ class ReplyMessage
     /**
      * @var string
      */
-    protected $replyToken;
+    protected $token;
 
     /**
      * @param  LINEBot  $bot
-     * @param  string  $replyToken
+     * @param  string  $token
      */
-    public function __construct(LINEBot $bot, string $replyToken)
+    public function __construct($bot, string $token)
     {
         $this->bot = $bot;
-        $this->replyToken = $replyToken;
+        $this->token = $token;
     }
 
     /**
@@ -35,7 +35,7 @@ class ReplyMessage
      */
     public function message(MessageBuilder $messageBuilder)
     {
-        return $this->bot->replyMessage($this->replyToken, $messageBuilder);
+        return $this->bot->replyMessage($this->token, $messageBuilder);
     }
 
     /**
