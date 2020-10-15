@@ -4,8 +4,12 @@ namespace Revolution\Line\Messaging;
 
 use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder;
+use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\QuickReplyBuilder;
 use LINE\LINEBot\Response;
+use LINE\LINEBot\SenderBuilder\SenderBuilder;
+use LINE\LINEBot\SenderBuilder\SenderMessageBuilder;
 
 class ReplyMessage
 {
@@ -18,6 +22,16 @@ class ReplyMessage
      * @var string
      */
     protected $token;
+
+    /**
+     * @var QuickReplyBuilder
+     */
+    protected $quick;
+
+    /**
+     * @var SenderBuilder
+     */
+    protected $sender;
 
     /**
      * @param  LINEBot  $bot
@@ -44,6 +58,46 @@ class ReplyMessage
      */
     public function text(...$text)
     {
+        $text = collect($text)
+            ->push($this->quick)
+            ->push($this->sender)
+            ->reject(function ($item) {
+                return blank($item);
+            })->toArray();
+
         return $this->message(new TextMessageBuilder(...$text));
+    }
+
+    /**
+     * @param  int  $packageId
+     * @param  int  $stickerId
+     * @return Response
+     */
+    public function sticker(int $packageId, int $stickerId)
+    {
+        return $this->message(new StickerMessageBuilder($packageId, $stickerId, $this->quick, $this->sender));
+    }
+
+    /**
+     * @param  QuickReplyBuilder  $quickReply
+     * @return $this
+     */
+    public function withQuickReply(QuickReplyBuilder $quickReply)
+    {
+        $this->quick = $quickReply;
+
+        return $this;
+    }
+
+    /**
+     * @param  string|null  $name
+     * @param  string|null  $iconUrl
+     * @return $this
+     */
+    public function withSender(string $name = null, string $iconUrl = null)
+    {
+        $this->sender = new SenderMessageBuilder($name, $iconUrl);
+
+        return $this;
     }
 }
