@@ -2,8 +2,9 @@
 
 namespace Revolution\Line\Notifications;
 
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyClient implements NotifyFactory
@@ -34,11 +35,11 @@ class LineNotifyClient implements NotifyFactory
             'Authorization' => 'Bearer '.$token,
         ];
 
-        $response = $this->http->request(
+        $response = $this->http->sendRequest(new Request(
             'GET',
             self::ENDPOINT.'status',
-            compact('headers')
-        );
+            $headers
+        ));
 
         return json_decode($response->getBody(), true);
     }
@@ -55,11 +56,11 @@ class LineNotifyClient implements NotifyFactory
             'Authorization' => 'Bearer '.$token,
         ];
 
-        $response = $this->http->request(
+        $response = $this->http->sendRequest(new Request(
             'POST',
             self::ENDPOINT.'revoke',
-            compact('headers')
-        );
+            $headers
+        ));
 
         return json_decode($response->getBody(), true);
     }
