@@ -2,6 +2,8 @@
 
 wip
 
+https://notify-bot.line.me/
+
 ## .env
 ```
 LINE_NOTIFY_CLIENT_ID=
