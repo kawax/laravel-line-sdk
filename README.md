@@ -69,6 +69,7 @@ LINE::replyText();
 ## Documents
 - [Messaging API / Bot](./docs/bot.md)
 - [Socialite](./docs/socialite.md)
+- [Notifications](./docs/notify.md)
 
 ## Demo
 https://github.com/kawax/laravel-line-project
