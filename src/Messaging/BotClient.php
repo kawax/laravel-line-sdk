@@ -8,6 +8,8 @@ use Revolution\Line\Contracts\BotFactory;
 
 class BotClient implements BotFactory
 {
+    use Concerns\Reply;
+
     use Macroable {
         __call as macroCall;
     }
