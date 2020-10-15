@@ -16,11 +16,11 @@ class LineNotifyClient implements NotifyFactory
     protected $http;
 
     /**
-     * @param  ClientInterface  $client
+     * @param  ClientInterface  $http
      */
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $http)
     {
-        $this->http = $client;
+        $this->http = $http;
     }
 
     /**
