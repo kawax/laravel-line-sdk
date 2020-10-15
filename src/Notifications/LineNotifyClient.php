@@ -29,15 +29,15 @@ class LineNotifyClient implements NotifyFactory
      */
     public function status(string $token): array
     {
-        $headers = [
-            'Authorization' => 'Bearer '.$token,
-        ];
-
-        $response = $this->http->sendRequest(new Request(
+        $request = new Request(
             'GET',
             self::ENDPOINT.'status',
-            $headers
-        ));
+            [
+                'Authorization' => 'Bearer '.$token,
+            ]
+        );
+
+        $response = $this->http->sendRequest($request);
 
         return json_decode($response->getBody(), true);
     }
@@ -48,16 +48,16 @@ class LineNotifyClient implements NotifyFactory
      */
     public function revoke(string $token): array
     {
-        $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.$token,
-        ];
-
-        $response = $this->http->sendRequest(new Request(
-            'POST',
+        $request = new Request(
+            'GET',
             self::ENDPOINT.'revoke',
-            $headers
-        ));
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$token,
+            ]
+        );
+
+        $response = $this->http->sendRequest($request);
 
         return json_decode($response->getBody(), true);
     }
