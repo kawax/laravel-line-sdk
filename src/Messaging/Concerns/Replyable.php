@@ -4,7 +4,7 @@ namespace Revolution\Line\Messaging\Concerns;
 
 use Revolution\Line\Messaging\ReplyMessage;
 
-trait Reply
+trait Replyable
 {
     /**
      * @param  string  $token
