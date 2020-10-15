@@ -3,7 +3,7 @@
 namespace Revolution\Line\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Revolution\Line\Notifications\LineNotifyClient;
+use Revolution\Line\Contracts\NotifyFactory;
 
 /**
  * @method static array status(string $token)
@@ -18,6 +18,6 @@ class LineNotify extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return LineNotifyClient::class;
+        return NotifyFactory::class;
     }
 }
