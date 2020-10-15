@@ -10,7 +10,7 @@ return [
         'path' => env('LINE_BOT_WEBHOOK_PATH', 'line/webhook'),
         'route' => env('LINE_BOT_WEBHOOK_ROUTE', 'line.webhook'),
         'domain' => env('LINE_BOT_WEBHOOK_DOMAIN'),
-        'middleware' => env('LINE_BOT_WEBHOOK_MIDDLEWARE', ['throttle']),
+        'middleware' => env('LINE_BOT_WEBHOOK_MIDDLEWARE', 'throttle'),
     ],
 
     /**
