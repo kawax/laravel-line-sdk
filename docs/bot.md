@@ -63,6 +63,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use Revolution\Line\Facades\Bot;
 
 class TextListener
 {
@@ -84,7 +85,7 @@ class TextListener
      */
     public function handle(TextMessage $event)
     {
-        //
+        Bot::reply($event->getReplyToken())->text($event->getText());
     }
 }
 ```
