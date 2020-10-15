@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Revolution\Line\Facades;
 
 use Illuminate\Support\Facades\Facade;
