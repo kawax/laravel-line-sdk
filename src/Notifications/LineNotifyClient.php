@@ -3,11 +3,11 @@
 namespace Revolution\Line\Notifications;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Traits\Macroable;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
-use GuzzleHttp\Psr7\Utils;
 
 class LineNotifyClient implements NotifyFactory
 {

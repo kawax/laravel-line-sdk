@@ -3,8 +3,8 @@
 namespace Tests\Notifications;
 
 use Illuminate\Notifications\AnonymousNotifiable;
-use Tests\TestCase;
 use Revolution\Line\Facades\LineNotify;
+use Tests\TestCase;
 
 class LineNotifyChannelTest extends TestCase
 {
@@ -15,7 +15,7 @@ class LineNotifyChannelTest extends TestCase
             [
                 'message' => 'test',
                 'stickerPackageId' => null,
-                'stickerId' => null
+                'stickerId' => null,
             ])->once();
 
         (new AnonymousNotifiable())
