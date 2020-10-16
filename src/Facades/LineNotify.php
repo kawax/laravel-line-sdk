@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Revolution\Line\Contracts\NotifyFactory;
 
 /**
+ * @method static array notify(string $token, array $params)
  * @method static array status(string $token)
  * @method static array revoke(string $token)
  */

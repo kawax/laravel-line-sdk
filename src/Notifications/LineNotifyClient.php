@@ -7,6 +7,7 @@ use Illuminate\Support\Traits\Macroable;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
+use GuzzleHttp\Psr7\Utils;
 
 class LineNotifyClient implements NotifyFactory
 {
@@ -25,6 +26,31 @@ class LineNotifyClient implements NotifyFactory
     public function __construct(ClientInterface $http)
     {
         $this->http = $http;
+    }
+
+    /**
+     * @param  string  $token
+     * @param  array  $params
+     * @return array
+     * @throws ClientExceptionInterface
+     */
+    public function notify(string $token, array $params): array
+    {
+        $headers = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => 'Bearer '.$token,
+        ];
+
+        $request = new Request(
+            'POST',
+            self::ENDPOINT.'notify',
+            $headers,
+            Utils::streamFor(http_build_query($params))
+        );
+
+        $response = $this->http->sendRequest($request);
+
+        return json_decode($response->getBody(), true);
     }
 
     /**

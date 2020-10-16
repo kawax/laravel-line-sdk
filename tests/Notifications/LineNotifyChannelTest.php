@@ -2,26 +2,21 @@
 
 namespace Tests\Notifications;
 
-use GuzzleHttp\Client;
 use Illuminate\Notifications\AnonymousNotifiable;
-use Mockery;
 use Tests\TestCase;
+use Revolution\Line\Facades\LineNotify;
 
 class LineNotifyChannelTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
-
     public function testLineNotifyChannel()
     {
-        $client = Mockery::mock(Client::class);
-        $client->shouldReceive('post')->once();
-
-        $this->app->instance(Client::class, $client);
+        LineNotify::shouldReceive('notify')->with(
+            'test',
+            [
+                'message' => 'test',
+                'stickerPackageId' => null,
+                'stickerId' => null
+            ])->once();
 
         (new AnonymousNotifiable())
             ->route('line-notify', 'test')

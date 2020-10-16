@@ -21,16 +21,17 @@ class LineNotifyClientTest extends TestCase
     {
         $response = Mockery::mock(Response::class);
         $response->shouldReceive('getBody')
-            ->twice()
+            ->times(3)
             ->andReturn('[]');
 
         $client = Mockery::mock(Client::class);
         $client->shouldReceive('sendRequest')
-            ->twice()
+            ->times(3)
             ->andReturn($response);
 
         $this->app->instance(Client::class, $client);
 
+        $this->assertSame([], LineNotify::notify('test', []));
         $this->assertSame([], LineNotify::status('test'));
         $this->assertSame([], LineNotify::revoke('test'));
     }

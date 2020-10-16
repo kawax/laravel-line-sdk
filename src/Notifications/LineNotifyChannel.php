@@ -2,26 +2,23 @@
 
 namespace Revolution\Line\Notifications;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Notifications\Notification;
+use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyChannel
 {
-    protected const ENDPOINT = 'https://notify-api.line.me/api/notify';
+    /**
+     * @var NotifyFactory
+     */
+    protected $notify;
 
     /**
-     * @var Client
+     * @param  NotifyFactory  $notify
      */
-    protected $http;
-
-    /**
-     * @param  Client  $http
-     */
-    public function __construct(Client $http)
+    public function __construct(NotifyFactory $notify)
     {
-        $this->http = $http;
+        $this->notify = $notify;
     }
 
     /**
@@ -29,7 +26,6 @@ class LineNotifyChannel
      * @param  Notification  $notification
      *
      * @return void
-     * @throws GuzzleException
      */
     public function send($notifiable, Notification $notification)
     {
@@ -46,16 +42,9 @@ class LineNotifyChannel
             return;
         }
 
-        $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.$token,
-        ];
-
-        $form_params = $message->toArray();
-
-        $this->http->post(
-            self::ENDPOINT,
-            compact('headers', 'form_params')
+        $this->notify->notify(
+            $token,
+            $message->toArray()
         );
     }
 }
