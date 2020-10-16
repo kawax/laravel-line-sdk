@@ -71,11 +71,11 @@ class ReplyMessage
     }
 
     /**
-     * @param  int  $packageId
-     * @param  int  $stickerId
+     * @param  string|int  $packageId
+     * @param  string|int  $stickerId
      * @return Response
      */
-    public function sticker(int $packageId, int $stickerId)
+    public function sticker($packageId, $stickerId)
     {
         return $this->message(new StickerMessageBuilder($packageId, $stickerId, $this->quick, $this->sender));
     }
