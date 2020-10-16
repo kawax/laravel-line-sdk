@@ -2,6 +2,7 @@
 
 namespace Revolution\Line\Messaging;
 
+use Illuminate\Support\Traits\Macroable;
 use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder;
 use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
@@ -13,6 +14,8 @@ use LINE\LINEBot\SenderBuilder\SenderMessageBuilder;
 
 class ReplyMessage
 {
+    use Macroable;
+
     /**
      * @var LINEBot
      */
@@ -59,8 +62,7 @@ class ReplyMessage
     public function text(...$text)
     {
         $text = collect($text)
-            ->push($this->quick)
-            ->push($this->sender)
+            ->push($this->quick, $this->sender)
             ->reject(function ($item) {
                 return blank($item);
             })->toArray();
