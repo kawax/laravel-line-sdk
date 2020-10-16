@@ -3,12 +3,15 @@
 namespace Revolution\Line\Notifications;
 
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Traits\Macroable;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyClient implements NotifyFactory
 {
+    use Macroable;
+
     protected const ENDPOINT = 'https://notify-api.line.me/api/';
 
     /**
