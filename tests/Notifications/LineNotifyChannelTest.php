@@ -3,14 +3,19 @@
 namespace Tests\Notifications;
 
 use Illuminate\Notifications\AnonymousNotifiable;
-use Revolution\Line\Facades\LineNotify;
+use Mockery;
+use Revolution\Line\Notifications\LineNotifyChannel;
+use Revolution\Line\Notifications\LineNotifyClient;
+use Tests\Notifications\Fixtures\LineNotifyStub;
+use Tests\Notifications\Fixtures\TestNotifiableStub;
 use Tests\TestCase;
 
 class LineNotifyChannelTest extends TestCase
 {
     public function testLineNotifyChannel()
     {
-        LineNotify::shouldReceive('notify')->with(
+        $client = Mockery::mock(LineNotifyClient::class);
+        $client->shouldReceive('notify')->with(
             'test',
             [
                 'message' => 'test',
@@ -18,8 +23,26 @@ class LineNotifyChannelTest extends TestCase
                 'stickerId' => null,
             ])->once();
 
-        (new AnonymousNotifiable())
-            ->route('line-notify', 'test')
-            ->notify(new LineNotifyStub('test'));
+        $channel = new LineNotifyChannel($client);
+
+        $notifiable = (new AnonymousNotifiable())
+            ->route('line-notify', 'test');
+
+        $channel->send($notifiable, new LineNotifyStub('test'));
+        $channel->send(new TestNotifiableStub(), new LineNotifyStub('test'));
+    }
+
+    public function testLineNotifyChannelNotArrayable()
+    {
+        $client = Mockery::mock(LineNotifyClient::class);
+        $client->shouldReceive('notify')->never();
+
+        $channel = new LineNotifyChannel($client);
+
+        $notification = Mockery::mock(LineNotifyStub::class);
+        $notification->shouldReceive('toLineNotify')
+            ->andReturnNull();
+
+        $channel->send(new TestNotifiableStub(), $notification);
     }
 }
