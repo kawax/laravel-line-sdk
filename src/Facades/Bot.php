@@ -11,7 +11,7 @@ use Revolution\Line\Messaging\ReplyMessage;
 /**
  * @method static Response replyMessage($replyToken, MessageBuilder $messageBuilder)
  * @method static Response replyText($replyToken, $text, $extraTexts = null)
- * @method static ReplyMessage reply($token)
+ * @method static ReplyMessage reply(string $token)
  * @method static Response pushMessage($to, MessageBuilder $messageBuilder, $notificationDisabled = false, $retryKey = null)
  * @method static mixed parseEventRequest($body, $signature, $eventOnly = true)
  */
