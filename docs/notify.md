@@ -134,6 +134,7 @@ Notification::route('line-notify', config('line.notify.personal_access_token'))
 ```php
 use Revolution\Line\Facades\LineNotify;
 
+$res = LineNotify::notify($token, $params);
 $res = LineNotify::status($token);
 $res = LineNotify::revoke($token);
 ```

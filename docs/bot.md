@@ -1,5 +1,27 @@
 # Messaging API / Bot
 
+## Bot
+`Revolution\Line\Facades\Bot` can use all methods of the `LINEBot` class.
+
+Delegate to LINEBot.
+```php
+use Revolution\Line\Facades\Bot;
+
+Bot::replyText();
+Bot::replyMessage();
+Bot::pushMessage();
+```
+
+It also has the original `reply` function.
+
+```php
+use Revolution\Line\Facades\Bot;
+
+Bot::reply($token)->text('text');
+Bot::reply($token)->withSender('alt-name')->text('text1', 'text2');
+Bot::reply($token)->sticker(1, 1);
+```
+
 ## Webhook
 
 The SDK includes Webhook routing and controller.
