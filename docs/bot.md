@@ -161,6 +161,32 @@ Bot::botUsing(function () {
 });
 ```
 
+### Webhook default route middleware
+The `throttle` middleware is enabled. To disable it, configure in `.env`.
+
+```
+LINE_BOT_WEBHOOK_MIDDLEWARE=null
+```
+
+Or change the `throttle` settings.
+
+```
+LINE_BOT_WEBHOOK_MIDDLEWARE=throttle:120,1
+```
+
+Laravel>=8
+```php
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+
+RateLimiter::for('line', function (Request $request) {
+    return Limit::perMinute(120);
+});
+```
+```
+LINE_BOT_WEBHOOK_MIDDLEWARE=throttle:line
+```
+
 ### Another way not to use the Laravel Event system
 
 Make your `app/Actions/LineWebhook.php`
@@ -222,13 +248,6 @@ public function register()
 ```
 
 Anything is possible by replacing the WebhookHandler.
-
-### Webhook default route middleware
-The `throttle` middleware is already enabled. To disable it, configure it in `.env`.
-
-```
-LINE_BOT_WEBHOOK_MIDDLEWARE=null
-```
 
 ### Http::line() (Required Laravel>=7)
 We've already extended the `Http` class, so you can make API requests without using the LINEBot class.
