@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\Facade;
 use Revolution\Line\Contracts\NotifyFactory;
 
 /**
- * @method static array notify(string $token, array $params)
- * @method static array status(string $token)
- * @method static array revoke(string $token)
+ * @method static $this withToken(string $token)
+ * @method array notify(array $params)
+ * @method array status()
+ * @method array revoke()
  */
 class LineNotify extends Facade
 {

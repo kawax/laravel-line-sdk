@@ -4,6 +4,7 @@ namespace Revolution\Line\Notifications;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Notifications\Notification;
+use Psr\Http\Client\ClientExceptionInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyChannel
@@ -26,6 +27,7 @@ class LineNotifyChannel
      * @param  Notification  $notification
      *
      * @return void
+     * @throws ClientExceptionInterface
      */
     public function send($notifiable, Notification $notification)
     {
@@ -42,9 +44,6 @@ class LineNotifyChannel
             return;
         }
 
-        $this->notify->notify(
-            $token,
-            $message->toArray()
-        );
+        $this->notify->withToken($token)->notify($message->toArray());
     }
 }

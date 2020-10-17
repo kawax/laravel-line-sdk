@@ -15,8 +15,7 @@ class LineNotifyChannelTest extends TestCase
     public function testLineNotifyChannel()
     {
         $client = Mockery::mock(LineNotifyClient::class);
-        $client->shouldReceive('notify')->with(
-            'test',
+        $client->shouldReceive('withToken->notify')->with(
             [
                 'message' => 'test',
                 'stickerPackageId' => null,
@@ -35,7 +34,7 @@ class LineNotifyChannelTest extends TestCase
     public function testLineNotifyChannelNotArrayable()
     {
         $client = Mockery::mock(LineNotifyClient::class);
-        $client->shouldReceive('notify')->never();
+        $client->shouldReceive('withToken->notify')->never();
 
         $channel = new LineNotifyChannel($client);
 

@@ -31,8 +31,8 @@ class LineNotifyClientTest extends TestCase
 
         $this->app->instance(Client::class, $client);
 
-        $this->assertSame([], LineNotify::notify('test', []));
-        $this->assertSame([], LineNotify::status('test'));
-        $this->assertSame([], LineNotify::revoke('test'));
+        $this->assertSame([], LineNotify::withToken('test')->notify([]));
+        $this->assertSame([], LineNotify::withToken('test')->status());
+        $this->assertSame([], LineNotify::withToken('test')->revoke());
     }
 }

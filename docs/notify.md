@@ -134,7 +134,17 @@ Notification::route('line-notify', config('line.notify.personal_access_token'))
 ```php
 use Revolution\Line\Facades\LineNotify;
 
-$res = LineNotify::notify($token, $params);
-$res = LineNotify::status($token);
-$res = LineNotify::revoke($token);
+$res = LineNotify::withToken($token)->notify($params);
+$res = LineNotify::withToken($token)->status();
+$res = LineNotify::withToken($token)->revoke();
+```
+
+Without Laravel Notification system.
+```php
+use Revolution\Line\Facades\LineNotify;
+use Revolution\Line\Notifications\LineNotifyMessage;
+
+$message = LineNotifyMessage::create('message');
+
+$res = LineNotify::withToken($token)->notify($message->toArray());
 ```

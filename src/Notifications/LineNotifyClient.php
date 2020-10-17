@@ -21,6 +21,11 @@ class LineNotifyClient implements NotifyFactory
     protected $http;
 
     /**
+     * @var string
+     */
+    protected $token;
+
+    /**
      * @param  ClientInterface  $http
      */
     public function __construct(ClientInterface $http)
@@ -30,15 +35,26 @@ class LineNotifyClient implements NotifyFactory
 
     /**
      * @param  string  $token
+     *
+     * @return $this
+     */
+    public function withToken(string $token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
      * @param  array  $params
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function notify(string $token, array $params): array
+    public function notify(array $params)
     {
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer '.$this->token,
         ];
 
         $request = new Request(
@@ -54,17 +70,16 @@ class LineNotifyClient implements NotifyFactory
     }
 
     /**
-     * @param  string  $token
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function status(string $token): array
+    public function status()
     {
         $request = new Request(
             'GET',
             self::ENDPOINT.'status',
             [
-                'Authorization' => 'Bearer '.$token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 
@@ -74,18 +89,17 @@ class LineNotifyClient implements NotifyFactory
     }
 
     /**
-     * @param  string  $token
      * @return array
      * @throws ClientExceptionInterface
      */
-    public function revoke(string $token): array
+    public function revoke()
     {
         $request = new Request(
-            'GET',
+            'POST',
             self::ENDPOINT.'revoke',
             [
                 'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => 'Bearer '.$token,
+                'Authorization' => 'Bearer '.$this->token,
             ]
         );
 

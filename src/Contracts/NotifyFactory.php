@@ -2,17 +2,33 @@
 
 namespace Revolution\Line\Contracts;
 
+use Psr\Http\Client\ClientExceptionInterface;
+
 interface NotifyFactory
 {
     /**
      * @param  string  $token
-     * @return array
+     *
+     * @return $this
      */
-    public function status(string $token): array;
+    public function withToken(string $token);
 
     /**
-     * @param  string  $token
+     * @param  array  $params
      * @return array
+     * @throws ClientExceptionInterface
      */
-    public function revoke(string $token): array;
+    public function notify(array $params);
+
+    /**
+     * @return array
+     * @throws ClientExceptionInterface
+     */
+    public function status();
+
+    /**
+     * @return array
+     * @throws ClientExceptionInterface
+     */
+    public function revoke();
 }
