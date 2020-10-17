@@ -126,6 +126,8 @@ class TextMessageListener implements ShouldQueue
 ```
 
 ## Customizing
+
+### Bot macro
 `Bot` is Macroable, it means "You can add any method"
 
 Register at `AppServiceProvider@boot`
@@ -220,6 +222,13 @@ public function register()
 ```
 
 Anything is possible by replacing the WebhookHandler.
+
+### Webhook default route middleware
+The `throttle` middleware is already enabled. To disable it, configure it in `.env`.
+
+```
+LINE_BOT_WEBHOOK_MIDDLEWARE=null
+```
 
 ### Http::line() (Required Laravel>=7)
 We've already extended the `Http` class, so you can make API requests without using the LINEBot class.
