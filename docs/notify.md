@@ -1,7 +1,5 @@
 # LINE Notify
 
-wip
-
 https://notify-bot.line.me/
 
 ## .env
