@@ -1,5 +1,7 @@
 # Messaging API / Bot
 
+https://developers.line.biz/en/docs/messaging-api/
+
 ## Bot
 `Revolution\Line\Facades\Bot` can use all methods of the `LINEBot` class.
 
