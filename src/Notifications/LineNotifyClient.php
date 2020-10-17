@@ -52,15 +52,13 @@ class LineNotifyClient implements NotifyFactory
      */
     public function notify(array $params)
     {
-        $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => 'Bearer '.$this->token,
-        ];
-
         $request = new Request(
             'POST',
             self::ENDPOINT.'notify',
-            $headers,
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => 'Bearer '.$this->token,
+            ],
             Utils::streamFor(http_build_query($params))
         );
 
