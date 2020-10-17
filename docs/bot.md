@@ -218,3 +218,31 @@ public function register()
 ```
 
 Anything is possible by replacing the WebhookHandler.
+
+### Http::line() (Required Laravel>=7)
+We've already extended the `Http` class, so you can make API requests without using the LINEBot class.
+
+```php
+use Illuminate\Support\Facades\Http;
+
+$response = Http::line()->post('/v2/bot/channel/webhook/test', [
+                            'endpoint' => '',
+                        ]);
+```
+
+Combine with Bot macro.
+
+```php
+use Illuminate\Support\Facades\Http;
+use Revolution\Line\Facades\Bot;
+
+Bot::macro('verifyWebhook', function ($endpoint = '') {
+    return Http::line()->post('/v2/bot/channel/webhook/test', [
+        'endpoint' => $endpoint,
+    ])->json();
+});
+```
+
+```php
+$response = Bot::verifyWebhook();
+```
