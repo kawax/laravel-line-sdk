@@ -146,7 +146,7 @@ Use it anywhere.
 $foo = Bot::foo();
 ```
 
-### Replacing a LINEBot instance
+### Replacing `LINEBot` instance
 `Bot::bot()` returns LINEBot instance. You can swap instances with `Bot::botUsing()`
 
 ```php
@@ -154,7 +154,7 @@ $bot = new MyBot();
 
 Bot::botUsing($bot);
 ```
-Accepts a Closure, too.
+Accepts a callable.
 ```php
 Bot::botUsing(function () {
    return new MyBot();
