@@ -5,6 +5,12 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/maintainability)](https://codeclimate.com/github/kawax/laravel-line-sdk/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/test_coverage)](https://codeclimate.com/github/kawax/laravel-line-sdk/test_coverage)
 
+## Features
+- Working with Laravel Event System. Including Webhook routing and controller.
+- Extensible Bot Client.
+- Working with Laravel Notification System(LINE Notify)
+- Including Socialite drivers(LINE Login, LINE Notify)
+
 ## Requirements
 - PHP >= 7.2
 - Laravel >= 6.0
