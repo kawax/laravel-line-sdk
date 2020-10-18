@@ -30,13 +30,6 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     protected $scopeSeparator = ' ';
 
     /**
-     * The type of the encoding in the query.
-     *
-     * @var int Can be either PHP_QUERY_RFC3986 or PHP_QUERY_RFC1738.
-     */
-    protected $encodingType = PHP_QUERY_RFC3986;
-
-    /**
      * @inheritdoc
      */
     protected function getAuthUrl($state)
