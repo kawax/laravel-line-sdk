@@ -1,6 +1,6 @@
 # Laravel-based framework
 
-Add a ServiceProvider manually.
+Manually add some ServiceProviders.
 
 ## Lumen
 
