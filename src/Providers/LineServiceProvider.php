@@ -143,6 +143,10 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureMacros()
     {
+        if (! class_exists(HttpFactory::class)) {
+            return;
+        }
+
         if (! $this->app->make(HttpFactory::class)) {
             return;
         }
