@@ -37,7 +37,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Revolution\\Line\\Providers\\LineServiceProvider"
+                "Revolution\\Line\\Providers\\LineServiceProvider",
+                "Revolution\\Line\\Providers\\LineSocialiteServiceProvider",
+                "Revolution\\Line\\Providers\\RouteServiceProvider",
+                "Revolution\\Line\\Providers\\MacroServiceProvider"
             ]
         }
     }

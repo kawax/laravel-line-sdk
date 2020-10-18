@@ -2,6 +2,8 @@
 
 namespace Tests\Messaging;
 
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 use LINE\LINEBot;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Facades\Bot;
@@ -43,5 +45,10 @@ class BotClientTest extends TestCase
     public function testBotAlias()
     {
         $this->assertInstanceOf(LINEBot::class, BotAlias::bot());
+    }
+
+    public function testHttpMacro()
+    {
+        $this->assertInstanceOf(PendingRequest::class, Http::line());
     }
 }
