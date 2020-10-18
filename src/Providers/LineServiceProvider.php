@@ -9,9 +9,7 @@ use LINE\LINEBot\HTTPClient;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Contracts\NotifyFactory;
-use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\BotClient;
-use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Notifications\LineNotifyClient;
 
 class LineServiceProvider extends ServiceProvider
@@ -29,8 +27,6 @@ class LineServiceProvider extends ServiceProvider
         );
 
         $this->registerBot();
-
-        $this->registerWebhookHandler();
 
         $this->registerNotify();
     }
@@ -53,16 +49,6 @@ class LineServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(BotFactory::class, BotClient::class);
-    }
-
-    /**
-     * Default WebhookHandler.
-     *
-     * @return void
-     */
-    protected function registerWebhookHandler()
-    {
-        $this->app->singleton(WebhookHandler::class, WebhookEventDispatcher::class);
     }
 
     /**
