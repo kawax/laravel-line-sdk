@@ -47,6 +47,9 @@ class BotClientTest extends TestCase
         $this->assertInstanceOf(LINEBot::class, BotAlias::bot());
     }
 
+    /**
+     * @requires \Illuminate\Http\Client\Factory::get
+     */
     public function testHttpMacro()
     {
         $this->assertInstanceOf(PendingRequest::class, Http::line());
