@@ -84,15 +84,15 @@ class LineServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../../config/line.php' => config_path('line.php'),
+            __DIR__.'/../../config/line.php' => $this->app->configPath('line.php'),
         ], 'line-config');
 
         $this->publishes([
-            __DIR__.'/../../stubs/listeners' => app_path('Listeners'),
+            __DIR__.'/../../stubs/listeners' => $this->app->path('Listeners'),
         ], 'line-listeners-all');
 
         $this->publishes([
-            __DIR__.'/../../stubs/listeners/Message' => app_path('Listeners/Message'),
+            __DIR__.'/../../stubs/listeners/Message' => $this->app->path('Listeners/Message'),
         ], 'line-listeners-message');
     }
 
