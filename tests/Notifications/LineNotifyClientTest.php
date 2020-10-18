@@ -25,7 +25,7 @@ class LineNotifyClientTest extends TestCase
             ->andReturn('[]');
 
         $client = Mockery::mock(Client::class);
-        $client->shouldReceive('sendRequest')
+        $client->shouldReceive('send')
             ->times(3)
             ->andReturn($response);
 

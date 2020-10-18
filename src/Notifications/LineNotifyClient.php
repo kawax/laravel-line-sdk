@@ -2,11 +2,11 @@
 
 namespace Revolution\Line\Notifications;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Traits\Macroable;
-use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyClient implements NotifyFactory
@@ -48,7 +48,7 @@ class LineNotifyClient implements NotifyFactory
     /**
      * @param  array  $params
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function notify(array $params)
     {
@@ -62,14 +62,14 @@ class LineNotifyClient implements NotifyFactory
             Utils::streamFor(http_build_query($params))
         );
 
-        $response = $this->http->sendRequest($request);
+        $response = $this->http->send($request);
 
         return json_decode($response->getBody(), true);
     }
 
     /**
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function status()
     {
@@ -81,14 +81,14 @@ class LineNotifyClient implements NotifyFactory
             ]
         );
 
-        $response = $this->http->sendRequest($request);
+        $response = $this->http->send($request);
 
         return json_decode($response->getBody(), true);
     }
 
     /**
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function revoke()
     {
@@ -101,7 +101,7 @@ class LineNotifyClient implements NotifyFactory
             ]
         );
 
-        $response = $this->http->sendRequest($request);
+        $response = $this->http->send($request);
 
         return json_decode($response->getBody(), true);
     }

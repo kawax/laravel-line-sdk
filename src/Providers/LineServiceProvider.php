@@ -4,6 +4,7 @@ namespace Revolution\Line\Providers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -101,6 +102,10 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureRoutes()
     {
+        if (! class_exists(Router::class)) {
+            return;
+        }
+
         Route::middleware(config('line.bot.middleware'))
             ->domain(config('line.bot.domain'))
             ->group(function () {
