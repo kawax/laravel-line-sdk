@@ -103,17 +103,15 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureRoutes()
     {
-        if (! $this->app->make('router')) {
-            return;
-        }
-
-        Route::middleware(config('line.bot.middleware'))
-            ->domain(config('line.bot.domain'))
-            ->group(function () {
-                Route::post(config('line.bot.path', 'line/webhook'))
-                    ->name(config('line.bot.route', 'line.webhook'))
-                    ->uses(WebhookController::class);
-            });
+        rescue(function () {
+            Route::middleware(config('line.bot.middleware'))
+                ->domain(config('line.bot.domain'))
+                ->group(function () {
+                    Route::post(config('line.bot.path', 'line/webhook'))
+                        ->name(config('line.bot.route', 'line.webhook'))
+                        ->uses(WebhookController::class);
+                });
+        });
     }
 
     /**
@@ -123,16 +121,14 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureSocialite()
     {
-        if (! $this->app->make(Factory::class)) {
-            return;
-        }
+        rescue(function () {
+            Socialite::extend('line-login', function () {
+                return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
+            });
 
-        Socialite::extend('line-login', function () {
-            return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
-        });
-
-        Socialite::extend('line-notify', function () {
-            return Socialite::buildProvider(LineNotifyProvider::class, config('line.notify'));
+            Socialite::extend('line-notify', function () {
+                return Socialite::buildProvider(LineNotifyProvider::class, config('line.notify'));
+            });
         });
     }
 
@@ -143,17 +139,15 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureMacros()
     {
-        if (! class_exists(HttpFactory::class)) {
+        if (! interface_exists(HttpFactory::class)) {
             return;
         }
 
-        if (! $this->app->make(HttpFactory::class)) {
-            return;
-        }
-
-        PendingRequest::macro('line', function (string $endpoint = null) {
-            return Http::withToken(config('line.bot.channel_token'))
-                ->baseUrl($endpoint ?? LINEBot::DEFAULT_ENDPOINT_BASE);
+        rescue(function () {
+            PendingRequest::macro('line', function (string $endpoint = null) {
+                return Http::withToken(config('line.bot.channel_token'))
+                    ->baseUrl($endpoint ?? LINEBot::DEFAULT_ENDPOINT_BASE);
+            });
         });
     }
 }
