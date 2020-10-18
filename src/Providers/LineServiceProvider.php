@@ -3,11 +3,12 @@
 namespace Revolution\Line\Providers;
 
 use GuzzleHttp\Client;
+use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory;
 use Laravel\Socialite\Facades\Socialite;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;
@@ -102,7 +103,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureRoutes()
     {
-        if (! class_exists(Router::class)) {
+        if (! $this->app->make('router')) {
             return;
         }
 
@@ -122,6 +123,10 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureSocialite()
     {
+        if (! $this->app->make(Factory::class)) {
+            return;
+        }
+
         Socialite::extend('line-login', function () {
             return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
         });
@@ -138,7 +143,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureMacros()
     {
-        if (! class_exists(Http::class)) {
+        if (! $this->app->make(HttpFactory::class)) {
             return;
         }
 
