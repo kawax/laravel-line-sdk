@@ -103,7 +103,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureRoutes()
     {
-        rescue(function () {
+        try {
             Route::middleware(config('line.bot.middleware'))
                 ->domain(config('line.bot.domain'))
                 ->group(function () {
@@ -111,7 +111,9 @@ class LineServiceProvider extends ServiceProvider
                         ->name(config('line.bot.route', 'line.webhook'))
                         ->uses(WebhookController::class);
                 });
-        });
+        } catch (\Throwable $e) {
+            //
+        }
     }
 
     /**
@@ -121,7 +123,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function configureSocialite()
     {
-        rescue(function () {
+        try {
             Socialite::extend('line-login', function () {
                 return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
             });
@@ -129,7 +131,9 @@ class LineServiceProvider extends ServiceProvider
             Socialite::extend('line-notify', function () {
                 return Socialite::buildProvider(LineNotifyProvider::class, config('line.notify'));
             });
-        });
+        } catch (\Throwable $e) {
+            //
+        }
     }
 
     /**
@@ -143,11 +147,13 @@ class LineServiceProvider extends ServiceProvider
             return;
         }
 
-        rescue(function () {
+        try {
             PendingRequest::macro('line', function (string $endpoint = null) {
                 return Http::withToken(config('line.bot.channel_token'))
                     ->baseUrl($endpoint ?? LINEBot::DEFAULT_ENDPOINT_BASE);
             });
-        });
+        } catch (\Throwable $e) {
+            //
+        }
     }
 }
