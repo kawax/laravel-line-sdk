@@ -14,6 +14,8 @@ use Revolution\Line\Messaging\ReplyMessage;
  * @method static ReplyMessage reply(string $token)
  * @method static Response pushMessage($to, MessageBuilder $messageBuilder, $notificationDisabled = false, $retryKey = null)
  * @method static mixed parseEventRequest($body, $signature, $eventOnly = true)
+ *
+ * @see \LINE\LINEBot
  */
 class Bot extends Facade
 {
