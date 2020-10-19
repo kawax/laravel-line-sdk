@@ -68,7 +68,7 @@ class LineServiceProvider extends ServiceProvider
     }
 
     /**
-     * Default WebhookHandler
+     * Default WebhookHandler.
      *
      * @return void
      */
