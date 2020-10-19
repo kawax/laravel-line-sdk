@@ -2,9 +2,11 @@ name: tests
 
 on:
   push:
+    tags: 
     branches: 
       - master
   pull_request:
+
 
 jobs:
   test:
