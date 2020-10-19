@@ -4,6 +4,9 @@ I'm not going to write all the changes.
 
 ## [Unreleased]
 
+## v1.1.0 (2020-10-19)
+- Improve Laravel-based support.
+
 ## v1.0.6 (2020-10-19)
 - Split ServiceProvider.
 
