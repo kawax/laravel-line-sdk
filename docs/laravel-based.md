@@ -9,7 +9,6 @@ Manually add some ServiceProviders.
 ```php
 $app->register(Revolution\Line\Providers\LineServiceProvider::class);
 $app->register(Revolution\Line\Providers\LineSocialiteServiceProvider::class);
-$app->register(Revolution\Line\Providers\RouteServiceProvider::class);
 $app->register(Revolution\Line\Providers\MacroServiceProvider::class);// Laravel>=7
 ```
 
