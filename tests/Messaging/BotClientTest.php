@@ -48,7 +48,7 @@ class BotClientTest extends TestCase
     }
 
     /**
-     * @requires function \Illuminate\Http\Client\Factory::get
+     * @requires function \Illuminate\Http\Client\PendingRequest::get
      */
     public function testHttpMacro()
     {
