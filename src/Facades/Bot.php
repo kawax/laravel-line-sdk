@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use LINE\LINEBot\MessageBuilder;
 use LINE\LINEBot\Response;
 use Revolution\Line\Contracts\BotFactory;
+use Revolution\Line\Messaging\BotClient;
 use Revolution\Line\Messaging\ReplyMessage;
 
 /**
@@ -16,6 +17,7 @@ use Revolution\Line\Messaging\ReplyMessage;
  * @method static mixed parseEventRequest($body, $signature, $eventOnly = true)
  *
  * @see \LINE\LINEBot
+ * @see BotClient
  */
 class Bot extends Facade
 {

@@ -21,7 +21,7 @@ class MacroServiceProvider extends ServiceProvider
             return;
         }
 
-        PendingRequest::macro('line', function (string $endpoint = null): PendingRequest {
+        Http::macro('line', function (string $endpoint = null): PendingRequest {
             return Http::withToken(config('line.bot.channel_token'))
                 ->baseUrl($endpoint ?? LINEBot::DEFAULT_ENDPOINT_BASE);
         });
