@@ -5,7 +5,6 @@ namespace Tests\Messaging;
 use LINE\LINEBot;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder;
-use LINE\LINEBot\SenderBuilder\SenderMessageBuilder;
 use Mockery;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\ReplyMessage;
