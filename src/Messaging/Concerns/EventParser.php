@@ -5,8 +5,6 @@ namespace Revolution\Line\Messaging\Concerns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use LINE\LINEBot\Constant\HTTPHeader;
-use Revolution\Line\Facades\Bot;
-use LINE\LINEBot\Event\Parser\EventRequestParser;
 
 trait EventParser
 {
