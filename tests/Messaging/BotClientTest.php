@@ -5,6 +5,7 @@ namespace Tests\Messaging;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use LINE\LINEBot;
+use Mockery;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Bot as BotAlias;
@@ -13,6 +14,13 @@ use Tests\TestCase;
 
 class BotClientTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
+
     public function testBotInstance()
     {
         $this->assertInstanceOf(LINEBot::class, app(LINEBot::class));
@@ -40,6 +48,18 @@ class BotClientTest extends TestCase
         });
 
         $this->assertSame('test', Bot::testMacro());
+    }
+
+    public function testBotInfo()
+    {
+        $bot = Mockery::mock(LINEBot::class);
+        $bot->shouldReceive('getBotInfo')
+            ->once()
+            ->andReturn([]);
+
+        $this->app->instance(LINEBot::class, $bot);
+
+        $this->assertSame([], Bot::getBotInfo());
     }
 
     public function testBotAlias()

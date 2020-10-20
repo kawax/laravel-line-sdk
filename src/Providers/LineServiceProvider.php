@@ -95,7 +95,7 @@ class LineServiceProvider extends ServiceProvider
     protected function configurePublishing()
     {
         if (! $this->app->runningInConsole()) {
-            return;
+            return;// @codeCoverageIgnore
         }
 
         $this->publishes([
