@@ -18,7 +18,7 @@ class MacroServiceProvider extends ServiceProvider
     public function boot()
     {
         if (! class_exists(Factory::class)) {
-            return;// @codeCoverageIgnore
+            return; // @codeCoverageIgnore
         }
 
         Http::macro('line', function (string $endpoint = null): PendingRequest {
