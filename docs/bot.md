@@ -212,24 +212,12 @@ class LineWebhook implements WebhookHandler
      */
     public function __invoke(Request $request)
     {
-        try {
-            $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
-
-            $events = Bot::parseEventRequest($request->getContent(), $signature);
-
-            collect($events)->each(function ($event) {
-                //event($event);
-                if($event instanceof TextMessage){
-                    //
-                }
-            });
-        } catch (InvalidSignatureException $e) {
-            report($e);
-            abort(400, $e->getMessage());
-        } catch (InvalidEventRequestException $e) {
-            report($e);
-            abort(400, 'Invalid event request');
-        }
+        Bot::parseEvent($request)->each(function ($event) {
+            //event($event);
+            if($event instanceof TextMessage){
+                //
+            }
+        });
 
         return response('OK');
     }

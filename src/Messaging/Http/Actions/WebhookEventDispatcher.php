@@ -16,11 +16,7 @@ class WebhookEventDispatcher implements WebhookHandler
      */
     public function __invoke(Request $request)
     {
-        $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
-
-        $events = Bot::parseEventRequest($request->getContent(), $signature);
-
-        collect($events)->each(function ($event) {
+        Bot::parseEvent($request)->each(function ($event) {
             event($event);
         });
 

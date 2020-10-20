@@ -3,15 +3,23 @@
 namespace Tests\Messaging;
 
 use Illuminate\Support\Facades\Event;
+use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use Mockery;
 use Revolution\Line\Contracts\WebhookHandler;
-use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Tests\TestCase;
 
 class WebhookTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Mockery::close();
+    }
+
     public function testWebhookHandler()
     {
         $this->assertInstanceOf(WebhookEventDispatcher::class, app(WebhookHandler::class));
@@ -21,23 +29,28 @@ class WebhookTest extends TestCase
     {
         Event::fake();
 
-        Bot::shouldReceive('parseEventRequest')->once()->andReturn([
-            new TextMessage([
-                'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
-                'type' => 'message',
-                'mode' => 'active',
-                'timestamp' => 1462629479859,
-                'source' => [
-                    'type' => 'user',
-                    'userId' => 'U4af4980629...',
-                ],
-                'message' => [
-                    'id' => '',
-                    'type' => '',
-                    'text' => '',
-                ],
-            ]),
-        ]);
+        $bot = Mockery::mock(LINEBot::class);
+        $bot->shouldReceive('parseEventRequest')
+            ->once()
+            ->andReturn([
+                new TextMessage([
+                    'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
+                    'type' => 'message',
+                    'mode' => 'active',
+                    'timestamp' => 1462629479859,
+                    'source' => [
+                        'type' => 'user',
+                        'userId' => 'U4af4980629...',
+                    ],
+                    'message' => [
+                        'id' => '',
+                        'type' => '',
+                        'text' => '',
+                    ],
+                ]),
+            ]);
+
+        $this->app->instance(LINEBot::class, $bot);
 
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
@@ -57,7 +70,7 @@ class WebhookTest extends TestCase
 
         $response->assertStatus(400)
             ->assertJson([
-                'message' => 'Request does not contain signature'
+                'message' => 'Request does not contain signature',
             ]);
     }
 
@@ -71,7 +84,7 @@ class WebhookTest extends TestCase
 
         $response->assertStatus(400)
             ->assertJson([
-                'message' => 'Invalid signature has given'
+                'message' => 'Invalid signature has given',
             ]);
     }
 
@@ -83,14 +96,14 @@ class WebhookTest extends TestCase
 
         $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, $signature)
             ->postJson(config('line.bot.path'), [
-                'test'
+                'test',
             ]);
 
         Event::assertNotDispatched(TextMessage::class);
 
         $response->assertStatus(400)
             ->assertJson([
-                'message' => 'Invalid event request'
+                'message' => 'Invalid event request',
             ]);
     }
 }
