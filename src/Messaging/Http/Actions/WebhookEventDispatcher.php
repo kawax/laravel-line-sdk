@@ -4,7 +4,6 @@ namespace Revolution\Line\Messaging\Http\Actions;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use LINE\LINEBot\Constant\HTTPHeader;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 
