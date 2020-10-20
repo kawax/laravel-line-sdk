@@ -5,31 +5,31 @@ namespace Revolution\Line\Messaging\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use LINE\LINEBot\Constant\HTTPHeader;
+use LINE\LINEBot\Exception\InvalidSignatureException;
+use LINE\LINEBot\SignatureValidator;
 
 class ValidateSignature
 {
-    /**
-     * @var string
-     */
-    protected $signature;
-
     /**
      * Handle an incoming request.
      *
      * @param  Request  $request
      * @param  Closure  $next
      * @return mixed
+     * @throws InvalidSignatureException
      */
     public function handle(Request $request, Closure $next)
     {
-        $this->signature = $request->header(HTTPHeader::LINE_SIGNATURE);
-
-        if (empty($this->signature)) {
-            abort(400);
+        if (! $request->hasHeader(HTTPHeader::LINE_SIGNATURE)) {
+            abort(400, 'Request does not contain signature');
         }
 
-        if (! $this->validate($request)) {
-            abort(400);
+        if (! $this->validateSignature($request)) {
+            abort(400, 'Invalid signature has given');
+        }
+
+        if ($request->missing('events')) {
+            abort(400, 'Invalid event request');
         }
 
         return $next($request); // @codeCoverageIgnore
@@ -38,14 +38,14 @@ class ValidateSignature
     /**
      * @param  Request  $request
      * @return bool
+     * @throws InvalidSignatureException
      */
-    public function validate($request)
+    protected function validateSignature(Request $request): bool
     {
-        return hash_equals(base64_encode(hash_hmac(
-            'sha256',
+        return SignatureValidator::validateSignature(
             $request->getContent(),
             config('line.bot.channel_secret'),
-            true
-        )), $this->signature);
+            $request->header(HTTPHeader::LINE_SIGNATURE)
+        );
     }
 }

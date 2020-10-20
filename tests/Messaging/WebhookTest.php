@@ -47,25 +47,50 @@ class WebhookTest extends TestCase
         $response->assertSuccessful();
     }
 
+    public function testEmptySignature()
+    {
+        Event::fake();
+
+        $response = $this->postJson(config('line.bot.path'));
+
+        Event::assertNotDispatched(TextMessage::class);
+
+        $response->assertStatus(400)
+            ->assertJson([
+                'message' => 'Request does not contain signature'
+            ]);
+    }
+
     public function testInvalidSignature()
     {
         Event::fake();
 
-        $response = $this->post(config('line.bot.path'));
+        $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')->postJson(config('line.bot.path'));
 
         Event::assertNotDispatched(TextMessage::class);
 
-        $response->assertStatus(400);
+        $response->assertStatus(400)
+            ->assertJson([
+                'message' => 'Invalid signature has given'
+            ]);
     }
 
-    public function testInvalidEventRequest()
+    public function testValidSignatureEmptyEvents()
     {
+        $signature = base64_encode(hash_hmac('sha256', json_encode(['test']), config('line.bot.channel_secret'), true));
+
         Event::fake();
 
-        $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')->post(config('line.bot.path'));
+        $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, $signature)
+            ->postJson(config('line.bot.path'), [
+                'test'
+            ]);
 
         Event::assertNotDispatched(TextMessage::class);
 
-        $response->assertStatus(400);
+        $response->assertStatus(400)
+            ->assertJson([
+                'message' => 'Invalid event request'
+            ]);
     }
 }

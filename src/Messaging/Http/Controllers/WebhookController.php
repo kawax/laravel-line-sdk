@@ -10,6 +10,9 @@ use Revolution\Line\Messaging\Http\Middleware\ValidateSignature;
 
 class WebhookController extends Controller
 {
+    /**
+     * WebhookController constructor.
+     */
     public function __construct()
     {
         $this->middleware(ValidateSignature::class);
