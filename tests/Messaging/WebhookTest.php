@@ -5,8 +5,6 @@ namespace Tests\Messaging;
 use Illuminate\Support\Facades\Event;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
-use LINE\LINEBot\Exception\InvalidEventRequestException;
-use LINE\LINEBot\Exception\InvalidSignatureException;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
@@ -41,7 +39,7 @@ class WebhookTest extends TestCase
             ]),
         ]);
 
-        $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')
+        $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
 
         Event::assertDispatched(TextMessage::class);
@@ -49,12 +47,9 @@ class WebhookTest extends TestCase
         $response->assertSuccessful();
     }
 
-    public function testInvalidSignatureException()
+    public function testInvalidSignature()
     {
         Event::fake();
-
-        Bot::shouldReceive('parseEventRequest')->once()
-            ->andThrow(InvalidSignatureException::class);
 
         $response = $this->post(config('line.bot.path'));
 
@@ -63,14 +58,11 @@ class WebhookTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function testInvalidEventRequestException()
+    public function testInvalidEventRequest()
     {
         Event::fake();
 
-        Bot::shouldReceive('parseEventRequest')->once()
-            ->andThrow(InvalidEventRequestException::class);
-
-        $response = $this->post(config('line.bot.path'));
+        $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')->post(config('line.bot.path'));
 
         Event::assertNotDispatched(TextMessage::class);
 
