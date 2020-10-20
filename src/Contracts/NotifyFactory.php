@@ -2,7 +2,7 @@
 
 namespace Revolution\Line\Contracts;
 
-use Psr\Http\Client\ClientExceptionInterface;
+use GuzzleHttp\Exception\GuzzleException;
 
 interface NotifyFactory
 {
@@ -16,19 +16,19 @@ interface NotifyFactory
     /**
      * @param  array  $params
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function notify(array $params);
 
     /**
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function status();
 
     /**
      * @return array
-     * @throws ClientExceptionInterface
+     * @throws GuzzleException
      */
     public function revoke();
 }
