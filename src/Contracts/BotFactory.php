@@ -27,7 +27,7 @@ interface BotFactory
      * @return ReplyMessage
      */
     public function reply(string $token);
-    
+
     /**
      * @param  Request  $request
      * @return Collection
