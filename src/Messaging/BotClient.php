@@ -5,11 +5,13 @@ namespace Revolution\Line\Messaging;
 use Illuminate\Support\Traits\Macroable;
 use LINE\LINEBot;
 use Revolution\Line\Contracts\BotFactory;
+use Revolution\Line\Messaging\Concerns\EventParser;
+use Revolution\Line\Messaging\Concerns\Replyable;
 
 class BotClient implements BotFactory
 {
-    use Concerns\EventParser;
-    use Concerns\Replyable;
+    use EventParser;
+    use Replyable;
     use Macroable {
         __call as macroCall;
     }
