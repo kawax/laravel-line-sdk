@@ -63,7 +63,7 @@ class BotClient implements BotFactory
     public function __call($method, $parameters)
     {
         if (method_exists($this->bot(), $method)) {
-            return call_user_func_array([$this->bot(), $method], $parameters);
+            return $this->bot()->{$method}(...array_values($parameters));
         }
 
         return $this->macroCall($method, $parameters);
