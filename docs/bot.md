@@ -199,7 +199,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
-use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 
 class LineWebhook implements WebhookHandler
