@@ -2,6 +2,8 @@
 
 namespace Revolution\Line\Contracts;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use LINE\LINEBot;
 use Revolution\Line\Messaging\ReplyMessage;
 
