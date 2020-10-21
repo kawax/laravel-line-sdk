@@ -201,8 +201,6 @@ use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
-use LINE\LINEBot\Exception\InvalidEventRequestException;
-use LINE\LINEBot\Exception\InvalidSignatureException;
 
 class LineWebhook implements WebhookHandler
 {
