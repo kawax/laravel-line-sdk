@@ -9,11 +9,11 @@ use Revolution\Line\Contracts\WebhookHandler;
 class WebhookController
 {
     /**
-     * @param  Request  $request
      * @param  WebhookHandler  $handler
+     * @param  Request  $request
      * @return Response
      */
-    public function __invoke(Request $request, WebhookHandler $handler)
+    public function __invoke(WebhookHandler $handler, Request $request)
     {
         return $handler($request);
     }
