@@ -33,7 +33,7 @@ class WebhookTest extends TestCase
         $bot->shouldReceive('parseEventRequest')
             ->once()
             ->andReturn([
-                new TextMessage([
+                $message = new TextMessage([
                     'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
                     'type' => 'message',
                     'mode' => 'active',
@@ -45,7 +45,7 @@ class WebhookTest extends TestCase
                     'message' => [
                         'id' => '',
                         'type' => '',
-                        'text' => '',
+                        'text' => 'test',
                     ],
                 ]),
             ]);
@@ -55,9 +55,12 @@ class WebhookTest extends TestCase
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
 
-        Event::assertDispatched(TextMessage::class);
+        Event::assertDispatched(TextMessage::class, function (TextMessage $event) use ($message) {
+            return $event->getText() === $message->getText();
+        });
 
-        $response->assertSuccessful();
+        $response->assertSuccessful()
+            ->assertSee(class_basename(WebhookEventDispatcher::class));
     }
 
     public function testEmptySignature()
