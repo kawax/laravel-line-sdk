@@ -10,10 +10,11 @@ class WebhookController
 {
     /**
      * @param  Request  $request
+     * @param  WebhookHandler  $handler
      * @return Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, WebhookHandler $handler)
     {
-        return app(WebhookHandler::class)($request);
+        return $handler($request);
     }
 }

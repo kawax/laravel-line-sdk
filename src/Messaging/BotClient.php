@@ -2,6 +2,7 @@
 
 namespace Revolution\Line\Messaging;
 
+use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
 use LINE\LINEBot;
 use Revolution\Line\Contracts\BotFactory;
@@ -46,7 +47,7 @@ class BotClient implements BotFactory
      */
     public function botUsing($bot)
     {
-        $this->bot = is_callable($bot) ? call_user_func($bot) : $bot;
+        $this->bot = is_callable($bot) ? $bot() : $bot;
 
         return $this;
     }
@@ -58,7 +59,7 @@ class BotClient implements BotFactory
      * @param  array  $parameters
      *
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function __call($method, $parameters)
     {
