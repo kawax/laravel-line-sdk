@@ -30,6 +30,14 @@ composer require revolution/laravel-line-sdk
 ## Configuration
 
 ### .env
+Set up in LINE Developers console.
+https://developers.line.biz/
+
+Create two channels `Messaging API` and `LINE Login`.
+
+- Messaging API : Get `Channel access token (long-lived)` and `Channel secret`. Set `Webhook URL`
+- LINE Login : Get `Channel ID` and `Channel secret`. Set `Callback URL`
+
 ```
 LINE_BOT_CHANNEL_TOKEN=
 LINE_BOT_CHANNEL_SECRET=
