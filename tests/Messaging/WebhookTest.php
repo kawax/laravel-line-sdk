@@ -141,15 +141,16 @@ class WebhookTest extends TestCase
         $this->app->instance(LINEBot::class, $bot);
 
         $context = [
-            'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
-            'type' => 'message',
-            'mode' => 'active',
-            'timestamp' => 1462629479859,
-            'message.type' => 'text',
-            'message.text' => 'test',
+            'replyToken' => $message->getReplyToken(),
+            'type' => $message->getType(),
+            'mode' => $message->getMode(),
+            'timestamp' => $message->getTimestamp(),
+            'message.type' => $message->getMessageType(),
+            'message.text' => $message->getText(),
         ];
 
-        Log::shouldReceive('info')->once()
+        Log::shouldReceive('info')
+            ->once()
             ->with(class_basename(TextMessage::class), $context);
 
         $response = $this->withoutMiddleware()
