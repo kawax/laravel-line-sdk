@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
-use Mockery;
+use Mockery as m;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
@@ -16,11 +16,30 @@ use Tests\TestCase;
 
 class WebhookTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
+    /**
+     * @var TextMessage
+     */
+    protected $message;
 
-        Mockery::close();
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->message = new TextMessage([
+            'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
+            'type' => 'message',
+            'mode' => 'active',
+            'timestamp' => 1462629479859,
+            'source' => [
+                'type' => 'user',
+                'userId' => 'U4af4980629...',
+            ],
+            'message' => [
+                'id' => '1',
+                'type' => 'text',
+                'text' => 'test',
+            ],
+        ]);
     }
 
     public function testWebhookHandler()
@@ -32,34 +51,18 @@ class WebhookTest extends TestCase
     {
         Event::fake();
 
-        $bot = Mockery::mock(LINEBot::class);
+        $bot = m::mock(LINEBot::class);
         $bot->shouldReceive('parseEventRequest')
             ->once()
-            ->andReturn([
-                $message = new TextMessage([
-                    'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
-                    'type' => 'message',
-                    'mode' => 'active',
-                    'timestamp' => 1462629479859,
-                    'source' => [
-                        'type' => 'user',
-                        'userId' => 'U4af4980629...',
-                    ],
-                    'message' => [
-                        'id' => '',
-                        'type' => '',
-                        'text' => 'test',
-                    ],
-                ]),
-            ]);
+            ->andReturn([$this->message]);
 
         $this->app->instance(LINEBot::class, $bot);
 
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
 
-        Event::assertDispatched(TextMessage::class, function (TextMessage $event) use ($message) {
-            return $event->getText() === $message->getText();
+        Event::assertDispatched(TextMessage::class, function (TextMessage $event) {
+            return $event->getText() === $this->message->getText();
         });
 
         $response->assertSuccessful()
@@ -117,36 +120,20 @@ class WebhookTest extends TestCase
     {
         $this->app->singleton(WebhookHandler::class, WebhookLogHandler::class);
 
-        $bot = Mockery::mock(LINEBot::class);
+        $bot = m::mock(LINEBot::class);
         $bot->shouldReceive('parseEventRequest')
             ->once()
-            ->andReturn([
-                $message = new TextMessage([
-                    'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
-                    'type' => 'message',
-                    'mode' => 'active',
-                    'timestamp' => 1462629479859,
-                    'source' => [
-                        'type' => 'user',
-                        'userId' => 'U4af4980629...',
-                    ],
-                    'message' => [
-                        'id' => '1',
-                        'type' => 'text',
-                        'text' => 'test',
-                    ],
-                ]),
-            ]);
+            ->andReturn([$this->message]);
 
         $this->app->instance(LINEBot::class, $bot);
 
         $context = [
-            'replyToken' => $message->getReplyToken(),
-            'type' => $message->getType(),
-            'mode' => $message->getMode(),
-            'timestamp' => $message->getTimestamp(),
-            'message.type' => $message->getMessageType(),
-            'message.text' => $message->getText(),
+            'replyToken' => $this->message->getReplyToken(),
+            'type' => $this->message->getType(),
+            'mode' => $this->message->getMode(),
+            'timestamp' => $this->message->getTimestamp(),
+            'message.type' => $this->message->getMessageType(),
+            'message.text' => $this->message->getText(),
         ];
 
         Log::shouldReceive('info')
