@@ -3,12 +3,15 @@
 namespace Tests\Messaging;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use Mockery;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
+use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
+use Revolution\Line\Messaging\Http\Actions\WebhookNullHandler;
 use Tests\TestCase;
 
 class WebhookTest extends TestCase
@@ -25,7 +28,7 @@ class WebhookTest extends TestCase
         $this->assertInstanceOf(WebhookEventDispatcher::class, app(WebhookHandler::class));
     }
 
-    public function testWebhookEventDispatched()
+    public function testWebhookEventDispatcher()
     {
         Event::fake();
 
@@ -108,5 +111,66 @@ class WebhookTest extends TestCase
             ->assertJson([
                 'message' => 'Invalid event request',
             ]);
+    }
+
+    public function testWebhookLogHandler()
+    {
+        $this->app->singleton(WebhookHandler::class, WebhookLogHandler::class);
+
+        $bot = Mockery::mock(LINEBot::class);
+        $bot->shouldReceive('parseEventRequest')
+            ->once()
+            ->andReturn([
+                $message = new TextMessage([
+                    'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
+                    'type' => 'message',
+                    'mode' => 'active',
+                    'timestamp' => 1462629479859,
+                    'source' => [
+                        'type' => 'user',
+                        'userId' => 'U4af4980629...',
+                    ],
+                    'message' => [
+                        'id' => '1',
+                        'type' => 'text',
+                        'text' => 'test',
+                    ],
+                ]),
+            ]);
+
+        $this->app->instance(LINEBot::class, $bot);
+
+        $context = [
+            'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
+            'type' => 'message',
+            'mode' => 'active',
+            'timestamp' => 1462629479859,
+            'message.type' => 'text',
+            'message.text' => 'test',
+        ];
+
+        Log::shouldReceive('info')->once()
+            ->with(class_basename(TextMessage::class), $context);
+
+        $response = $this->withoutMiddleware()
+            ->post(config('line.bot.path'));
+
+        $response->assertSuccessful()
+            ->assertSee(class_basename(WebhookLogHandler::class));
+    }
+
+    public function testWebhookNullHandler()
+    {
+        $this->app->singleton(WebhookHandler::class, WebhookNullHandler::class);
+
+        Event::fake();
+
+        $response = $this->withoutMiddleware()
+            ->post(config('line.bot.path'));
+
+        Event::assertNotDispatched(TextMessage::class);
+
+        $response->assertSuccessful()
+            ->assertSee(class_basename(WebhookNullHandler::class));
     }
 }
