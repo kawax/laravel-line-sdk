@@ -29,6 +29,6 @@ jobs:
       - name: Install testbench
         run: composer require "orchestra/testbench=${{ matrix.testbench }}" --dev --no-update
       - name: Install Composer dependencies
-        run: composer install --no-progress --optimize-autoloader
+        run: composer update --no-progress --optimize-autoloader
       - name: Test with phpunit
         run: vendor/bin/phpunit
