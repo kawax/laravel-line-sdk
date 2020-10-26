@@ -20,11 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-testbench-${{ matrix.testbench }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
         with:
@@ -34,6 +29,6 @@ jobs:
       - name: Install testbench
         run: composer require "orchestra/testbench=${{ matrix.testbench }}" --dev --no-update
       - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --optimize-autoloader
       - name: Test with phpunit
         run: vendor/bin/phpunit
