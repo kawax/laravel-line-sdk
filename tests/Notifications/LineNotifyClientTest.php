@@ -10,13 +10,6 @@ use Tests\TestCase;
 
 class LineNotifyClientTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
-
     public function testLineNotifyClient()
     {
         $response = Mockery::mock(Response::class);

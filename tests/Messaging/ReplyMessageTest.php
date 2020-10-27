@@ -12,13 +12,6 @@ use Tests\TestCase;
 
 class ReplyMessageTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
-
     public function testReplyMessageInstance()
     {
         $this->assertInstanceOf(ReplyMessage::class, Bot::reply('token'));

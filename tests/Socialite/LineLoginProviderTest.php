@@ -14,13 +14,6 @@ use Tests\TestCase;
 
 class LineLoginProviderTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
     public function testInstance()
     {
         $provider = Socialite::driver('line-login');

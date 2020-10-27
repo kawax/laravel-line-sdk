@@ -14,13 +14,6 @@ use Tests\TestCase;
 
 class BotClientTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
-    }
-
     public function testBotInstance()
     {
         $this->assertInstanceOf(LINEBot::class, app(LINEBot::class));

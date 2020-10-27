@@ -12,13 +12,6 @@ use Tests\TestCase;
 
 class LineNotifyProviderTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
     public function testInstance()
     {
         $provider = Socialite::driver('line-notify');
