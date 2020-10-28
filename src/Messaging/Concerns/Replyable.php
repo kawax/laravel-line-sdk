@@ -14,9 +14,9 @@ trait Replyable
      */
     public function reply(string $token)
     {
-        return app(ReplyMessage::class, [
-            'bot' => $this->bot(),
-        ])->withToken($token);
+        return app(ReplyMessage::class)
+            ->withBot($this->bot())
+            ->withToken($token);
     }
 
     /**

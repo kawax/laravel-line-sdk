@@ -38,10 +38,13 @@ class ReplyMessage
 
     /**
      * @param  LINEBot  $bot
+     * @return $this
      */
-    public function __construct($bot)
+    public function withBot($bot)
     {
         $this->bot = $bot;
+
+        return $this;
     }
 
     /**
