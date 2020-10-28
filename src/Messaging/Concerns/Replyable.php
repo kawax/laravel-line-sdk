@@ -16,8 +16,7 @@ trait Replyable
     {
         return app(ReplyMessage::class, [
             'bot' => $this->bot(),
-            'token' => $token,
-        ]);
+        ])->withToken($token);
     }
 
     /**

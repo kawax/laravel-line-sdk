@@ -38,12 +38,21 @@ class ReplyMessage
 
     /**
      * @param  LINEBot  $bot
-     * @param  string  $token
      */
-    public function __construct($bot, string $token)
+    public function __construct($bot)
     {
         $this->bot = $bot;
+    }
+
+    /**
+     * @param  string  $token
+     * @return $this
+     */
+    public function withToken(string $token)
+    {
         $this->token = $token;
+
+        return $this;
     }
 
     /**
@@ -93,12 +102,12 @@ class ReplyMessage
 
     /**
      * @param  string|null  $name
-     * @param  string|null  $iconUrl
+     * @param  string|null  $icon
      * @return $this
      */
-    public function withSender(string $name = null, string $iconUrl = null)
+    public function withSender(string $name = null, string $icon = null)
     {
-        $this->sender = new SenderMessageBuilder($name, $iconUrl);
+        $this->sender = new SenderMessageBuilder($name, $icon);
 
         return $this;
     }
