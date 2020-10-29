@@ -81,6 +81,42 @@ use LINE;
 LINE::replyText();
 ```
 
+## Quick Start
+
+### Prepare
+- Create `Messaging API` channel in LINE Developers console.
+- Get `Channel access token (long-lived)`, `Channel secret` and QR code.
+- A web server that can receive webhooks from LINE. Not possible on a normal local server.
+
+### Create new Laravel project
+```
+composer create-project --prefer-dist laravel/laravel line-bot "8.*"
+cd ./line-bot
+composer require revolution/laravel-line-sdk
+```
+
+Edit `.env`
+
+```
+LINE_BOT_CHANNEL_TOKEN=
+LINE_BOT_CHANNEL_SECRET=
+```
+
+Publishing default Listeners
+```
+php artisan vendor:publish --tag=line-listeners-message
+```
+
+### Deploy to web server
+- Set `Webhook URL` in LINE Developers console. `https://example.com/line/webhook`
+- Verify Webhook URL.
+
+### Add bot as a friend.
+- Using QR code.
+
+### Send test message
+Bot returns same message.
+
 ## Documents
 - [Messaging API / Bot](./docs/bot.md)
 - [Socialite](./docs/socialite.md)
