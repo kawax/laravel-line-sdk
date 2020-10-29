@@ -102,6 +102,19 @@ LINE_BOT_CHANNEL_TOKEN=
 LINE_BOT_CHANNEL_SECRET=
 ```
 
+Add `shouldDiscoverEvents()` to `app/Providers/EventServiceProvider`
+```php
+/**
+ * Determine if events and listeners should be automatically discovered.
+ *
+ * @return bool
+ */
+public function shouldDiscoverEvents()
+{
+    return true;
+}
+```
+
 Publishing default Listeners
 ```
 php artisan vendor:publish --tag=line-listeners-message
