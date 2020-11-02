@@ -1,6 +1,6 @@
 sudo: false
 language: php
-dist: bionic
+dist: focal
 
 jobs:
   include:
