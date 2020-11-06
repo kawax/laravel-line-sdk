@@ -5,7 +5,6 @@ namespace Tests\Messaging;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use LINE\LINEBot;
-use Mockery;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Bot as BotAlias;
@@ -45,12 +44,11 @@ class BotClientTest extends TestCase
 
     public function testBotInfo()
     {
-        $bot = Mockery::mock(LINEBot::class);
-        $bot->shouldReceive('getBotInfo')
-            ->once()
-            ->andReturn([]);
-
-        $this->app->instance(LINEBot::class, $bot);
+        $this->mock(LINEBot::class, function ($mock) {
+            $mock->shouldReceive('getBotInfo')
+                ->once()
+                ->andReturn([]);
+        });
 
         $this->assertSame([], Bot::getBotInfo());
     }

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
-use Mockery as m;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
@@ -51,12 +50,11 @@ class WebhookTest extends TestCase
     {
         Event::fake();
 
-        $bot = m::mock(LINEBot::class);
-        $bot->shouldReceive('parseEventRequest')
-            ->once()
-            ->andReturn([$this->message]);
-
-        $this->app->instance(LINEBot::class, $bot);
+        $this->mock(LINEBot::class, function ($mock) {
+            $mock->shouldReceive('parseEventRequest')
+                ->once()
+                ->andReturn([$this->message]);
+        });
 
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
@@ -120,12 +118,11 @@ class WebhookTest extends TestCase
     {
         $this->app->singleton(WebhookHandler::class, WebhookLogHandler::class);
 
-        $bot = m::mock(LINEBot::class);
-        $bot->shouldReceive('parseEventRequest')
-            ->once()
-            ->andReturn([$this->message]);
-
-        $this->app->instance(LINEBot::class, $bot);
+        $this->mock(LINEBot::class, function ($mock) {
+            $mock->shouldReceive('parseEventRequest')
+                ->once()
+                ->andReturn([$this->message]);
+        });
 
         $context = [
             'replyToken' => $this->message->getReplyToken(),
