@@ -30,5 +30,10 @@ jobs:
         run: composer require "orchestra/testbench=${{ matrix.testbench }}" --dev --no-update
       - name: Install Composer dependencies
         run: composer update --no-progress --optimize-autoloader
-      - name: Test with phpunit
-        run: vendor/bin/phpunit
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.4
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: vendor/bin/phpunit
+          coverageLocations: build/logs/clover.xml:clover
