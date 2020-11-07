@@ -25,7 +25,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring
-          coverage: none
+          coverage: xdebug
       - name: Install testbench
         run: composer require "orchestra/testbench=${{ matrix.testbench }}" --dev --no-update
       - name: Install Composer dependencies
