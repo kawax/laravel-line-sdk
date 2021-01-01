@@ -2,7 +2,8 @@
 
 I'm not going to write all the changes.
 
-## [Unreleased]
+## v1.3.0 (2021-01-01)
+- Drop PHP7.2 support
 
 ## v1.2.0 (2020-10-21)
 - Add ValidateSignature middleware
