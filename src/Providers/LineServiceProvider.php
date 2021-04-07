@@ -47,7 +47,7 @@ class LineServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(LINEBot::class, function ($app) {
-            return new LINEBot($app->make(HTTPClient::class), [
+            return new LINEBot(app(HTTPClient::class), [
                 'channelSecret' => config('line.bot.channel_secret'),
             ]);
         });
@@ -63,7 +63,7 @@ class LineServiceProvider extends ServiceProvider
     protected function registerNotify()
     {
         $this->app->singleton(NotifyFactory::class, function ($app) {
-            return new LineNotifyClient($app->make(Client::class));
+            return new LineNotifyClient(app(Client::class));
         });
     }
 
