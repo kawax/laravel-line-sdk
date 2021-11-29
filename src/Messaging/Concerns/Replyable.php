@@ -9,7 +9,6 @@ trait Replyable
 {
     /**
      * @param  string  $token
-     *
      * @return ReplyMessage
      */
     public function reply(string $token)

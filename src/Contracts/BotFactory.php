@@ -16,14 +16,12 @@ interface BotFactory
 
     /**
      * @param  LINEBot|callable  $bot
-     *
      * @return $this
      */
     public function botUsing($bot);
 
     /**
      * @param  string  $token
-     *
      * @return ReplyMessage
      */
     public function reply(string $token);

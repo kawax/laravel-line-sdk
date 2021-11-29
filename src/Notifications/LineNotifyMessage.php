@@ -36,7 +36,6 @@ class LineNotifyMessage implements Arrayable
 
     /**
      * @param  string  $message
-     *
      * @return $this
      */
     public static function create(string $message)
@@ -46,7 +45,6 @@ class LineNotifyMessage implements Arrayable
 
     /**
      * @param  string  $message
-     *
      * @return $this
      */
     public function message(string $message)
@@ -59,7 +57,6 @@ class LineNotifyMessage implements Arrayable
     /**
      * @param  int  $stickerPackageId
      * @param  int  $stickerId
-     *
      * @return $this
      */
     public function withSticker(int $stickerPackageId, int $stickerId)
@@ -74,7 +71,6 @@ class LineNotifyMessage implements Arrayable
      * Set other options.
      *
      * @param  array  $options
-     *
      * @return $this
      */
     public function with(array $options)
