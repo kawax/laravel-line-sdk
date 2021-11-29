@@ -25,8 +25,8 @@ class LineNotifyChannel
     /**
      * @param  mixed  $notifiable
      * @param  Notification  $notification
-     *
      * @return void
+     *
      * @throws ClientExceptionInterface
      */
     public function send($notifiable, Notification $notification)
