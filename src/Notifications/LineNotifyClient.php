@@ -35,7 +35,6 @@ class LineNotifyClient implements NotifyFactory
 
     /**
      * @param  string  $token
-     *
      * @return $this
      */
     public function withToken(string $token)
@@ -48,6 +47,7 @@ class LineNotifyClient implements NotifyFactory
     /**
      * @param  array  $params
      * @return array
+     *
      * @throws GuzzleException
      */
     public function notify(array $params)
@@ -69,6 +69,7 @@ class LineNotifyClient implements NotifyFactory
 
     /**
      * @return array
+     *
      * @throws GuzzleException
      */
     public function status()
@@ -88,6 +89,7 @@ class LineNotifyClient implements NotifyFactory
 
     /**
      * @return array
+     *
      * @throws GuzzleException
      */
     public function revoke()

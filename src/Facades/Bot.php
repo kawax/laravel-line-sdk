@@ -13,7 +13,6 @@ use Revolution\Line\Messaging\ReplyMessage;
 /**
  * @method static ReplyMessage reply(string $token)
  * @method static Collection parseEvent(Request $request)
- *
  * @method static Response replyMessage($replyToken, MessageBuilder $messageBuilder)
  * @method static Response replyText($replyToken, $text, $extraTexts = null)
  * @method static Response pushMessage($to, MessageBuilder $messageBuilder, $notificationDisabled = false, $retryKey = null)

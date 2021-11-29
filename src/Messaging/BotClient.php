@@ -42,7 +42,6 @@ class BotClient implements BotFactory
 
     /**
      * @param  LINEBot|callable  $bot
-     *
      * @return $this
      */
     public function botUsing($bot)
@@ -57,8 +56,8 @@ class BotClient implements BotFactory
      *
      * @param  string  $method
      * @param  array  $parameters
-     *
      * @return mixed
+     *
      * @throws BadMethodCallException
      */
     public function __call($method, $parameters)
