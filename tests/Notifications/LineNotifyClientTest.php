@@ -4,6 +4,7 @@ namespace Tests\Notifications;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use Mockery as m;
 use Revolution\Line\Facades\LineNotify;
 use Tests\TestCase;
@@ -15,7 +16,7 @@ class LineNotifyClientTest extends TestCase
         $response = m::mock(Response::class);
         $response->shouldReceive('getBody')
             ->times(3)
-            ->andReturn('[]');
+            ->andReturn(Utils::streamFor('[]'));
 
         $client = m::mock(Client::class);
         $client->shouldReceive('send')
