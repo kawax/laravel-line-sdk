@@ -19,28 +19,28 @@ class ReplyMessage
     /**
      * @var LINEBot
      */
-    protected $bot;
+    protected LINEBot $bot;
 
     /**
      * @var string
      */
-    protected $token;
+    protected string $token;
 
     /**
-     * @var QuickReplyBuilder
+     * @var QuickReplyBuilder|null
      */
-    protected $quick;
+    protected ?QuickReplyBuilder $quick = null;
 
     /**
-     * @var SenderBuilder
+     * @var SenderBuilder|null
      */
-    protected $sender;
+    protected ?SenderBuilder $sender = null;
 
     /**
      * @param  LINEBot  $bot
      * @return $this
      */
-    public function withBot($bot)
+    public function withBot(LINEBot $bot): self
     {
         $this->bot = $bot;
 
@@ -51,7 +51,7 @@ class ReplyMessage
      * @param  string  $token
      * @return $this
      */
-    public function withToken(string $token)
+    public function withToken(string $token): self
     {
         $this->token = $token;
 
@@ -60,18 +60,18 @@ class ReplyMessage
 
     /**
      * @param  MessageBuilder  $messageBuilder
-     * @return Response
+     * @return Response|null
      */
-    public function message(MessageBuilder $messageBuilder)
+    public function message(MessageBuilder $messageBuilder): ?Response
     {
         return $this->bot->replyMessage($this->token, $messageBuilder);
     }
 
     /**
      * @param  mixed  ...$text
-     * @return Response
+     * @return Response|null
      */
-    public function text(...$text)
+    public function text(...$text): ?Response
     {
         $text = collect($text)
             ->push($this->quick, $this->sender)
@@ -83,11 +83,11 @@ class ReplyMessage
     }
 
     /**
-     * @param  string|int  $packageId
-     * @param  string|int  $stickerId
-     * @return Response
+     * @param  int|string  $packageId
+     * @param  int|string  $stickerId
+     * @return Response|null
      */
-    public function sticker($packageId, $stickerId)
+    public function sticker(int|string $packageId, int|string $stickerId): ?Response
     {
         return $this->message(new StickerMessageBuilder($packageId, $stickerId, $this->quick, $this->sender));
     }
@@ -96,7 +96,7 @@ class ReplyMessage
      * @param  QuickReplyBuilder  $quickReply
      * @return $this
      */
-    public function withQuickReply(QuickReplyBuilder $quickReply)
+    public function withQuickReply(QuickReplyBuilder $quickReply): self
     {
         $this->quick = $quickReply;
 
@@ -108,7 +108,7 @@ class ReplyMessage
      * @param  string|null  $icon
      * @return $this
      */
-    public function withSender(string $name = null, string $icon = null)
+    public function withSender(string $name = null, string $icon = null): self
     {
         $this->sender = new SenderMessageBuilder($name, $icon);
 

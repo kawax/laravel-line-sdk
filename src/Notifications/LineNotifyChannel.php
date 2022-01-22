@@ -10,16 +10,11 @@ use Revolution\Line\Contracts\NotifyFactory;
 class LineNotifyChannel
 {
     /**
-     * @var NotifyFactory
-     */
-    protected $notify;
-
-    /**
      * @param  NotifyFactory  $notify
      */
-    public function __construct(NotifyFactory $notify)
+    public function __construct(protected NotifyFactory $notify)
     {
-        $this->notify = $notify;
+        //
     }
 
     /**

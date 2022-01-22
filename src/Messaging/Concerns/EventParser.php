@@ -12,7 +12,7 @@ trait EventParser
      * @param  Request  $request
      * @return Collection
      */
-    public function parseEvent(Request $request)
+    public function parseEvent(Request $request): Collection
     {
         $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
 

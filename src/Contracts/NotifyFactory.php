@@ -10,7 +10,7 @@ interface NotifyFactory
      * @param  string  $token
      * @return $this
      */
-    public function withToken(string $token);
+    public function withToken(string $token): self;
 
     /**
      * @param  array  $params
@@ -18,19 +18,19 @@ interface NotifyFactory
      *
      * @throws GuzzleException
      */
-    public function notify(array $params);
+    public function notify(array $params): array;
 
     /**
      * @return array
      *
      * @throws GuzzleException
      */
-    public function status();
+    public function status(): array;
 
     /**
      * @return array
      *
      * @throws GuzzleException
      */
-    public function revoke();
+    public function revoke(): array;
 }

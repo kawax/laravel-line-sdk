@@ -16,28 +16,23 @@ class LineNotifyClient implements NotifyFactory
     protected const ENDPOINT = 'https://notify-api.line.me/api/';
 
     /**
-     * @var ClientInterface
-     */
-    protected $http;
-
-    /**
      * @var string
      */
-    protected $token;
+    protected string $token;
 
     /**
      * @param  ClientInterface  $http
      */
-    public function __construct(ClientInterface $http)
+    public function __construct(protected ClientInterface $http)
     {
-        $this->http = $http;
+        //
     }
 
     /**
      * @param  string  $token
      * @return $this
      */
-    public function withToken(string $token)
+    public function withToken(string $token): self
     {
         $this->token = $token;
 
@@ -50,7 +45,7 @@ class LineNotifyClient implements NotifyFactory
      *
      * @throws GuzzleException
      */
-    public function notify(array $params)
+    public function notify(array $params): array
     {
         $request = new Request(
             'POST',
@@ -72,7 +67,7 @@ class LineNotifyClient implements NotifyFactory
      *
      * @throws GuzzleException
      */
-    public function status()
+    public function status(): array
     {
         $request = new Request(
             'GET',
@@ -92,7 +87,7 @@ class LineNotifyClient implements NotifyFactory
      *
      * @throws GuzzleException
      */
-    public function revoke()
+    public function revoke(): array
     {
         $request = new Request(
             'POST',

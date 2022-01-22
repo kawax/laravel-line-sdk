@@ -10,16 +10,6 @@ jobs:
   test:
     name: tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [7.3, 7.4, 8.0, 8.1]
-        testbench: [^4.0, ^5.0, ^6.0]
-        exclude:
-          - php: 8.1
-            testbench: ^4.0
-          - php: 8.1
-            testbench: ^5.0
 
     steps:
       - name: Checkout
@@ -27,11 +17,9 @@ jobs:
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 8.1
           extensions: mbstring
           coverage: xdebug
-      - name: Install testbench
-        run: composer require "orchestra/testbench=${{ matrix.testbench }}" --dev --no-update
       - name: Install Composer dependencies
         run: composer update --no-progress --optimize-autoloader
       - name: Test & publish code coverage

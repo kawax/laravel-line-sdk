@@ -3,42 +3,25 @@
 namespace Revolution\Line\Notifications;
 
 use Illuminate\Contracts\Support\Arrayable;
+use JetBrains\PhpStorm\Pure;
 
 class LineNotifyMessage implements Arrayable
 {
-    /**
-     * @var string
-     */
-    protected $message;
-
-    /**
-     * @var int
-     */
-    protected $stickerPackageId;
-
-    /**
-     * @var int
-     */
-    protected $stickerId;
-
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * @param  string|null  $message
-     */
-    public function __construct(string $message = null)
-    {
-        $this->message = $message;
+    public function __construct(
+        protected ?string $message = null,
+        protected ?int $stickerPackageId = null,
+        protected ?int $stickerId = null,
+        protected array $options = []
+    ) {
+        //
     }
 
     /**
      * @param  string  $message
      * @return $this
      */
-    public static function create(string $message)
+    #[Pure]
+    public static function create(string $message): self
     {
         return new static($message);
     }
@@ -47,7 +30,7 @@ class LineNotifyMessage implements Arrayable
      * @param  string  $message
      * @return $this
      */
-    public function message(string $message)
+    public function message(string $message): self
     {
         $this->message = $message;
 
@@ -59,7 +42,7 @@ class LineNotifyMessage implements Arrayable
      * @param  int  $stickerId
      * @return $this
      */
-    public function withSticker(int $stickerPackageId, int $stickerId)
+    public function withSticker(int $stickerPackageId, int $stickerId): self
     {
         $this->stickerPackageId = $stickerPackageId;
         $this->stickerId = $stickerId;
@@ -73,7 +56,7 @@ class LineNotifyMessage implements Arrayable
      * @param  array  $options
      * @return $this
      */
-    public function with(array $options)
+    public function with(array $options): self
     {
         $this->options = $options;
 

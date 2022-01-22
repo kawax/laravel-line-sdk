@@ -12,23 +12,23 @@ interface BotFactory
     /**
      * @return LINEBot
      */
-    public function bot();
+    public function bot(): LINEBot;
 
     /**
-     * @param  LINEBot|callable  $bot
+     * @param  callable|LINEBot  $bot
      * @return $this
      */
-    public function botUsing($bot);
+    public function botUsing(callable|LINEBot $bot): self;
 
     /**
      * @param  string  $token
      * @return ReplyMessage
      */
-    public function reply(string $token);
+    public function reply(string $token): ReplyMessage;
 
     /**
      * @param  Request  $request
      * @return Collection
      */
-    public function parseEvent(Request $request);
+    public function parseEvent(Request $request): Collection;
 }

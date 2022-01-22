@@ -18,33 +18,28 @@ class BotClient implements BotFactory
     }
 
     /**
-     * @var LINEBot
-     */
-    protected $bot;
-
-    /**
      * BotClient constructor.
      *
      * @param  LINEBot  $bot
      */
-    public function __construct(LINEBot $bot)
+    public function __construct(protected LINEBot $bot)
     {
-        $this->bot = $bot;
+        //
     }
 
     /**
      * @return LINEBot
      */
-    public function bot()
+    public function bot(): LINEBot
     {
         return $this->bot;
     }
 
     /**
-     * @param  LINEBot|callable  $bot
+     * @param  callable|LINEBot  $bot
      * @return $this
      */
-    public function botUsing($bot)
+    public function botUsing(callable|LINEBot $bot): self
     {
         $this->bot = is_callable($bot) ? $bot() : $bot;
 

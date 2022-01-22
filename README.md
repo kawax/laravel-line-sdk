@@ -13,8 +13,8 @@
 - Including Socialite drivers(LINE Login, LINE Notify)
 
 ## Requirements
-- PHP >= 7.3
-- Laravel >= 6.0
+- PHP >= 8.0
+- Laravel >= 9.0
 
 ## Versioning
 - Basic : semver

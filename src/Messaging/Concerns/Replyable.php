@@ -11,7 +11,7 @@ trait Replyable
      * @param  string  $token
      * @return ReplyMessage
      */
-    public function reply(string $token)
+    public function reply(string $token): ReplyMessage
     {
         return app(ReplyMessage::class)
             ->withBot($this->bot())
@@ -21,5 +21,5 @@ trait Replyable
     /**
      * @return LINEBot
      */
-    abstract public function bot();
+    abstract public function bot(): LINEBot;
 }
