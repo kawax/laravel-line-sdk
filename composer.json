@@ -44,6 +44,5 @@
                 "Revolution\\Line\\Providers\\MacroServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
