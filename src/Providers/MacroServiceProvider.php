@@ -17,10 +17,6 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! class_exists(Factory::class)) {
-            return; // @codeCoverageIgnore
-        }
-
         Http::macro('line', function (string $endpoint = null): PendingRequest {
             return Http::withToken(config('line.bot.channel_token'))
                 ->baseUrl($endpoint ?? LINEBot::DEFAULT_ENDPOINT_BASE);

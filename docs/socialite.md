@@ -105,6 +105,20 @@ https://developers.line.biz/en/docs/line-login/integrate-line-login/#scopes
     }
 ```
 
+### Enable PKCE
+
+https://developers.line.biz/en/docs/line-login/integrate-pkce/
+
+```php
+    public function login()
+    {
+        return Socialite::driver('line-login')
+                        ->setScopes(['profile', 'openid', 'email'])
+                        ->enablePKCE()
+                        ->redirect();
+    }
+```
+
 ## Usage(LINE Notify)
 Almost the same as LINE Login, but the user only has a `token`.
 
