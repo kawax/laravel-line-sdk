@@ -2,7 +2,6 @@
 
 namespace Revolution\Line\Providers;
 
-use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
