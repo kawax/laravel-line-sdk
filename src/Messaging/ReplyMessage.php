@@ -75,7 +75,7 @@ class ReplyMessage
     {
         $text = collect($text)
             ->push($this->quick, $this->sender)
-            ->reject(fn($item) => blank($item))
+            ->reject(fn ($item) => blank($item))
             ->toArray();
 
         return $this->message(new TextMessageBuilder(...$text));
