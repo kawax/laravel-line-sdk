@@ -25,7 +25,7 @@ class LocationMessageListener
      * @param  LocationMessage  $event
      * @return void
      */
-    public function handle(LocationMessage $event)
+    public function handle(LocationMessage $event): void
     {
         //
     }

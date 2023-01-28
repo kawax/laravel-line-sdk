@@ -25,7 +25,7 @@ class UnfollowEventListener
      * @param  UnfollowEvent  $event
      * @return void
      */
-    public function handle(UnfollowEvent $event)
+    public function handle(UnfollowEvent $event): void
     {
         //
     }

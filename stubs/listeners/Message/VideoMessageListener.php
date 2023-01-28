@@ -25,7 +25,7 @@ class VideoMessageListener
      * @param  VideoMessage  $event
      * @return void
      */
-    public function handle(VideoMessage $event)
+    public function handle(VideoMessage $event): void
     {
         //
     }

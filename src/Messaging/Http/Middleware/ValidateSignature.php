@@ -19,7 +19,7 @@ class ValidateSignature
      *
      * @throws InvalidSignatureException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (! $request->hasHeader(HTTPHeader::LINE_SIGNATURE)) {
             abort(400, 'Request does not contain signature');

@@ -25,7 +25,7 @@ class ImageMessageListener
      * @param  ImageMessage  $event
      * @return void
      */
-    public function handle(ImageMessage $event)
+    public function handle(ImageMessage $event): void
     {
         //
     }

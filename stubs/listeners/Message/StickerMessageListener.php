@@ -26,7 +26,7 @@ class StickerMessageListener
      * @param  StickerMessage  $event
      * @return void
      */
-    public function handle(StickerMessage $event)
+    public function handle(StickerMessage $event): void
     {
         $packageId = $event->getPackageId();
         $stickerId = $event->getStickerId();

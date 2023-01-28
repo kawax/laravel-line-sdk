@@ -14,7 +14,7 @@ class MacroServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Http::macro('line', function (string $endpoint = null): PendingRequest {
             return Http::withToken(config('line.bot.channel_token'))

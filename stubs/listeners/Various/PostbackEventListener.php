@@ -25,7 +25,7 @@ class PostbackEventListener
      * @param  PostbackEvent  $event
      * @return void
      */
-    public function handle(PostbackEvent $event)
+    public function handle(PostbackEvent $event): void
     {
         //
     }

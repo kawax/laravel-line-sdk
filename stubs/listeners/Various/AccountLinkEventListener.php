@@ -25,7 +25,7 @@ class AccountLinkEventListener
      * @param  AccountLinkEvent  $event
      * @return void
      */
-    public function handle(AccountLinkEvent $event)
+    public function handle(AccountLinkEvent $event): void
     {
         //
     }

@@ -25,7 +25,7 @@ class AudioMessageListener
      * @param  AudioMessage  $event
      * @return void
      */
-    public function handle(AudioMessage $event)
+    public function handle(AudioMessage $event): void
     {
         //
     }

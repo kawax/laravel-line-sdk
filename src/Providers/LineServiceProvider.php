@@ -21,7 +21,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../../config/line.php',
@@ -40,7 +40,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerBot()
+    protected function registerBot(): void
     {
         $this->app->singleton(HTTPClient::class, function ($app) {
             return new CurlHTTPClient(config('line.bot.channel_token'));
@@ -60,7 +60,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerNotify()
+    protected function registerNotify(): void
     {
         $this->app->singleton(NotifyFactory::class, function ($app) {
             return new LineNotifyClient(app(Client::class));
@@ -72,7 +72,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerWebhookHandler()
+    protected function registerWebhookHandler(): void
     {
         $this->app->singleton(WebhookHandler::class, WebhookEventDispatcher::class);
     }
@@ -82,7 +82,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->configurePublishing();
     }
@@ -92,7 +92,7 @@ class LineServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configurePublishing()
+    protected function configurePublishing(): void
     {
         if (! $this->app->runningInConsole()) {
             return; // @codeCoverageIgnore

@@ -25,7 +25,7 @@ class MemberJoinEventListener
      * @param  MemberJoinEvent  $event
      * @return void
      */
-    public function handle(MemberJoinEvent $event)
+    public function handle(MemberJoinEvent $event): void
     {
         //
     }

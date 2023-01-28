@@ -25,7 +25,7 @@ class TextMessageListener
      * @param  TextMessage  $event
      * @return void
      */
-    public function handle(TextMessage $event)
+    public function handle(TextMessage $event): void
     {
         $response = Bot::replyText($event->getReplyToken(), $event->getText());
 

@@ -25,7 +25,7 @@ class LeaveEventListener
      * @param  LeaveEvent  $event
      * @return void
      */
-    public function handle(LeaveEvent $event)
+    public function handle(LeaveEvent $event): void
     {
         //
     }

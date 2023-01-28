@@ -14,7 +14,7 @@ class LineSocialiteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Socialite::extend('line-login', function () {
             return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));

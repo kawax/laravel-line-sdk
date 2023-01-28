@@ -25,7 +25,7 @@ class BeaconDetectionEventListener
      * @param  BeaconDetectionEvent  $event
      * @return void
      */
-    public function handle(BeaconDetectionEvent $event)
+    public function handle(BeaconDetectionEvent $event): void
     {
         //
     }

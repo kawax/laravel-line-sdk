@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Route::middleware(config('line.bot.middleware'))
             ->domain(config('line.bot.domain'))

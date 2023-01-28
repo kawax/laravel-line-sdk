@@ -2,6 +2,9 @@
 
 I'm not going to write all the changes.
 
+## v2.1.0 (2023-01-28)
+- Laravel 10 support
+
 ## v2.0.0 (2022-01-22)
 - Add Laravel9 support
 - Require PHP8.0+

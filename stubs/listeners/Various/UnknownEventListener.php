@@ -25,7 +25,7 @@ class UnknownEventListener
      * @param  UnknownEvent  $event
      * @return void
      */
-    public function handle(UnknownEvent $event)
+    public function handle(UnknownEvent $event): void
     {
         //
     }

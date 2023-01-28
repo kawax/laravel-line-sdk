@@ -25,7 +25,7 @@ class VideoPlayCompleteEventListener
      * @param  VideoPlayCompleteEvent  $event
      * @return void
      */
-    public function handle(VideoPlayCompleteEvent $event)
+    public function handle(VideoPlayCompleteEvent $event): void
     {
         //
     }

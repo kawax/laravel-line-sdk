@@ -25,7 +25,7 @@ class FollowEventListener
      * @param  FollowEvent  $event
      * @return void
      */
-    public function handle(FollowEvent $event)
+    public function handle(FollowEvent $event): void
     {
         //
     }

@@ -24,7 +24,7 @@ class LineNotifyChannel
      *
      * @throws ClientExceptionInterface
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, Notification $notification): void
     {
         /**
          * @var LineNotifyMessage $message
