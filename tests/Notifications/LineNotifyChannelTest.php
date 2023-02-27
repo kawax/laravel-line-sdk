@@ -6,6 +6,7 @@ use Illuminate\Notifications\AnonymousNotifiable;
 use Mockery;
 use Revolution\Line\Notifications\LineNotifyChannel;
 use Revolution\Line\Notifications\LineNotifyClient;
+use Revolution\Line\Notifications\LineNotifyMessage;
 use Tests\Notifications\Fixtures\LineNotifyStub;
 use Tests\Notifications\Fixtures\TestNotifiableStub;
 use Tests\TestCase;
@@ -40,7 +41,7 @@ class LineNotifyChannelTest extends TestCase
 
         $notification = Mockery::mock(LineNotifyStub::class);
         $notification->shouldReceive('toLineNotify')
-            ->andReturnNull();
+            ->andReturn(LineNotifyMessage::create(''));
 
         $channel->send(new TestNotifiableStub(), $notification);
     }

@@ -14,7 +14,7 @@ class LineNotifyStub extends Notification
     /**
      * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
      * Create a new notification instance.
@@ -22,7 +22,7 @@ class LineNotifyStub extends Notification
      * @param  string  $message
      * @return void
      */
-    public function __construct($message)
+    public function __construct(string $message)
     {
         $this->message = $message;
     }
@@ -33,7 +33,7 @@ class LineNotifyStub extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via(mixed $notifiable): array
     {
         return [
             LineNotifyChannel::class,
@@ -44,7 +44,7 @@ class LineNotifyStub extends Notification
      * @param  mixed  $notifiable
      * @return LineNotifyMessage
      */
-    public function toLineNotify($notifiable)
+    public function toLineNotify(mixed $notifiable): LineNotifyMessage
     {
         return LineNotifyMessage::create($this->message);
     }

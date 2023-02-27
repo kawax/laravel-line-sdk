@@ -17,29 +17,18 @@ class BotClient implements BotFactory
         __call as macroCall;
     }
 
-    /**
-     * BotClient constructor.
-     *
-     * @param  LINEBot  $bot
-     */
-    public function __construct(protected LINEBot $bot)
-    {
+    public function __construct(
+        protected LINEBot $bot
+    ) {
         //
     }
 
-    /**
-     * @return LINEBot
-     */
     public function bot(): LINEBot
     {
         return $this->bot;
     }
 
-    /**
-     * @param  callable|LINEBot  $bot
-     * @return $this
-     */
-    public function botUsing(callable|LINEBot $bot): self
+    public function botUsing(callable|LINEBot $bot): static
     {
         $this->bot = is_callable($bot) ? $bot() : $bot;
 

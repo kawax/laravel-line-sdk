@@ -79,7 +79,7 @@ class LineNotifyTest extends Notification
 use Revolution\Line\Notifications\LineNotifyMessage;
 
 return LineNotifyMessage::create('message')
-            ->withSticker(1, 1)
+            ->withSticker(package: 1, id: 1)
             ->with([
                 'imageThumbnail' => 'https://',
             ]);
@@ -87,7 +87,7 @@ return LineNotifyMessage::create('message')
 
 ```php
 return (new LineNotifyMessage())->message('message')
-            ->withSticker(1, 2)
+            ->withSticker(package: 1, id: 2)
             ->with([
                 'imageFullsize' => 'https://',
             ]);

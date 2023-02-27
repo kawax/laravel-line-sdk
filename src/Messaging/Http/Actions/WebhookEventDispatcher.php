@@ -9,15 +9,9 @@ use Revolution\Line\Facades\Bot;
 
 class WebhookEventDispatcher implements WebhookHandler
 {
-    /**
-     * @param  Request  $request
-     * @return Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
-        Bot::parseEvent($request)->each(function ($event) {
-            event($event);
-        });
+        Bot::parseEvent($request)->each(fn ($event) => event($event));
 
         return response(class_basename(static::class));
     }

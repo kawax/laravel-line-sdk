@@ -16,62 +16,34 @@ class ReplyMessage
 {
     use Macroable;
 
-    /**
-     * @var LINEBot
-     */
     protected LINEBot $bot;
 
-    /**
-     * @var string
-     */
     protected string $token;
 
-    /**
-     * @var QuickReplyBuilder|null
-     */
     protected ?QuickReplyBuilder $quick = null;
 
-    /**
-     * @var SenderBuilder|null
-     */
     protected ?SenderBuilder $sender = null;
 
-    /**
-     * @param  LINEBot  $bot
-     * @return $this
-     */
-    public function withBot(LINEBot $bot): self
+    public function withBot(LINEBot $bot): static
     {
         $this->bot = $bot;
 
         return $this;
     }
 
-    /**
-     * @param  string  $token
-     * @return $this
-     */
-    public function withToken(string $token): self
+    public function withToken(string $token): static
     {
         $this->token = $token;
 
         return $this;
     }
 
-    /**
-     * @param  MessageBuilder  $messageBuilder
-     * @return Response|null
-     */
     public function message(MessageBuilder $messageBuilder): ?Response
     {
         return $this->bot->replyMessage($this->token, $messageBuilder);
     }
 
-    /**
-     * @param  mixed  ...$text
-     * @return Response|null
-     */
-    public function text(...$text): ?Response
+    public function text(mixed ...$text): ?Response
     {
         $text = collect($text)
             ->push($this->quick, $this->sender)
@@ -81,33 +53,19 @@ class ReplyMessage
         return $this->message(new TextMessageBuilder(...$text));
     }
 
-    /**
-     * @param  int|string  $packageId
-     * @param  int|string  $stickerId
-     * @return Response|null
-     */
-    public function sticker(int|string $packageId, int|string $stickerId): ?Response
+    public function sticker(int|string $package, int|string $id): ?Response
     {
-        return $this->message(new StickerMessageBuilder($packageId, $stickerId, $this->quick, $this->sender));
+        return $this->message(new StickerMessageBuilder($package, $id, $this->quick, $this->sender));
     }
 
-    /**
-     * @param  QuickReplyBuilder  $quickReply
-     * @return $this
-     */
-    public function withQuickReply(QuickReplyBuilder $quickReply): self
+    public function withQuickReply(QuickReplyBuilder $quickReply): static
     {
         $this->quick = $quickReply;
 
         return $this;
     }
 
-    /**
-     * @param  string|null  $name
-     * @param  string|null  $icon
-     * @return $this
-     */
-    public function withSender(string $name = null, string $icon = null): self
+    public function withSender(string $name = null, string $icon = null): static
     {
         $this->sender = new SenderMessageBuilder($name, $icon);
 

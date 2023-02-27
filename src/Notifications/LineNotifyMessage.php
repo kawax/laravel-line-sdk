@@ -16,20 +16,11 @@ class LineNotifyMessage implements Arrayable
         //
     }
 
-    /**
-     * @param  string  $message
-     * @return $this
-     */
-    #[Pure]
     public static function create(string $message): self
     {
         return new static($message);
     }
 
-    /**
-     * @param  string  $message
-     * @return $this
-     */
     public function message(string $message): self
     {
         $this->message = $message;
@@ -37,35 +28,24 @@ class LineNotifyMessage implements Arrayable
         return $this;
     }
 
-    /**
-     * @param  int  $stickerPackageId
-     * @param  int  $stickerId
-     * @return $this
-     */
-    public function withSticker(int $stickerPackageId, int $stickerId): self
+    public function withSticker(int $package, int $id): static
     {
-        $this->stickerPackageId = $stickerPackageId;
-        $this->stickerId = $stickerId;
+        $this->stickerPackageId = $package;
+        $this->stickerId = $id;
 
         return $this;
     }
 
     /**
      * Set other options.
-     *
-     * @param  array  $options
-     * @return $this
      */
-    public function with(array $options): self
+    public function with(array $options): static
     {
         $this->options = $options;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return array_merge(

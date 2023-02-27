@@ -13,10 +13,6 @@ class ValidateSignature
     /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
-     * @return mixed
-     *
      * @throws InvalidSignatureException
      */
     public function handle(Request $request, Closure $next): mixed
@@ -37,9 +33,6 @@ class ValidateSignature
     }
 
     /**
-     * @param  Request  $request
-     * @return bool
-     *
      * @throws InvalidSignatureException
      */
     protected function validateSignature(Request $request): bool

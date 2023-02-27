@@ -5,6 +5,7 @@ namespace Tests\Notifications;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use Illuminate\Support\Facades\Http;
 use Mockery as m;
 use Revolution\Line\Facades\LineNotify;
 use Tests\TestCase;
@@ -13,20 +14,12 @@ class LineNotifyClientTest extends TestCase
 {
     public function testLineNotifyClient()
     {
-        $response = m::mock(Response::class);
-        $response->shouldReceive('getBody')
-            ->times(3)
-            ->andReturn(Utils::streamFor('[]'));
-
-        $client = m::mock(Client::class);
-        $client->shouldReceive('send')
-            ->times(3)
-            ->andReturn($response);
-
-        $this->instance(Client::class, $client);
+        Http::fake(fn () => Http::response([]));
 
         $this->assertSame([], LineNotify::withToken('test')->notify([]));
         $this->assertSame([], LineNotify::withToken('test')->status());
         $this->assertSame([], LineNotify::withToken('test')->revoke());
+
+        Http::assertSentCount(3);
     }
 }

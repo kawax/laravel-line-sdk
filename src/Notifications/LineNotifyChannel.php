@@ -2,29 +2,25 @@
 
 namespace Revolution\Line\Notifications;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Notifications\Notification;
 use Psr\Http\Client\ClientExceptionInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyChannel
 {
-    /**
-     * @param  NotifyFactory  $notify
-     */
-    public function __construct(protected NotifyFactory $notify)
-    {
+    public function __construct(
+        protected NotifyFactory $notify
+    ) {
         //
     }
 
     /**
-     * @param  mixed  $notifiable
-     * @param  Notification  $notification
-     * @return void
-     *
-     * @throws ClientExceptionInterface
+     * @throws RequestException
      */
-    public function send($notifiable, Notification $notification): void
+    public function send(mixed $notifiable, Notification $notification): void
     {
         /**
          * @var LineNotifyMessage $message

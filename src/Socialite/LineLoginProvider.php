@@ -36,7 +36,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         return $this->buildAuthUrlFromBase('https://access.line.me/oauth2/v2.1/authorize', $state);
     }
@@ -44,7 +44,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return LINEBot::DEFAULT_ENDPOINT_BASE.'/oauth2/v2.1/token';
     }
@@ -89,7 +89,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
         return (new User())->setRaw($user)->map(
             [

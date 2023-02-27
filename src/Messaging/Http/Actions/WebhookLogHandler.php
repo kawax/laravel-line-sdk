@@ -10,11 +10,7 @@ use Revolution\Line\Facades\Bot;
 
 class WebhookLogHandler implements WebhookHandler
 {
-    /**
-     * @param  Request  $request
-     * @return Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         Bot::parseEvent($request)->each(function ($event) {
             /**

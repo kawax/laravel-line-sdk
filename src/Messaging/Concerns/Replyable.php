@@ -7,10 +7,6 @@ use Revolution\Line\Messaging\ReplyMessage;
 
 trait Replyable
 {
-    /**
-     * @param  string  $token
-     * @return ReplyMessage
-     */
     public function reply(string $token): ReplyMessage
     {
         return app(ReplyMessage::class)
@@ -18,8 +14,5 @@ trait Replyable
             ->withToken($token);
     }
 
-    /**
-     * @return LINEBot
-     */
     abstract public function bot(): LINEBot;
 }

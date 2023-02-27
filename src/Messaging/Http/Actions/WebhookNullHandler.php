@@ -8,11 +8,7 @@ use Revolution\Line\Contracts\WebhookHandler;
 
 class WebhookNullHandler implements WebhookHandler
 {
-    /**
-     * @param  Request  $request
-     * @return Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         // null
 

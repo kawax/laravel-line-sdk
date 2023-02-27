@@ -7,9 +7,5 @@ use Illuminate\Http\Response;
 
 interface WebhookHandler
 {
-    /**
-     * @param  Request  $request
-     * @return Response
-     */
-    public function __invoke(Request $request);
+    public function __invoke(Request $request): mixed;
 }

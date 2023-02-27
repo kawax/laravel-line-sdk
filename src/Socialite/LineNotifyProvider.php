@@ -11,7 +11,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @var string
      */
-    protected $endpoint = 'https://notify-bot.line.me';
+    protected string $endpoint = 'https://notify-bot.line.me';
 
     /**
      * The scopes being requested.
@@ -32,7 +32,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function getAuthUrl($state)
+    protected function getAuthUrl($state): string
     {
         return $this->buildAuthUrlFromBase($this->endpoint.'/oauth/authorize', $state);
     }
@@ -40,7 +40,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function getTokenUrl()
+    protected function getTokenUrl(): string
     {
         return $this->endpoint.'/oauth/token';
     }
@@ -68,7 +68,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function getUserByToken($token)
+    protected function getUserByToken($token): array
     {
         return [
             'token' => $token,
@@ -78,7 +78,7 @@ class LineNotifyProvider extends AbstractProvider implements ProviderInterface
     /**
      * @inheritdoc
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user): User
     {
         return (new User())->setRaw($user);
     }

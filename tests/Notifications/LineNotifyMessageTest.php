@@ -11,7 +11,7 @@ class LineNotifyMessageTest extends TestCase
     {
         $message = LineNotifyMessage::create('message')
             ->message('message')
-            ->withSticker(1, 2)
+            ->withSticker(package: 1, id: 2)
             ->with([
                 'imageThumbnail' => 'https://',
             ]);

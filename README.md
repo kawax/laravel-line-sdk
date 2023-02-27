@@ -4,7 +4,6 @@
 ![tests](https://github.com/kawax/laravel-line-sdk/workflows/tests/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/maintainability)](https://codeclimate.com/github/kawax/laravel-line-sdk/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/test_coverage)](https://codeclimate.com/github/kawax/laravel-line-sdk/test_coverage)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cdeca7c2d37b4def9cce5f73b66e04da)](https://app.codacy.com/gh/kawax/laravel-line-sdk?utm_source=github.com&utm_medium=referral&utm_content=kawax/laravel-line-sdk&utm_campaign=Badge_Grade)
 
 ## Features
 - Working with Laravel Event System. Including Webhook routing and controller.
@@ -90,7 +89,9 @@ LINE::replyText();
 
 ### Create new Laravel project
 ```
-composer create-project --prefer-dist laravel/laravel line-bot "8.*"
+# Docker
+curl -s "https://laravel.build/line-bot" | bash
+
 cd ./line-bot
 composer require revolution/laravel-line-sdk
 ```

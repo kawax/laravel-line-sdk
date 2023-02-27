@@ -8,12 +8,7 @@ use Revolution\Line\Contracts\WebhookHandler;
 
 class WebhookController
 {
-    /**
-     * @param  WebhookHandler  $handler
-     * @param  Request  $request
-     * @return Response
-     */
-    public function __invoke(WebhookHandler $handler, Request $request)
+    public function __invoke(WebhookHandler $handler, Request $request): mixed
     {
         return $handler($request);
     }

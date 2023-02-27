@@ -15,10 +15,7 @@ use Tests\TestCase;
 
 class WebhookTest extends TestCase
 {
-    /**
-     * @var TextMessage
-     */
-    protected $message;
+    protected TextMessage $message;
 
     protected function setUp(): void
     {

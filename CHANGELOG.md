@@ -2,6 +2,10 @@
 
 I'm not going to write all the changes.
 
+## v2.2.0 (2023-02-27)
+- Code maintenance
+- Change some argument name and return type.
+
 ## v2.1.0 (2023-01-28)
 - Laravel 10 support
 

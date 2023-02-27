@@ -21,7 +21,7 @@ use Revolution\Line\Facades\Bot;
 
 Bot::reply($token)->text('text');
 Bot::reply($token)->withSender('alt-name')->text('text1', 'text2');
-Bot::reply($token)->sticker(1, 1);
+Bot::reply($token)->sticker(package: 1, id: 1);
 ```
 
 ## Webhook
@@ -196,7 +196,6 @@ Make your `app/Actions/LineWebhook.php`
 namespace App\Actions;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
@@ -205,9 +204,9 @@ class LineWebhook implements WebhookHandler
 {
     /**
      * @param  Request  $request
-     * @return Response
+     * @return mixed
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): mixed
     {
         Bot::parseEvent($request)->each(function ($event) {
             //event($event);

@@ -62,9 +62,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerNotify(): void
     {
-        $this->app->singleton(NotifyFactory::class, function ($app) {
-            return new LineNotifyClient(app(Client::class));
-        });
+        $this->app->singleton(NotifyFactory::class, LineNotifyClient::class);
     }
 
     /**

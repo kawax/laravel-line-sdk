@@ -2,35 +2,24 @@
 
 namespace Revolution\Line\Contracts;
 
-use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Client\RequestException;
 
 interface NotifyFactory
 {
-    /**
-     * @param  string  $token
-     * @return $this
-     */
     public function withToken(string $token): self;
 
     /**
-     * @param  array  $params
-     * @return array
-     *
-     * @throws GuzzleException
+     * @throws RequestException
      */
     public function notify(array $params): array;
 
     /**
-     * @return array
-     *
-     * @throws GuzzleException
+     * @throws RequestException
      */
     public function status(): array;
 
     /**
-     * @return array
-     *
-     * @throws GuzzleException
+     * @throws RequestException
      */
     public function revoke(): array;
 }
