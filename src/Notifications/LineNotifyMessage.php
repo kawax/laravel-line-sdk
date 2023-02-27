@@ -3,7 +3,6 @@
 namespace Revolution\Line\Notifications;
 
 use Illuminate\Contracts\Support\Arrayable;
-use JetBrains\PhpStorm\Pure;
 
 class LineNotifyMessage implements Arrayable
 {

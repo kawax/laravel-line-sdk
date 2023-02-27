@@ -2,10 +2,6 @@
 
 namespace Revolution\Line\Notifications;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Utils;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Traits\Macroable;

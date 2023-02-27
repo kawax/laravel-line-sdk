@@ -2,11 +2,9 @@
 
 namespace Revolution\Line\Notifications;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Notifications\Notification;
-use Psr\Http\Client\ClientExceptionInterface;
 use Revolution\Line\Contracts\NotifyFactory;
 
 class LineNotifyChannel
