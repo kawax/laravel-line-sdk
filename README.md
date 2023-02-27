@@ -26,6 +26,13 @@
 composer require revolution/laravel-line-sdk
 ```
 
+### Uninstall
+```shell
+composer remove revolution/laravel-line-sdk
+```
+
+- Delete related files. See below.
+
 ## Configuration
 
 ### .env
