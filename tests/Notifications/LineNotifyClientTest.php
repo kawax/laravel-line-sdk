@@ -2,11 +2,7 @@
 
 namespace Tests\Notifications;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Http;
-use Mockery as m;
 use Revolution\Line\Facades\LineNotify;
 use Tests\TestCase;
 

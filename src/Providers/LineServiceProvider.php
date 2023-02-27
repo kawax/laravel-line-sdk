@@ -2,7 +2,6 @@
 
 namespace Revolution\Line\Providers;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 use LINE\LINEBot;
 use LINE\LINEBot\HTTPClient;

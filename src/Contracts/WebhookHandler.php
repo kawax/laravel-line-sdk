@@ -3,7 +3,6 @@
 namespace Revolution\Line\Contracts;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 interface WebhookHandler
 {
