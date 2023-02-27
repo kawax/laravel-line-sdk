@@ -24,14 +24,14 @@ class ReplyMessage
 
     protected ?SenderBuilder $sender = null;
 
-    public function withBot(LINEBot $bot): static
+    public function withBot(LINEBot $bot): self
     {
         $this->bot = $bot;
 
         return $this;
     }
 
-    public function withToken(string $token): static
+    public function withToken(string $token): self
     {
         $this->token = $token;
 
@@ -58,14 +58,14 @@ class ReplyMessage
         return $this->message(new StickerMessageBuilder($package, $id, $this->quick, $this->sender));
     }
 
-    public function withQuickReply(QuickReplyBuilder $quickReply): static
+    public function withQuickReply(QuickReplyBuilder $quickReply): self
     {
         $this->quick = $quickReply;
 
         return $this;
     }
 
-    public function withSender(string $name = null, string $icon = null): static
+    public function withSender(string $name = null, string $icon = null): self
     {
         $this->sender = new SenderMessageBuilder($name, $icon);
 

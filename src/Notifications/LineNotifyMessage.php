@@ -27,7 +27,7 @@ class LineNotifyMessage implements Arrayable
         return $this;
     }
 
-    public function withSticker(int $package, int $id): static
+    public function withSticker(int $package, int $id): self
     {
         $this->stickerPackageId = $package;
         $this->stickerId = $id;
@@ -38,7 +38,7 @@ class LineNotifyMessage implements Arrayable
     /**
      * Set other options.
      */
-    public function with(array $options): static
+    public function with(array $options): self
     {
         $this->options = $options;
 

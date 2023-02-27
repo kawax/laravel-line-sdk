@@ -44,7 +44,7 @@ class BotClient implements BotFactory
      *
      * @throws BadMethodCallException
      */
-    public function __call($method, $parameters)
+    public function __call($method, array $parameters)
     {
         if (method_exists($this->bot(), $method)) {
             return $this->bot()->{$method}(...array_values($parameters));
