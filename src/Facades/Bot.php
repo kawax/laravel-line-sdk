@@ -5,7 +5,6 @@ namespace Revolution\Line\Facades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use LINE\LINEBot\MessageBuilder;
 use LINE\LINEBot\Response;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Messaging\ReplyMessage;
