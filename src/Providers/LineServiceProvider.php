@@ -42,6 +42,7 @@ class LineServiceProvider extends ServiceProvider
     {
         $this->app->singleton(MessagingApiApi::class, function ($app) {
             $config = (new Configuration())->setAccessToken(config('line.bot.channel_token'));
+
             return new MessagingApiApi(config: $config);
         });
 

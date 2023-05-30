@@ -5,9 +5,9 @@ namespace Revolution\Line\Messaging\Concerns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use LINE\Constants\HTTPHeader;
+use LINE\Parser\EventRequestParser;
 use LINE\Parser\Exception\InvalidEventRequestException;
 use LINE\Parser\Exception\InvalidSignatureException;
-use LINE\Parser\EventRequestParser;
 
 trait EventParser
 {

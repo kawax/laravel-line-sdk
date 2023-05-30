@@ -6,11 +6,11 @@ use Illuminate\Support\Traits\Macroable;
 use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use LINE\Clients\MessagingApi\ApiException;
 use LINE\Clients\MessagingApi\Model\Message;
+use LINE\Clients\MessagingApi\Model\QuickReply;
 use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
+use LINE\Clients\MessagingApi\Model\Sender;
 use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
-use LINE\Clients\MessagingApi\Model\QuickReply;
-use LINE\Clients\MessagingApi\Model\Sender;
 use LINE\Constants\MessageType;
 
 class ReplyMessage
@@ -67,6 +67,7 @@ class ReplyMessage
                 if (filled($this->sender)) {
                     $text->setSender($this->sender);
                 }
+
                 return $text;
             })
             ->toArray();
