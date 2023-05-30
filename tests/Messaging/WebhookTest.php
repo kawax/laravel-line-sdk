@@ -4,12 +4,9 @@ namespace Tests\Messaging;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use LINE\Constants\HTTPHeader;
 use LINE\Parser\EventRequestParser;
-use LINE\Parser\ParsedEvents;
 use LINE\Webhook\Model\MessageEvent;
-use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
