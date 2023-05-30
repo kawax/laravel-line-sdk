@@ -3,13 +3,12 @@
 https://developers.line.biz/en/docs/messaging-api/
 
 ## Bot
-`Revolution\Line\Facades\Bot` can use all methods of the `LINEBot` class.
+`Revolution\Line\Facades\Bot` can use all methods of the `LINE\Clients\MessagingApi\Api\MessagingApiApi` class.
 
 Delegate to LINEBot.
 ```php
 use Revolution\Line\Facades\Bot;
 
-Bot::replyText();
 Bot::replyMessage();
 Bot::pushMessage();
 ```
@@ -21,7 +20,7 @@ use Revolution\Line\Facades\Bot;
 
 Bot::reply($token)->text('text');
 Bot::reply($token)->withSender('alt-name')->text('text1', 'text2');
-Bot::reply($token)->sticker(package: 1, id: 1);
+Bot::reply($token)->sticker(package: 1, sticker: 1);
 ```
 
 ## Webhook
@@ -57,40 +56,28 @@ No need to change $listen.
 Note: In production, you should run `php artisan event:cache` command.
 
 ### Publishing default Listeners
-Publish to `app/Listeners`.
-
-All listeners.
+Publish to `app/Listeners/Line/`.
 ```
-php artisan vendor:publish --tag=line-listeners-all
-```
-Message event listeners only.
-```
-php artisan vendor:publish --tag=line-listeners-message
+php artisan vendor:publish --tag=line-listeners
 ```
 
-For example, `LINE\LINEBot\Event\MessageEvent\TextMessage` event is handled by `TextMessageListener`.
-
-### Listener@handle() must have type hint
-You can also make a new listener.
-
-```
-php artisan make:listener TextListener
-```
-
-Be sure to add a type hint that matches the event type.
+`LINE\Webhook\Model\MessageEvent` event is handled by `MessageListener`.
 
 ```php
-<?php
-
-namespace App\Listeners;
+namespace App\Listeners\Line;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\Clients\MessagingApi\ApiException;
+use LINE\Webhook\Model\MessageEvent;
+use LINE\Webhook\Model\StickerMessageContent;
+use LINE\Webhook\Model\TextMessageContent;
 use Revolution\Line\Facades\Bot;
 
-class TextListener
+class MessageListener
 {
+    protected string $token;
+
     /**
      * Create the event listener.
      *
@@ -104,24 +91,39 @@ class TextListener
     /**
      * Handle the event.
      *
-     * @param  TextMessage  $event
+     * @param  MessageEvent  $event
      * @return void
+     * @throws ApiException
      */
-    public function handle(TextMessage $event)
+    public function handle(MessageEvent $event): void
     {
-        Bot::reply($event->getReplyToken())->text($event->getText());
+        $message = $event->getMessage();
+        $this->token = $event->getReplyToken();
+
+        match (get_class($message)) {
+            TextMessageContent::class => $this->text($message),
+            StickerMessageContent::class => $this->sticker($message),
+        };
     }
-}
-```
 
-### Easy to use Queue
+    /**
+     * @throws ApiException
+     */
+    protected function text(TextMessageContent $message): void
+    {
+        Bot::reply($this->token)->text($message->getText());
+    }
 
-```php
-use Illuminate\Contracts\Queue\ShouldQueue;
-
-class TextMessageListener implements ShouldQueue
-{
-    //
+    /**
+     * @throws ApiException
+     */
+    protected function sticker(StickerMessageContent $message): void
+    {
+        Bot::reply($this->token)->sticker(
+            $message->getPackageId(),
+            $message->getStickerId()
+        );
+    }
 }
 ```
 
@@ -146,8 +148,8 @@ Use it anywhere.
 $foo = Bot::foo();
 ```
 
-### Replacing `LINEBot` instance
-`Bot::bot()` returns LINEBot instance. You can swap instances with `Bot::botUsing()`
+### Replacing `MessagingApiApi` instance
+`Bot::bot()` returns MessagingApiApi instance. You can swap instances with `Bot::botUsing()`
 
 ```php
 $bot = new MyBot();
@@ -198,7 +200,7 @@ namespace App\Actions;
 use Illuminate\Http\Request;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
-use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\Webhook\Model\MessageEvent;
 
 class LineWebhook implements WebhookHandler
 {
@@ -210,7 +212,7 @@ class LineWebhook implements WebhookHandler
     {
         Bot::parseEvent($request)->each(function ($event) {
             //event($event);
-            if($event instanceof TextMessage){
+            if($event instanceof MessageEvent){
                 //
             }
         });

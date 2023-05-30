@@ -5,17 +5,17 @@ namespace Revolution\Line\Facades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Messaging\ReplyMessage;
 
 /**
  * @method static ReplyMessage reply(string $token)
  * @method static Collection parseEvent(Request $request)
- * @method static \LINE\LINEBot\Response replyMessage(string $replyToken, \LINE\LINEBot\MessageBuilder $messageBuilder)
- * @method static \LINE\LINEBot\Response replyText(string $replyToken, string $text, ?array $extraTexts = null)
- * @method static \LINE\LINEBot\Response pushMessage(string $to, \LINE\LINEBot\MessageBuilder $messageBuilder, bool $notificationDisabled = false, ?string $retryKey = null, array $customAggregationUnits = [])
+ * @method static void replyMessage(\LINE\Clients\MessagingApi\Model\ReplyMessageRequest $replyMessageRequest, string $contentType = MessagingApiApi::contentTypes['replyMessage'][0])
+ * @method static void pushMessage(\LINE\Clients\MessagingApi\Model\PushMessageRequest $pushMessageRequest, string $xLineRetryKey = null, string $contentType = MessagingApiApi::contentTypes['pushMessage'][0])
  *
- * @see \LINE\LINEBot
+ * @see \LINE\Clients\MessagingApi\Api\MessagingApiApi
  * @see \Revolution\Line\Messaging\BotClient
  */
 class Bot extends Facade

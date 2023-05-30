@@ -4,9 +4,9 @@ namespace Revolution\Line\Messaging\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use LINE\LINEBot\Constant\HTTPHeader;
-use LINE\LINEBot\Exception\InvalidSignatureException;
-use LINE\LINEBot\SignatureValidator;
+use LINE\Parser\Exception\InvalidSignatureException;
+use LINE\Parser\SignatureValidator;
+use LINE\Constants\HTTPHeader;
 
 class ValidateSignature
 {

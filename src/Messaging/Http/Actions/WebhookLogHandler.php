@@ -4,7 +4,8 @@ namespace Revolution\Line\Messaging\Http\Actions;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\Webhook\Model\MessageEvent;
+use LINE\Webhook\Model\TextMessageContent;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Facades\Bot;
 
@@ -14,22 +15,15 @@ class WebhookLogHandler implements WebhookHandler
     {
         Bot::parseEvent($request)->each(function ($event) {
             /**
-             * @var TextMessage $event
+             * @var MessageEvent $event
              */
+
             $context = [
                 'type' => $event->getType(),
                 'mode' => $event->getMode(),
                 'timestamp' => $event->getTimestamp(),
                 'replyToken' => $event->getReplyToken(),
             ];
-
-            if (method_exists($event, 'getMessageType')) {
-                $context['message.type'] = $event->getMessageType();
-            }
-
-            if (method_exists($event, 'getText')) {
-                $context['message.text'] = $event->getText();
-            }
 
             info(class_basename(get_class($event)), $context);
         });

@@ -3,28 +3,29 @@
 namespace Revolution\Line\Messaging;
 
 use Illuminate\Support\Traits\Macroable;
-use LINE\LINEBot;
-use LINE\LINEBot\MessageBuilder;
-use LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
-use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use LINE\LINEBot\QuickReplyBuilder;
-use LINE\LINEBot\Response;
-use LINE\LINEBot\SenderBuilder\SenderBuilder;
-use LINE\LINEBot\SenderBuilder\SenderMessageBuilder;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
+use LINE\Clients\MessagingApi\ApiException;
+use LINE\Clients\MessagingApi\Model\Message;
+use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
+use LINE\Clients\MessagingApi\Model\StickerMessage;
+use LINE\Clients\MessagingApi\Model\TextMessage;
+use LINE\Clients\MessagingApi\Model\QuickReply;
+use LINE\Clients\MessagingApi\Model\Sender;
+use LINE\Constants\MessageType;
 
 class ReplyMessage
 {
     use Macroable;
 
-    protected LINEBot $bot;
+    protected MessagingApiApi $bot;
 
     protected string $token;
 
-    protected ?QuickReplyBuilder $quick = null;
+    protected ?QuickReply $quick = null;
 
-    protected ?SenderBuilder $sender = null;
+    protected ?Sender $sender = null;
 
-    public function withBot(LINEBot $bot): self
+    public function withBot(MessagingApiApi $bot): self
     {
         $this->bot = $bot;
 
@@ -38,27 +39,56 @@ class ReplyMessage
         return $this;
     }
 
-    public function message(MessageBuilder $messageBuilder): ?Response
+    /**
+     * @throws ApiException
+     */
+    public function message(Message ...$messages): void
     {
-        return $this->bot->replyMessage($this->token, $messageBuilder);
+        $reply = new ReplyMessageRequest([
+            'replyToken' => $this->token,
+            'messages' => $messages,
+        ]);
+
+        $this->bot->replyMessage($reply);
     }
 
-    public function text(mixed ...$text): ?Response
+    /**
+     * @throws ApiException
+     */
+    public function text(mixed ...$text): void
     {
-        $text = collect($text)
-            ->push($this->quick, $this->sender)
+        $messages = collect($text)
             ->reject(fn ($item) => blank($item))
+            ->map(function ($item) {
+                $text = (new TextMessage(['text' => $item]))->setType(MessageType::TEXT);
+                if (filled($this->quick)) {
+                    $text->setQuickReply($this->quick);
+                }
+                if (filled($this->sender)) {
+                    $text->setSender($this->sender);
+                }
+                return $text;
+            })
             ->toArray();
 
-        return $this->message(new TextMessageBuilder(...$text));
+        $this->message(...$messages);
     }
 
-    public function sticker(int|string $package, int|string $id): ?Response
+    /**
+     * @throws ApiException
+     */
+    public function sticker(int|string $package, int|string $sticker): void
     {
-        return $this->message(new StickerMessageBuilder($package, $id, $this->quick, $this->sender));
+        $message = new StickerMessage([
+            'type' => MessageType::STICKER,
+            'packageId' => $package,
+            'stickerId' => $sticker,
+        ]);
+
+        $this->message($message);
     }
 
-    public function withQuickReply(QuickReplyBuilder $quickReply): self
+    public function withQuickReply(QuickReply $quickReply): self
     {
         $this->quick = $quickReply;
 
@@ -67,7 +97,7 @@ class ReplyMessage
 
     public function withSender(string $name = null, string $icon = null): self
     {
-        $this->sender = new SenderMessageBuilder($name, $icon);
+        $this->sender = new Sender(['name' => $name, 'iconUrl' => $icon]);
 
         return $this;
     }

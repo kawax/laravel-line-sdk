@@ -123,9 +123,9 @@ public function shouldDiscoverEvents()
 }
 ```
 
-Publishing default Listeners
+Publishing Listeners
 ```
-php artisan vendor:publish --tag=line-listeners-message
+php artisan vendor:publish --tag=line-listeners
 ```
 
 ### Deploy to web server

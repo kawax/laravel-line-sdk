@@ -5,7 +5,6 @@ namespace Revolution\Line\Socialite;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
-use LINE\LINEBot;
 
 class LineLoginProvider extends AbstractProvider implements ProviderInterface
 {
@@ -46,7 +45,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl(): string
     {
-        return LINEBot::DEFAULT_ENDPOINT_BASE.'/oauth2/v2.1/token';
+        return 'https://api.line.me/oauth2/v2.1/token';
     }
 
     /**
@@ -75,7 +74,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            LINEBot::DEFAULT_ENDPOINT_BASE.'/v2/profile',
+            'https://api.line.me/v2/profile',
             [
                 'headers' => [
                     'Authorization' => 'Bearer '.$token,

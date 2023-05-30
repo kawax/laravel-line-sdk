@@ -4,9 +4,10 @@ namespace Revolution\Line\Messaging\Concerns;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use LINE\LINEBot\Constant\HTTPHeader;
-use LINE\LINEBot\Exception\InvalidEventRequestException;
-use LINE\LINEBot\Exception\InvalidSignatureException;
+use LINE\Constants\HTTPHeader;
+use LINE\Parser\Exception\InvalidEventRequestException;
+use LINE\Parser\Exception\InvalidSignatureException;
+use LINE\Parser\EventRequestParser;
 
 trait EventParser
 {
@@ -18,7 +19,11 @@ trait EventParser
     {
         $signature = $request->header(HTTPHeader::LINE_SIGNATURE);
 
-        $events = $this->bot()->parseEventRequest($request->getContent(), $signature);
+        $events = EventRequestParser::parseEventRequest(
+            body: $request->getContent(),
+            channelSecret: config('line.bot.channel_secret'),
+            signature: $signature
+        )->getEvents();
 
         return collect($events);
     }

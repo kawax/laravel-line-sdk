@@ -26,7 +26,7 @@ class LineNotifyChannel
         $message = $notification->toLineNotify($notifiable);
 
         if (! $message instanceof Arrayable) {
-            return;
+            return; // @codeCoverageIgnore
         }
 
         if (! $token = $notifiable->routeNotificationFor('line-notify', $notification)) {

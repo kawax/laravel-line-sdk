@@ -3,12 +3,16 @@
 namespace Tests\Socialite;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User;
 use LINE\LINEBot;
 use Mockery as m;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Revolution\Line\Socialite\LineLoginProvider;
 use Tests\TestCase;
 
@@ -39,22 +43,26 @@ class LineLoginProviderTest extends TestCase
             ->with('code')
             ->andReturn('fake-code');
 
-        $accessTokenResponse = m::mock(ResponseInterface::class);
-        $accessTokenResponse->shouldReceive('getBody')
-            ->andReturn(json_encode(['access_token' => 'fake-token']));
+        $stream = m::mock(StreamInterface::class);
+        $stream->allows('__toString')->andReturns(json_encode(['access_token' => 'fake-token']));
 
-        $basicProfileResponse = m::mock(ResponseInterface::class);
-        $basicProfileResponse->shouldReceive('getBody')
-            ->andReturn(json_encode([
-                'userId' => $userId = 'test',
-                'displayName' => 'displayName',
-                'pictureUrl' => 'pictureUrl',
-            ]));
+        $accessTokenResponse = m::mock(ResponseInterface::class);
+        $accessTokenResponse->shouldReceive('getBody')->andReturn($stream);
+
+        $stream = m::mock(StreamInterface::class);
+        $stream->allows('__toString')->andReturns(json_encode([
+            'userId' => $userId = 'test',
+            'displayName' => 'displayName',
+            'pictureUrl' => 'pictureUrl',
+        ]));
+
+        $basicProfileResponse = m::mock(ResponseInterface::class)->makePartial();
+        $basicProfileResponse->shouldReceive('getBody')->andReturn($stream);
 
         $guzzle = m::mock(Client::class);
         $guzzle->shouldReceive('post')->once()->andReturn($accessTokenResponse);
         $guzzle->shouldReceive('get')
-            ->with(LINEBot::DEFAULT_ENDPOINT_BASE.'/v2/profile', [
+            ->with('https://api.line.me/v2/profile', [
                 'headers' => [
                     'Authorization' => 'Bearer fake-token',
                 ],

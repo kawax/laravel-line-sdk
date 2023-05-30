@@ -2,7 +2,7 @@
 
 namespace Revolution\Line\Messaging\Concerns;
 
-use LINE\LINEBot;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use Revolution\Line\Messaging\ReplyMessage;
 
 trait Replyable
@@ -14,5 +14,5 @@ trait Replyable
             ->withToken($token);
     }
 
-    abstract public function bot(): LINEBot;
+    abstract public function bot(): MessagingApiApi;
 }

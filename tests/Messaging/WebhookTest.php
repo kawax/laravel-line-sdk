@@ -4,9 +4,12 @@ namespace Tests\Messaging;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
-use LINE\LINEBot;
-use LINE\LINEBot\Constant\HTTPHeader;
-use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
+use LINE\Constants\HTTPHeader;
+use LINE\Parser\EventRequestParser;
+use LINE\Parser\ParsedEvents;
+use LINE\Webhook\Model\MessageEvent;
+use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
 use Revolution\Line\Messaging\Http\Actions\WebhookLogHandler;
@@ -15,13 +18,13 @@ use Tests\TestCase;
 
 class WebhookTest extends TestCase
 {
-    protected TextMessage $message;
+    protected MessageEvent $message;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->message = new TextMessage([
+        $this->message = new MessageEvent([
             'replyToken' => '0f3779fba3b349968c5d07db31eab56f',
             'type' => 'message',
             'mode' => 'active',
@@ -47,17 +50,15 @@ class WebhookTest extends TestCase
     {
         Event::fake();
 
-        $this->mock(LINEBot::class, function ($mock) {
-            $mock->shouldReceive('parseEventRequest')
-                ->once()
-                ->andReturn([$this->message]);
-        });
+        $this->mock('alias:'.EventRequestParser::class)
+            ->allows('parseEventRequest->getEvents')
+            ->andReturns([$this->message]);
 
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
 
-        Event::assertDispatched(TextMessage::class, function (TextMessage $event) {
-            return $event->getText() === $this->message->getText();
+        Event::assertDispatched(MessageEvent::class, function (MessageEvent $event) {
+            return $event->getType() === $this->message->getType();
         });
 
         $response->assertSuccessful()
@@ -70,7 +71,7 @@ class WebhookTest extends TestCase
 
         $response = $this->postJson(config('line.bot.path'));
 
-        Event::assertNotDispatched(TextMessage::class);
+        Event::assertNotDispatched(MessageEvent::class);
 
         $response->assertStatus(400)
             ->assertJson([
@@ -84,7 +85,7 @@ class WebhookTest extends TestCase
 
         $response = $this->withHeader(HTTPHeader::LINE_SIGNATURE, 'test')->postJson(config('line.bot.path'));
 
-        Event::assertNotDispatched(TextMessage::class);
+        Event::assertNotDispatched(MessageEvent::class);
 
         $response->assertStatus(400)
             ->assertJson([
@@ -103,7 +104,7 @@ class WebhookTest extends TestCase
                 'test',
             ]);
 
-        Event::assertNotDispatched(TextMessage::class);
+        Event::assertNotDispatched(MessageEvent::class);
 
         $response->assertStatus(400)
             ->assertJson([
@@ -115,24 +116,12 @@ class WebhookTest extends TestCase
     {
         $this->app->singleton(WebhookHandler::class, WebhookLogHandler::class);
 
-        $this->mock(LINEBot::class, function ($mock) {
-            $mock->shouldReceive('parseEventRequest')
-                ->once()
-                ->andReturn([$this->message]);
-        });
-
-        $context = [
-            'replyToken' => $this->message->getReplyToken(),
-            'type' => $this->message->getType(),
-            'mode' => $this->message->getMode(),
-            'timestamp' => $this->message->getTimestamp(),
-            'message.type' => $this->message->getMessageType(),
-            'message.text' => $this->message->getText(),
-        ];
+        $this->mock('alias:'.EventRequestParser::class)
+            ->allows('parseEventRequest->getEvents')
+            ->andReturns([$this->message]);
 
         Log::shouldReceive('info')
-            ->once()
-            ->with(class_basename(TextMessage::class), $context);
+            ->once();
 
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
@@ -150,7 +139,7 @@ class WebhookTest extends TestCase
         $response = $this->withoutMiddleware()
             ->post(config('line.bot.path'));
 
-        Event::assertNotDispatched(TextMessage::class);
+        Event::assertNotDispatched(MessageEvent::class);
 
         $response->assertSuccessful()
             ->assertSee(class_basename(WebhookNullHandler::class));

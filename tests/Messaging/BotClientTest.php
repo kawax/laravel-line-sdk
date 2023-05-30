@@ -4,7 +4,7 @@ namespace Tests\Messaging;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
-use LINE\LINEBot;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Messaging\Bot as BotAlias;
@@ -15,22 +15,22 @@ class BotClientTest extends TestCase
 {
     public function testBotInstance()
     {
-        $this->assertInstanceOf(LINEBot::class, app(LINEBot::class));
+        $this->assertInstanceOf(MessagingApiApi::class, app(MessagingApiApi::class));
         $this->assertInstanceOf(BotClient::class, app(BotFactory::class));
     }
 
     public function testBotUsing()
     {
-        $bot = app(LINEBot::class);
+        $bot = app(MessagingApiApi::class);
         $client = new BotClient($bot);
 
         $client->botUsing($bot);
-        $this->assertInstanceOf(LINEBot::class, $client->bot());
+        $this->assertInstanceOf(MessagingApiApi::class, $client->bot());
 
         $client->botUsing(function () use ($bot) {
             return $bot;
         });
-        $this->assertInstanceOf(LINEBot::class, $client->bot());
+        $this->assertInstanceOf(MessagingApiApi::class, $client->bot());
     }
 
     public function testMacroable()
@@ -44,7 +44,7 @@ class BotClientTest extends TestCase
 
     public function testBotInfo()
     {
-        $this->mock(LINEBot::class, function ($mock) {
+        $this->mock(MessagingApiApi::class, function ($mock) {
             $mock->shouldReceive('getBotInfo')
                 ->once()
                 ->andReturn([]);
@@ -55,7 +55,7 @@ class BotClientTest extends TestCase
 
     public function testBotAlias()
     {
-        $this->assertInstanceOf(LINEBot::class, BotAlias::bot());
+        $this->assertInstanceOf(MessagingApiApi::class, BotAlias::bot());
     }
 
     /**

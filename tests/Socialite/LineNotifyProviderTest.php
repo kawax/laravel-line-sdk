@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Mockery as m;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Revolution\Line\Socialite\LineNotifyProvider;
 use Tests\TestCase;
 
@@ -37,9 +38,12 @@ class LineNotifyProviderTest extends TestCase
             ->with('code')
             ->andReturn('fake-code');
 
+        $stream = m::mock(StreamInterface::class);
+        $stream->allows('__toString')->andReturns(json_encode(['access_token' => 'fake-token']));
+
         $accessTokenResponse = m::mock(ResponseInterface::class);
         $accessTokenResponse->shouldReceive('getBody')
-            ->andReturn(json_encode(['access_token' => 'fake-token']));
+            ->andReturn($stream);
 
         $guzzle = m::mock(Client::class);
         $guzzle->shouldReceive('post')->once()->andReturn($accessTokenResponse);

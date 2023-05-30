@@ -4,7 +4,7 @@ namespace Revolution\Line\Messaging;
 
 use BadMethodCallException;
 use Illuminate\Support\Traits\Macroable;
-use LINE\LINEBot;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Messaging\Concerns\EventParser;
 use Revolution\Line\Messaging\Concerns\Replyable;
@@ -18,17 +18,17 @@ class BotClient implements BotFactory
     }
 
     public function __construct(
-        protected LINEBot $bot
+        protected MessagingApiApi $bot
     ) {
         //
     }
 
-    public function bot(): LINEBot
+    public function bot(): MessagingApiApi
     {
         return $this->bot;
     }
 
-    public function botUsing(callable|LINEBot $bot): static
+    public function botUsing(callable|MessagingApiApi $bot): static
     {
         $this->bot = is_callable($bot) ? $bot() : $bot;
 
@@ -44,7 +44,7 @@ class BotClient implements BotFactory
      *
      * @throws BadMethodCallException
      */
-    public function __call($method, array $parameters)
+    public function __call($method, $parameters)
     {
         if (method_exists($this->bot(), $method)) {
             return $this->bot()->{$method}(...array_values($parameters));

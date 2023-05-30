@@ -3,9 +3,8 @@
 namespace Revolution\Line\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use LINE\LINEBot;
-use LINE\LINEBot\HTTPClient;
-use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use LINE\Clients\MessagingApi\Api\MessagingApiApi;
+use LINE\Clients\MessagingApi\Configuration;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Contracts\NotifyFactory;
 use Revolution\Line\Contracts\WebhookHandler;
@@ -41,14 +40,9 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerBot(): void
     {
-        $this->app->singleton(HTTPClient::class, function ($app) {
-            return new CurlHTTPClient(config('line.bot.channel_token'));
-        });
-
-        $this->app->singleton(LINEBot::class, function ($app) {
-            return new LINEBot(app(HTTPClient::class), [
-                'channelSecret' => config('line.bot.channel_secret'),
-            ]);
+        $this->app->singleton(MessagingApiApi::class, function ($app) {
+            $config = (new Configuration())->setAccessToken(config('line.bot.channel_token'));
+            return new MessagingApiApi(config: $config);
         });
 
         $this->app->singleton(BotFactory::class, BotClient::class);
@@ -101,10 +95,6 @@ class LineServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../stubs/listeners' => $this->app->path('Listeners'),
-        ], 'line-listeners-all');
-
-        $this->publishes([
-            __DIR__.'/../../stubs/listeners/Message' => $this->app->path('Listeners/Message'),
-        ], 'line-listeners-message');
+        ], 'line-listeners');
     }
 }

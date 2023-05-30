@@ -2,6 +2,10 @@
 
 I'm not going to write all the changes.
 
+## v3.0.0 (2023-05-30)
+- Update line-bot-sdk v8.0
+- Remove listeners except MessageListener.
+
 ## v2.2.0 (2023-02-27)
 - Code maintenance
 - Change some argument name and return type.
