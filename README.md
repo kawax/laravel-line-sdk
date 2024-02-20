@@ -12,8 +12,8 @@
 - Including Socialite drivers(LINE Login, LINE Notify)
 
 ## Requirements
-- PHP >= 8.0
-- Laravel >= 9.0
+- PHP >= 8.1
+- Laravel >= 10.0
 
 ## Versioning
 - Basic : semver
@@ -108,19 +108,6 @@ Edit `.env`
 ```
 LINE_BOT_CHANNEL_TOKEN=
 LINE_BOT_CHANNEL_SECRET=
-```
-
-Add `shouldDiscoverEvents()` to `app/Providers/EventServiceProvider`
-```php
-/**
- * Determine if events and listeners should be automatically discovered.
- *
- * @return bool
- */
-public function shouldDiscoverEvents()
-{
-    return true;
-}
 ```
 
 Publishing Listeners
