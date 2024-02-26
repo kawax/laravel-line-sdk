@@ -64,29 +64,6 @@ LINE_NOTIFY_PERSONAL_ACCESS_TOKEN=
 php artisan vendor:publish --tag=line-config
 ```
 
-### Short Facade(Optional)
-Recent Laravel uses a full namespace.
-
-```php
-use Revolution\Line\Facades\Bot;
-
-Bot::replyText();
-```
-
-If you want to use the short Facade, you can add it manually in `config/app.php`.
-
-```php
-    'aliases' => [
-        'LINE' => Revolution\Line\Facades\Bot::class,
-    ],
-```
-
-```php
-use LINE;
-
-LINE::replyText();
-```
-
 ## Quick Start
 
 ### Prepare
