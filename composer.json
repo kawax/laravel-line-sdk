@@ -16,8 +16,7 @@
         "linecorp/line-bot-sdk": "^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.0||^9.0",
-        "phpunit/phpunit": "^10.0"
+        "orchestra/testbench": "^8.0||^9.0"
     },
     "autoload": {
         "psr-4": {
