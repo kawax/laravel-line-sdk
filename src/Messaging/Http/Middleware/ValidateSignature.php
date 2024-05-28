@@ -17,17 +17,11 @@ class ValidateSignature
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        if (! $request->hasHeader(HTTPHeader::LINE_SIGNATURE)) {
-            abort(400, 'Request does not contain signature');
-        }
+        abort_unless($request->hasHeader(HTTPHeader::LINE_SIGNATURE), 400, 'Request does not contain signature');
 
-        if (! $this->validateSignature($request)) {
-            abort(400, 'Invalid signature has given');
-        }
+        abort_unless($this->validateSignature($request), 400, 'Invalid signature has given');
 
-        if ($request->missing('events')) {
-            abort(400, 'Invalid event request');
-        }
+        abort_if($request->missing('events'), 400, 'Invalid event request');
 
         return $next($request); // @codeCoverageIgnore
     }
