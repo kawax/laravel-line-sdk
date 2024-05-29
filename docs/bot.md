@@ -39,14 +39,10 @@ LINE_BOT_WEBHOOK_PATH=webhook
 ### Working with Laravel Event System
 When a Webhook event is received, Laravel event is dispatching.
 
+#### Laravel10
 For Event discovery, add `shouldDiscoverEvents()` to your `EventServiceProvider`
 ```php
-/**
- * Determine if events and listeners should be automatically discovered.
- *
- * @return bool
- */
-public function shouldDiscoverEvents()
+public function shouldDiscoverEvents(): bool
 {
     return true;
 }
