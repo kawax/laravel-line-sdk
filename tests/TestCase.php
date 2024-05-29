@@ -9,7 +9,7 @@ use Revolution\Line\Providers\LineSocialiteServiceProvider;
 use Revolution\Line\Providers\MacroServiceProvider;
 use Revolution\Line\Providers\RouteServiceProvider;
 
-class TestCase extends \Orchestra\Testbench\TestCase
+abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
      * Load package service provider.
