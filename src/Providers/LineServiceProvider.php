@@ -40,13 +40,11 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerBot(): void
     {
-        $this->app->when(BotFactory::class)
-            ->needs(MessagingApiApi::class)
-            ->give(function () {
-                $config = (new Configuration())->setAccessToken(config('line.bot.channel_token'));
+        $this->app->singleton(MessagingApiApi::class, function ($app) {
+            $config = (new Configuration())->setAccessToken(config('line.bot.channel_token'));
 
-                return new MessagingApiApi(config: $config);
-            });
+            return new MessagingApiApi(config: $config);
+        });
 
         $this->app->singleton(BotFactory::class, BotClient::class);
     }
