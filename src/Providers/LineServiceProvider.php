@@ -40,13 +40,13 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerBot(): void
     {
-        $this->app->singleton(MessagingApiApi::class, function ($app) {
+        $this->app->scoped(MessagingApiApi::class, function ($app) {
             $config = (new Configuration())->setAccessToken(config('line.bot.channel_token'));
 
             return new MessagingApiApi(config: $config);
         });
 
-        $this->app->singleton(BotFactory::class, BotClient::class);
+        $this->app->scoped(BotFactory::class, BotClient::class);
     }
 
     /**
@@ -56,7 +56,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerNotify(): void
     {
-        $this->app->singleton(NotifyFactory::class, LineNotifyClient::class);
+        $this->app->scoped(NotifyFactory::class, LineNotifyClient::class);
     }
 
     /**
@@ -66,7 +66,7 @@ class LineServiceProvider extends ServiceProvider
      */
     protected function registerWebhookHandler(): void
     {
-        $this->app->singleton(WebhookHandler::class, WebhookEventDispatcher::class);
+        $this->app->scoped(WebhookHandler::class, WebhookEventDispatcher::class);
     }
 
     /**
