@@ -3,9 +3,14 @@
 namespace Revolution\Line\Notifications;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Traits\Conditionable;
+use Illuminate\Support\Traits\Macroable;
 
-class LineNotifyMessage implements Arrayable
+final class LineNotifyMessage implements Arrayable
 {
+    use Conditionable;
+    use Macroable;
+
     public function __construct(
         protected ?string $message = null,
         protected ?int $stickerPackageId = null,
@@ -17,7 +22,7 @@ class LineNotifyMessage implements Arrayable
 
     public static function create(string $message): self
     {
-        return new static($message);
+        return new self($message);
     }
 
     public function message(string $message): self
