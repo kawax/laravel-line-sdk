@@ -58,7 +58,6 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
         ];
 
         $form_params = $this->getTokenFields($code);
-        $form_params['grant_type'] = 'authorization_code';
 
         $response = $this->getHttpClient()->post(
             $this->getTokenUrl(),
