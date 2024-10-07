@@ -3,11 +3,9 @@
 namespace Revolution\Line\Notifications;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
 use LINE\Clients\MessagingApi\Model\PushMessageRequest;
-use Revolution\Line\Contracts\NotifyFactory;
 use Revolution\Line\Facades\Bot;
 
 class LineChannel

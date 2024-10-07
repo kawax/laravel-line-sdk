@@ -3,12 +3,9 @@
 namespace Tests\Notifications;
 
 use Illuminate\Notifications\AnonymousNotifiable;
-use Mockery;
 use Revolution\Line\Facades\Bot;
 use Revolution\Line\Notifications\LineChannel;
-use Revolution\Line\Notifications\LineMessage;
 use Tests\Notifications\Fixtures\LineNotificationStub;
-use Tests\Notifications\Fixtures\LineNotifyStub;
 use Tests\Notifications\Fixtures\TestNotifiableStub;
 use Tests\TestCase;
 
