@@ -5,6 +5,9 @@ namespace Tests\Notifications;
 use Revolution\Line\Notifications\LineNotifyMessage;
 use Tests\TestCase;
 
+/**
+ * @deprecated
+ */
 class LineNotifyMessageTest extends TestCase
 {
     public function testLineNotifyMessage()

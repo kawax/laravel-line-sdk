@@ -4,6 +4,9 @@ namespace Revolution\Line\Contracts;
 
 use Illuminate\Http\Client\RequestException;
 
+/**
+ * @deprecated
+ */
 interface NotifyFactory
 {
     public function withToken(string $token): self;

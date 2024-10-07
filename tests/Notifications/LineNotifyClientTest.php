@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Http;
 use Revolution\Line\Facades\LineNotify;
 use Tests\TestCase;
 
+/**
+ * @deprecated
+ */
 class LineNotifyClientTest extends TestCase
 {
     public function testLineNotifyClient()

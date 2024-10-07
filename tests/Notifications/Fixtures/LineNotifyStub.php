@@ -7,6 +7,9 @@ use Illuminate\Notifications\Notification;
 use Revolution\Line\Notifications\LineNotifyChannel;
 use Revolution\Line\Notifications\LineNotifyMessage;
 
+/**
+ * @deprecated
+ */
 class LineNotifyStub extends Notification
 {
     use Queueable;

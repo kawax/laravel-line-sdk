@@ -5,37 +5,30 @@ namespace Revolution\Line\Notifications;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Arr;
+use LINE\Clients\MessagingApi\Model\PushMessageRequest;
 use Revolution\Line\Contracts\NotifyFactory;
+use Revolution\Line\Facades\Bot;
 
-/**
- * @deprecated
- */
-class LineNotifyChannel
+class LineChannel
 {
-    public function __construct(
-        protected NotifyFactory $notify
-    ) {
-        //
-    }
-
-    /**
-     * @throws RequestException
-     */
     public function send(mixed $notifiable, Notification $notification): void
     {
         /**
-         * @var LineNotifyMessage $message
+         * @var LineMessage $message
          */
-        $message = $notification->toLineNotify($notifiable);
+        $message = $notification->toLine($notifiable);
 
         if (! $message instanceof Arrayable) {
             return; // @codeCoverageIgnore
         }
 
-        if (! $token = $notifiable->routeNotificationFor('line-notify', $notification)) {
+        if (! $to = $notifiable->routeNotificationFor('line', $notification)) {
             return;
         }
 
-        $this->notify->withToken($token)->notify($message->toArray());
+        $data = Arr::add($message->toArray(), 'to', $to);
+
+        Bot::pushMessage(new PushMessageRequest($data));
     }
 }

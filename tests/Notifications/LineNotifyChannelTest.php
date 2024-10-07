@@ -11,6 +11,9 @@ use Tests\Notifications\Fixtures\LineNotifyStub;
 use Tests\Notifications\Fixtures\TestNotifiableStub;
 use Tests\TestCase;
 
+/**
+ * @deprecated
+ */
 class LineNotifyChannelTest extends TestCase
 {
     public function testLineNotifyChannel()

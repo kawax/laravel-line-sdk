@@ -53,6 +53,8 @@ class LineServiceProvider extends ServiceProvider
      * Notify.
      *
      * @return void
+     *
+     * @deprecated
      */
     protected function registerNotify(): void
     {

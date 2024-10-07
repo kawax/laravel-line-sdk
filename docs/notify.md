@@ -1,5 +1,9 @@
 # LINE Notify
 
+> **LINE Notify has been discontinued on 2025/03/31.**
+> https://developers.line.biz/en/news/2024/10/07/line-notify-will-be-discontinued/
+
+
 https://notify-bot.line.me/
 
 ## .env

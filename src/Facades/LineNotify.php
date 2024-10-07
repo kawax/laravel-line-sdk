@@ -10,6 +10,8 @@ use Revolution\Line\Contracts\NotifyFactory;
  * @method array notify(array $params)
  * @method array status()
  * @method array revoke()
+ *
+ * @deprecated
  */
 class LineNotify extends Facade
 {

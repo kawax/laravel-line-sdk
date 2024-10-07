@@ -11,6 +11,9 @@ use Psr\Http\Message\StreamInterface;
 use Revolution\Line\Socialite\LineNotifyProvider;
 use Tests\TestCase;
 
+/**
+ * @deprecated
+ */
 class LineNotifyProviderTest extends TestCase
 {
     public function testInstance()

@@ -24,6 +24,8 @@ return [
 
     /**
      * LINE Notify.
+     *
+     * @deprecated
      */
     'notify' => [
         'client_id' => env('LINE_NOTIFY_CLIENT_ID'),

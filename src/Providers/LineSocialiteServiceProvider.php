@@ -20,6 +20,14 @@ class LineSocialiteServiceProvider extends ServiceProvider
             return Socialite::buildProvider(LineLoginProvider::class, config('line.login'));
         });
 
+        $this->notify();
+    }
+
+    /**
+     * @deprecated
+     */
+    protected function notify(): void
+    {
         Socialite::extend('line-notify', function () {
             return Socialite::buildProvider(LineNotifyProvider::class, config('line.notify'));
         });

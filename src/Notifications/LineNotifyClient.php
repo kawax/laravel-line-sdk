@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Traits\Macroable;
 use Revolution\Line\Contracts\NotifyFactory;
 
+/**
+ * @deprecated
+ */
 class LineNotifyClient implements NotifyFactory
 {
     use Macroable;

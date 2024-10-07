@@ -6,6 +6,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 
+/**
+ * @deprecated
+ */
 final class LineNotifyMessage implements Arrayable
 {
     use Conditionable;

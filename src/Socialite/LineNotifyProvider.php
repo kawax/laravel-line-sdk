@@ -6,6 +6,9 @@ use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
 
+/**
+ * @deprecated
+ */
 class LineNotifyProvider extends AbstractProvider implements ProviderInterface
 {
     /**

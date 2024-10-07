@@ -8,8 +8,8 @@
 ## Features
 - Working with Laravel Event System. Including Webhook routing and controller.
 - Extensible Bot Client.
-- Working with Laravel Notification System(LINE Notify)
-- Including Socialite drivers(LINE Login, LINE Notify)
+- Working with Laravel Notification System(LINE Messaging API)
+- Including Socialite drivers(LINE Login)
 
 ## Requirements
 - PHP >= 8.1
@@ -51,11 +51,6 @@ LINE_BOT_CHANNEL_SECRET=
 LINE_LOGIN_CLIENT_ID=
 LINE_LOGIN_CLIENT_SECRET=
 LINE_LOGIN_REDIRECT=
-
-LINE_NOTIFY_CLIENT_ID=
-LINE_NOTIFY_CLIENT_SECRET=
-LINE_NOTIFY_REDIRECT=
-LINE_NOTIFY_PERSONAL_ACCESS_TOKEN=
 ```
 
 ### Publishing(Optional)
@@ -105,7 +100,7 @@ Bot returns same message.
 ## Documents
 - [Messaging API / Bot](./docs/bot.md)
 - [Socialite](./docs/socialite.md)
-- [Notifications](./docs/notify.md)
+- [Notifications](./docs/notification.md)
 
 ## Demo
 https://github.com/kawax/laravel-line-project
