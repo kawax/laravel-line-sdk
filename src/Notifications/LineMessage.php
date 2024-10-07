@@ -7,10 +7,10 @@ use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use LINE\Clients\MessagingApi\Model\ImageMessage;
 use LINE\Clients\MessagingApi\Model\Message;
-use LINE\Clients\MessagingApi\Model\ModelInterface;
 use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
 use LINE\Clients\MessagingApi\Model\VideoMessage;
+use LINE\Constants\MessageType;
 
 final class LineMessage implements Arrayable
 {
@@ -34,7 +34,9 @@ final class LineMessage implements Arrayable
     public function text(string $text): self
     {
         return $this->message(
-            (new TextMessage())->setText($text)
+            (new TextMessage())
+                ->setType(MessageType::TEXT)
+                ->setText($text)
         );
     }
 
@@ -45,6 +47,7 @@ final class LineMessage implements Arrayable
     {
         return $this->message(
             (new StickerMessage())
+                ->setType(MessageType::STICKER)
                 ->setPackageId($package)
                 ->setStickerId($sticker)
         );
@@ -57,6 +60,7 @@ final class LineMessage implements Arrayable
     {
         return $this->message(
             (new ImageMessage())
+                ->setType(MessageType::IMAGE)
                 ->setOriginalContentUrl($original)
                 ->setPreviewImageUrl($preview)
         );
@@ -69,6 +73,7 @@ final class LineMessage implements Arrayable
     {
         return $this->message(
             (new VideoMessage())
+                ->setType(MessageType::VIDEO)
                 ->setOriginalContentUrl($original)
                 ->setPreviewImageUrl($preview)
         );
@@ -77,7 +82,7 @@ final class LineMessage implements Arrayable
     /**
      * Add any Message object.
      */
-    public function message(ModelInterface $message): self
+    public function message(Message $message): self
     {
         $this->messages[] = $message;
 
