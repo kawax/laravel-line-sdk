@@ -27,8 +27,6 @@ class LeaveListener
 
         if ($source instanceof GroupSource) {
             $id = $source->getGroupId();
-        } elseif ($source instanceof RoomSource) {
-            $id = $source->getRoomId();
         }
 
         info($source);
