@@ -16,8 +16,6 @@ class MessageListener
 
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -26,9 +24,6 @@ class MessageListener
 
     /**
      * Handle the event.
-     *
-     * @param  MessageEvent  $event
-     * @return void
      *
      * @throws ApiException
      */
