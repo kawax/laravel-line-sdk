@@ -102,10 +102,8 @@ final class LineMessage implements Arrayable
     public function toArray(): array
     {
         return array_merge(
-            [
-                'messages' => collect($this->messages)->take(5)->all(),
-            ],
-            $this->options ?? []
+            ['messages' => collect($this->messages)->take(5)->all()],
+            $this->options
         );
     }
 }
