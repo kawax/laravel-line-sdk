@@ -13,7 +13,7 @@ use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
 use LINE\Constants\MessageType;
 
-class ReplyMessage
+final class ReplyMessage
 {
     use Macroable;
 
@@ -96,7 +96,7 @@ class ReplyMessage
         return $this;
     }
 
-    public function withSender(string $name = null, string $icon = null): self
+    public function withSender(?string $name = null, ?string $icon = null): self
     {
         $this->sender = new Sender(['name' => $name, 'iconUrl' => $icon]);
 
