@@ -23,9 +23,7 @@ final class LineMessage implements Arrayable
 
     public static function create(?string $text = null): self
     {
-        return (new self())->when(! empty($text), function (self $message) use ($text) {
-            $message->text($text);
-        });
+        return (new self())->unless(empty($text), fn (self $message) => $message->text($text));
     }
 
     /**
