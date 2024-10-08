@@ -5,6 +5,8 @@ namespace App\Listeners\Line;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use LINE\Webhook\Model\FollowEvent;
+use LINE\Webhook\Model\GroupSource;
+use LINE\Webhook\Model\UserSource;
 
 class FollowListener
 {
@@ -23,6 +25,10 @@ class FollowListener
     {
         $source = $event->getSource();
         $follow = $event->getFollow();
+
+        if ($source instanceof UserSource) {
+            $id = $source->getUserId();
+        }
 
         info($source);
     }
