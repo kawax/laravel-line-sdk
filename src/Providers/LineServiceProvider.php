@@ -16,8 +16,6 @@ class LineServiceProvider extends ServiceProvider
 {
     /**
      * Register bindings in the container.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -35,8 +33,6 @@ class LineServiceProvider extends ServiceProvider
 
     /**
      * Bot.
-     *
-     * @return void
      */
     protected function registerBot(): void
     {
@@ -52,8 +48,6 @@ class LineServiceProvider extends ServiceProvider
     /**
      * Notify.
      *
-     * @return void
-     *
      * @deprecated
      */
     protected function registerNotify(): void
@@ -63,8 +57,6 @@ class LineServiceProvider extends ServiceProvider
 
     /**
      * Default WebhookHandler.
-     *
-     * @return void
      */
     protected function registerWebhookHandler(): void
     {
@@ -73,8 +65,6 @@ class LineServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -83,8 +73,6 @@ class LineServiceProvider extends ServiceProvider
 
     /**
      * Configure publishing for the package.
-     *
-     * @return void
      */
     protected function configurePublishing(): void
     {

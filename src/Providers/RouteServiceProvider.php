@@ -9,11 +9,6 @@ use Revolution\Line\Messaging\Http\Middleware\ValidateSignature;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         Route::middleware(config('line.bot.middleware'))
