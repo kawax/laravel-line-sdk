@@ -56,7 +56,7 @@ $user->notify(new TestNotification());
 
 ## to
 
-userId or groupId.
+userId or groupId. ID can be obtained from FollowEvent or JoinEvent.
 
 ## TextMessage
 You can send up to 5 messages.
