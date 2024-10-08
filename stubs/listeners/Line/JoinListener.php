@@ -4,7 +4,11 @@ namespace App\Listeners\Line;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use LINE\Webhook\Model\GroupSource;
 use LINE\Webhook\Model\JoinEvent;
+use LINE\Webhook\Model\RoomSource;
+use LINE\Webhook\Model\StickerMessageContent;
+use LINE\Webhook\Model\TextMessageContent;
 
 class JoinListener
 {
@@ -22,6 +26,12 @@ class JoinListener
     public function handle(JoinEvent $event): void
     {
         $source = $event->getSource();
+
+        if ($source instanceof GroupSource) {
+            $id = $source->getGroupId();
+        } elseif ($source instanceof RoomSource) {
+            $id = $source->getRoomId();
+        }
 
         info($source);
     }
