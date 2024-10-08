@@ -59,6 +59,7 @@ $user->notify(new TestNotification());
 userId or groupId.
 
 ## TextMessage
+You can send up to 5 messages.
 
 ```php
 use Revolution\Line\Notifications\LineMessage;
@@ -66,7 +67,8 @@ use Revolution\Line\Notifications\LineMessage;
     public function toLine(object $notifiable): LineMessage
     {
         return LineMessage::create()
-                          ->text('test');
+                          ->text('text 1')
+                          ->text('text 2');
     }
 ```
 
@@ -97,5 +99,42 @@ use Revolution\Line\Notifications\LineMessage;
     {
         return LineMessage::create()
                           ->image(original: 'https://.../test.png', preview: 'https://.../preview.png');
+    }
+```
+
+## VideoMessage
+
+Specify a public URL.
+
+```php
+use Revolution\Line\Notifications\LineMessage;
+
+    public function toLine(object $notifiable): LineMessage
+    {
+        return LineMessage::create()
+                          ->video(original: 'https://.../test.mp4', preview: 'https://.../preview.png');
+    }
+```
+
+## Other Message Types
+
+You can add any message type with `message()`. Don't forget to specify the type with `setType()`.
+
+```php
+use LINE\Clients\MessagingApi\Model\LocationMessage;
+use LINE\Constants\MessageType;
+use Revolution\Line\Notifications\LineMessage;
+
+    public function toLine(object $notifiable): LineMessage
+    {
+        $location = (new LocationMessage())
+            ->setType(MessageType::LOCATION)
+            ->setTitle('title')
+            ->setAddress('address')
+            ->setLatitude(0.0)
+            ->setLongitude(0.0);
+            
+        return LineMessage::create()
+                          ->message($location);
     }
 ```
