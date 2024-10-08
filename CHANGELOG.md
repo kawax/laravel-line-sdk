@@ -5,6 +5,7 @@ I'm not going to write all the changes.
 ## v3.3.0 (2024-10-07)
 - Add Massaging API version of Notification channel.
 - **Deprecated LINE Notify**
+- Add some listeners stubs.
 
 ## v3.0.0 (2023-05-30)
 - Update line-bot-sdk v8.0
