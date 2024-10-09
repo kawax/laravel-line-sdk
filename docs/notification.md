@@ -59,6 +59,7 @@ $user->notify(new TestNotification());
 userId or groupId. ID can be obtained from FollowEvent or JoinEvent.
 
 ## TextMessage
+
 You can send up to 5 messages.
 
 ```php
@@ -85,6 +86,17 @@ use Revolution\Line\Notifications\LineMessage;
                           ->withSender(name: 'alt-name', icon: 'https://...png')
                           ->text('text 1')
                           ->text('text 2');
+    }
+```
+
+You can also specify a name and icon with `create()` method, which is easier if you're just creating a single text message.
+
+```php
+use Revolution\Line\Notifications\LineMessage;
+
+    public function toLine(object $notifiable): LineMessage
+    {
+        return LineMessage::create(text: 'test', name: 'alt-name', icon: 'https://...png');
     }
 ```
 
