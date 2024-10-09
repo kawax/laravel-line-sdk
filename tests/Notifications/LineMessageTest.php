@@ -42,9 +42,18 @@ class LineMessageTest extends TestCase
         $this->assertInstanceOf(LocationMessage::class, $message->toArray()['messages'][1]);
     }
 
+    public function test_create_with_sender()
+    {
+        $message = LineMessage::create(text: 'test', name: 'name', icon: 'icon');
+
+        $sender = $message->toArray()['messages'][0]->getSender();
+        $this->assertSame('name', $sender->getName());
+        $this->assertSame('icon', $sender->getIconUrl());
+    }
+
     public function test_sender()
     {
-        $message = LineMessage::create()
+        $message = (new LineMessage())
             ->withSender(name: 'name', icon: 'icon')
             ->text('test');
 
@@ -55,7 +64,7 @@ class LineMessageTest extends TestCase
 
     public function test_sender_wrong_order()
     {
-        $message = LineMessage::create()
+        $message = (new LineMessage())
             ->text('test')
             ->withSender(name: 'name', icon: 'icon');
 
@@ -65,7 +74,7 @@ class LineMessageTest extends TestCase
 
     public function test_sender_name()
     {
-        $message = LineMessage::create()
+        $message = (new LineMessage())
             ->withSender(name: 'name')
             ->text('test');
 
@@ -74,7 +83,7 @@ class LineMessageTest extends TestCase
 
     public function test_sender_icon()
     {
-        $message = LineMessage::create()
+        $message = (new LineMessage())
             ->withSender(icon: 'icon')
             ->text('test');
 
@@ -83,7 +92,7 @@ class LineMessageTest extends TestCase
 
     public function test_quick_reply()
     {
-        $message = LineMessage::create()
+        $message = (new LineMessage())
             ->withQuickReply($quick = new QuickReply(['items' => []]))
             ->text('test');
 
