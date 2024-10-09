@@ -27,9 +27,11 @@ final class LineMessage implements Arrayable
 
     private ?Sender $sender = null;
 
-    public static function create(?string $text = null): self
+    public static function create(?string $text = null, ?string $name = null, ?string $icon = null): self
     {
-        return (new self())->unless(empty($text), fn (self $message) => $message->text($text));
+        return (new self())
+            ->unless(empty($name) && empty($icon), fn (self $message) => $message->withSender($name, $icon))
+            ->unless(empty($text), fn (self $message) => $message->text($text));
     }
 
     public function withSender(?string $name = null, ?string $icon = null): self
