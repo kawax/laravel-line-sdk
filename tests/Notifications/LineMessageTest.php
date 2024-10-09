@@ -3,6 +3,7 @@
 namespace Tests\Notifications;
 
 use LINE\Clients\MessagingApi\Model\LocationMessage;
+use LINE\Clients\MessagingApi\Model\QuickReply;
 use LINE\Constants\MessageType;
 use Revolution\Line\Notifications\LineMessage;
 use Tests\TestCase;
@@ -39,5 +40,53 @@ class LineMessageTest extends TestCase
 
         $this->assertArrayHasKey('messages', $message->toArray());
         $this->assertInstanceOf(LocationMessage::class, $message->toArray()['messages'][1]);
+    }
+
+    public function test_sender()
+    {
+        $message = LineMessage::create()
+            ->withSender(name: 'name', icon: 'icon')
+            ->text('test');
+
+        $sender = $message->toArray()['messages'][0]->getSender();
+        $this->assertSame('name', $sender->getName());
+        $this->assertSame('icon', $sender->getIconUrl());
+    }
+
+    public function test_sender_wrong_order()
+    {
+        $message = LineMessage::create()
+            ->text('test')
+            ->withSender(name: 'name', icon: 'icon');
+
+        $sender = $message->toArray()['messages'][0]->getSender();
+        $this->assertNull($sender);
+    }
+
+    public function test_sender_name()
+    {
+        $message = LineMessage::create()
+            ->withSender(name: 'name')
+            ->text('test');
+
+        $this->assertSame('name', $message->toArray()['messages'][0]->getSender()->getName());
+    }
+
+    public function test_sender_icon()
+    {
+        $message = LineMessage::create()
+            ->withSender(icon: 'icon')
+            ->text('test');
+
+        $this->assertSame('icon', $message->toArray()['messages'][0]->getSender()->getIconUrl());
+    }
+
+    public function test_quick_reply()
+    {
+        $message = LineMessage::create()
+            ->withQuickReply($quick = new QuickReply(['items' => []]))
+            ->text('test');
+
+        $this->assertSame($quick, $message->toArray()['messages'][0]->getQuickReply());
     }
 }

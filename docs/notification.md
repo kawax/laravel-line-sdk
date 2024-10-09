@@ -72,6 +72,22 @@ use Revolution\Line\Notifications\LineMessage;
     }
 ```
 
+## Customize icon and display name
+
+Make sure you use `withSender()` before any other message adding methods.
+
+```php
+use Revolution\Line\Notifications\LineMessage;
+
+    public function toLine(object $notifiable): LineMessage
+    {
+        return LineMessage::create()
+                          ->withSender(name: 'alt-name', icon: 'https://...png')
+                          ->text('text 1')
+                          ->text('text 2');
+    }
+```
+
 ## StickerMessage
 
 Only the stickers on this page can be used.

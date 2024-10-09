@@ -7,6 +7,8 @@ use Illuminate\Support\Traits\Conditionable;
 use Illuminate\Support\Traits\Macroable;
 use LINE\Clients\MessagingApi\Model\ImageMessage;
 use LINE\Clients\MessagingApi\Model\Message;
+use LINE\Clients\MessagingApi\Model\QuickReply;
+use LINE\Clients\MessagingApi\Model\Sender;
 use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
 use LINE\Clients\MessagingApi\Model\VideoMessage;
@@ -17,13 +19,31 @@ final class LineMessage implements Arrayable
     use Conditionable;
     use Macroable;
 
-    protected array $messages = [];
+    private array $messages = [];
 
-    protected array $options = [];
+    private array $options = [];
+
+    private ?QuickReply $quick = null;
+
+    private ?Sender $sender = null;
 
     public static function create(?string $text = null): self
     {
         return (new self())->unless(empty($text), fn (self $message) => $message->text($text));
+    }
+
+    public function withSender(?string $name = null, ?string $icon = null): self
+    {
+        $this->sender = new Sender(['name' => $name, 'iconUrl' => $icon]);
+
+        return $this;
+    }
+
+    public function withQuickReply(QuickReply $quickReply): self
+    {
+        $this->quick = $quickReply;
+
+        return $this;
     }
 
     /**
@@ -82,6 +102,14 @@ final class LineMessage implements Arrayable
      */
     public function message(Message $message): self
     {
+        if (! empty($this->sender)) {
+            $message->setSender($this->sender);
+        }
+
+        if (! empty($this->quick)) {
+            $message->setQuickReply($this->quick);
+        }
+
         $this->messages[] = $message;
 
         return $this;
