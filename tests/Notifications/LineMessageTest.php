@@ -2,6 +2,9 @@
 
 namespace Tests\Notifications;
 
+use LINE\Clients\MessagingApi\Model\FlexBubble;
+use LINE\Clients\MessagingApi\Model\FlexCarousel;
+use LINE\Clients\MessagingApi\Model\FlexMessage;
 use LINE\Clients\MessagingApi\Model\LocationMessage;
 use LINE\Clients\MessagingApi\Model\QuickReply;
 use LINE\Constants\MessageType;
@@ -97,5 +100,33 @@ class LineMessageTest extends TestCase
             ->text('test');
 
         $this->assertSame($quick, $message->toArray()['messages'][0]->getQuickReply());
+    }
+
+    public function test_flex_bubble()
+    {
+        $bubble = new FlexBubble(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/bubble.json'), true));
+
+        $flex = (new FlexMessage())
+            ->setType(MessageType::FLEX)
+            ->setContents($bubble);
+
+        $message = (new LineMessage())
+            ->message($flex);
+
+        $this->assertSame('bubble', $message->toArray()['messages'][0]->getContents()->getType());
+    }
+
+    public function test_flex_carousel()
+    {
+        $carousel = new FlexCarousel(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/carousel.json'), true));
+
+        $flex = (new FlexMessage())
+            ->setType(MessageType::FLEX)
+            ->setContents($carousel);
+
+        $message = (new LineMessage())
+            ->message($flex);
+
+        $this->assertSame('carousel', $message->toArray()['messages'][0]->getContents()->getType());
     }
 }
