@@ -13,7 +13,7 @@ use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
 use LINE\Constants\MessageType;
 
-final class ReplyMessage
+class ReplyMessage
 {
     use Macroable;
 
