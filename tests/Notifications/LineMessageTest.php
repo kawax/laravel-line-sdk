@@ -2,11 +2,19 @@
 
 namespace Tests\Notifications;
 
+use LINE\Clients\MessagingApi\Model\AllMentionTarget;
+use LINE\Clients\MessagingApi\Model\EmojiSubstitutionObject;
 use LINE\Clients\MessagingApi\Model\FlexBubble;
 use LINE\Clients\MessagingApi\Model\FlexCarousel;
 use LINE\Clients\MessagingApi\Model\FlexMessage;
 use LINE\Clients\MessagingApi\Model\LocationMessage;
+use LINE\Clients\MessagingApi\Model\MentionSubstitutionObject;
+use LINE\Clients\MessagingApi\Model\MentionTarget;
 use LINE\Clients\MessagingApi\Model\QuickReply;
+use LINE\Clients\MessagingApi\Model\SubstitutionObject;
+use LINE\Clients\MessagingApi\Model\TextMessageV2;
+use LINE\Clients\MessagingApi\Model\UserMentionTarget;
+use LINE\Constants\MentioneeType;
 use LINE\Constants\MessageType;
 use Revolution\Line\Notifications\LineMessage;
 use Tests\TestCase;
@@ -104,7 +112,8 @@ class LineMessageTest extends TestCase
 
     public function test_flex_bubble()
     {
-        $bubble = new FlexBubble(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/bubble.json'), true));
+        $bubble = new FlexBubble(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/bubble.json'),
+            true));
 
         $flex = (new FlexMessage())
             ->setType(MessageType::FLEX)
@@ -118,7 +127,8 @@ class LineMessageTest extends TestCase
 
     public function test_flex_carousel()
     {
-        $carousel = new FlexCarousel(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/carousel.json'), true));
+        $carousel = new FlexCarousel(json_decode(file_get_contents(__DIR__.'/./Fixtures/flex-simulator/carousel.json'),
+            true));
 
         $flex = (new FlexMessage())
             ->setType(MessageType::FLEX)
@@ -128,5 +138,50 @@ class LineMessageTest extends TestCase
             ->message($flex);
 
         $this->assertSame('carousel', $message->toArray()['messages'][0]->getContents()->getType());
+    }
+
+    public function test_text_v2()
+    {
+        $text_v2 = new TextMessageV2();
+        $text_v2->setType('textV2');
+
+        $user_target = new UserMentionTarget();
+        $user_target->setType(MentioneeType::TYPE_USER);
+        $user_target->setUserId('test');
+        dump($user_target->__toString());
+
+        $user = new MentionSubstitutionObject();
+        $user->setType('mention');
+        $user->setMentionee($user_target);
+        dump($user->__toString());
+
+        $emoji = new EmojiSubstitutionObject();
+        $emoji->setType('emoji');
+        $emoji->setProductId('p');
+        $emoji->setEmojiId('e');
+
+        $everyone_target = new AllMentionTarget();
+        $everyone_target->setType(MentioneeType::TYPE_ALL);
+
+        $everyone = new MentionSubstitutionObject();
+        $everyone->setType('mention');
+        $everyone->setMentionee($everyone_target);
+
+        $text_v2->setSubstitution([
+            'user' => $user,
+            'emoji' => $emoji,
+            'everyone' => $everyone,
+        ]);
+
+        $text_v2->setText('{user} {emoji} {everyone}');
+
+        dump($text_v2->__toString());
+
+        $message = (new LineMessage())
+            ->message($text_v2);
+
+        dump($message->toArray());
+
+        $this->assertSame('textV2', $message->toArray()['messages'][0]->getType());
     }
 }
