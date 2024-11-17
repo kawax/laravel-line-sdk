@@ -4,6 +4,7 @@ namespace Tests\Messaging;
 
 use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use LINE\Clients\MessagingApi\Model\QuickReply;
+use LINE\Clients\MessagingApi\Model\ReplyMessageResponse;
 use LINE\Clients\MessagingApi\Model\TextMessage;
 use LINE\Constants\MessageType;
 use Mockery as m;
@@ -22,7 +23,8 @@ class ReplyMessageTest extends TestCase
     {
         $this->mock(MessagingApiApi::class, function ($mock) {
             $mock->shouldReceive('replyMessage')
-                ->once();
+                ->once()
+                ->andReturn(new ReplyMessageResponse());
         });
 
         Bot::reply('token')
@@ -33,6 +35,7 @@ class ReplyMessageTest extends TestCase
     {
         $this->mock(MessagingApiApi::class, function ($mock) {
             $mock->shouldReceive('replyMessage')
+                ->andReturn(new ReplyMessageResponse())
                 ->once();
         });
 
@@ -43,6 +46,7 @@ class ReplyMessageTest extends TestCase
     {
         $this->mock(MessagingApiApi::class, function ($mock) {
             $mock->shouldReceive('replyMessage')
+                ->andReturn(new ReplyMessageResponse())
                 ->once();
         });
 
@@ -56,6 +60,7 @@ class ReplyMessageTest extends TestCase
     {
         $this->mock(MessagingApiApi::class, function ($mock) {
             $mock->shouldReceive('replyMessage')
+                ->andReturn(new ReplyMessageResponse())
                 ->once();
         });
 
