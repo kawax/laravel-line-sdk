@@ -5,12 +5,14 @@ namespace Revolution\Line\Notifications;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Arr;
+use LINE\Clients\MessagingApi\Model\ErrorResponse;
 use LINE\Clients\MessagingApi\Model\PushMessageRequest;
+use LINE\Clients\MessagingApi\Model\PushMessageResponse;
 use Revolution\Line\Facades\Bot;
 
 class LineChannel
 {
-    public function send(mixed $notifiable, Notification $notification): void
+    public function send(mixed $notifiable, Notification $notification): null|PushMessageResponse|ErrorResponse
     {
         /**
          * @var LineMessage $message
@@ -18,15 +20,15 @@ class LineChannel
         $message = $notification->toLine($notifiable);
 
         if (! $message instanceof Arrayable) {
-            return; // @codeCoverageIgnore
+            return null; // @codeCoverageIgnore
         }
 
         if (! $to = $notifiable->routeNotificationFor('line', $notification)) {
-            return;
+            return null;
         }
 
         $data = Arr::add($message->toArray(), 'to', $to);
 
-        Bot::pushMessage(new PushMessageRequest($data));
+        return Bot::pushMessage(new PushMessageRequest($data));
     }
 }
