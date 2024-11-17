@@ -6,14 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use LINE\Clients\MessagingApi\Api\MessagingApiApi;
+use LINE\Clients\MessagingApi\Model\ErrorResponse;
+use LINE\Clients\MessagingApi\Model\PushMessageRequest;
+use LINE\Clients\MessagingApi\Model\PushMessageResponse;
+use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
+use LINE\Clients\MessagingApi\Model\ReplyMessageResponse;
 use Revolution\Line\Contracts\BotFactory;
 use Revolution\Line\Messaging\ReplyMessage;
 
 /**
  * @method static ReplyMessage reply(string $token)
  * @method static Collection parseEvent(Request $request)
- * @method static void replyMessage(\LINE\Clients\MessagingApi\Model\ReplyMessageRequest $replyMessageRequest, string $contentType = MessagingApiApi::contentTypes['replyMessage'][0])
- * @method static void pushMessage(\LINE\Clients\MessagingApi\Model\PushMessageRequest $pushMessageRequest, string $xLineRetryKey = null, string $contentType = MessagingApiApi::contentTypes['pushMessage'][0])
+ * @method static ReplyMessageResponse|ErrorResponse replyMessage(ReplyMessageRequest $replyMessageRequest, string $contentType = 'application/json')
+ * @method static PushMessageResponse|ErrorResponse pushMessage(PushMessageRequest $pushMessageRequest, string $xLineRetryKey = null, string $contentType = 'application/json')
  *
  * @see \LINE\Clients\MessagingApi\Api\MessagingApiApi
  * @see \Revolution\Line\Messaging\BotClient
