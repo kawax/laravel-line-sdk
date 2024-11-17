@@ -5,9 +5,11 @@ namespace Revolution\Line\Messaging;
 use Illuminate\Support\Traits\Macroable;
 use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use LINE\Clients\MessagingApi\ApiException;
+use LINE\Clients\MessagingApi\Model\ErrorResponse;
 use LINE\Clients\MessagingApi\Model\Message;
 use LINE\Clients\MessagingApi\Model\QuickReply;
 use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
+use LINE\Clients\MessagingApi\Model\ReplyMessageResponse;
 use LINE\Clients\MessagingApi\Model\Sender;
 use LINE\Clients\MessagingApi\Model\StickerMessage;
 use LINE\Clients\MessagingApi\Model\TextMessage;
@@ -42,20 +44,20 @@ class ReplyMessage
     /**
      * @throws ApiException
      */
-    public function message(Message ...$messages): void
+    public function message(Message ...$messages): ReplyMessageResponse|ErrorResponse
     {
         $reply = new ReplyMessageRequest([
             'replyToken' => $this->token,
             'messages' => $messages,
         ]);
 
-        $this->bot->replyMessage($reply);
+        return $this->bot->replyMessage($reply);
     }
 
     /**
      * @throws ApiException
      */
-    public function text(mixed ...$text): void
+    public function text(mixed ...$text): ErrorResponse|ReplyMessageResponse
     {
         $messages = collect($text)
             ->reject(fn ($item) => blank($item))
@@ -72,13 +74,13 @@ class ReplyMessage
             })
             ->toArray();
 
-        $this->message(...$messages);
+        return $this->message(...$messages);
     }
 
     /**
      * @throws ApiException
      */
-    public function sticker(int|string $package, int|string $sticker): void
+    public function sticker(int|string $package, int|string $sticker): ErrorResponse|ReplyMessageResponse
     {
         $message = new StickerMessage([
             'type' => MessageType::STICKER,
@@ -86,7 +88,7 @@ class ReplyMessage
             'stickerId' => $sticker,
         ]);
 
-        $this->message($message);
+        return $this->message($message);
     }
 
     public function withQuickReply(QuickReply $quickReply): self
