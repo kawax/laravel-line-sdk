@@ -24,6 +24,8 @@ class LineLoginProviderTest extends TestCase
     public function testRedirect()
     {
         $request = m::mock(Request::class);
+        $request->shouldReceive('session->put')->andReturn();
+        $request->shouldReceive('session->get')->andReturn();
 
         $provider = new LineLoginProvider($request, 'client_id', 'client_secret', 'redirect');
         $provider->stateless();
@@ -38,6 +40,9 @@ class LineLoginProviderTest extends TestCase
         $request->shouldReceive('input')
             ->with('code')
             ->andReturn('fake-code');
+        $request->shouldReceive('session->put')->andReturn();
+        $request->shouldReceive('session->get')->andReturn();
+        $request->shouldReceive('session->pull')->andReturn();
 
         $stream = m::mock(StreamInterface::class);
         $stream->allows('__toString')->andReturns(json_encode(['access_token' => 'fake-token']));
