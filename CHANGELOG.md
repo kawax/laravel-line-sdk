@@ -4,7 +4,7 @@ I'm not going to write all the changes.
 
 ## v3.3.0 (2024-10-07)
 - Add Massaging API version of Notification channel.
-- **Deprecated LINE Notify**
+- **Deprecated LINE Notify** (Removed in v4.0)
 - Add some listeners stubs.
 
 ## v3.0.0 (2023-05-30)
