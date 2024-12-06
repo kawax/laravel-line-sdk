@@ -100,21 +100,7 @@ https://developers.line.biz/en/docs/line-login/integrate-line-login/#scopes
     public function login()
     {
         return Socialite::driver('line-login')
-                        ->setScopes(['profile', 'openid', 'email'])
-                        ->redirect();
-    }
-```
-
-### Enable PKCE
-
-https://developers.line.biz/en/docs/line-login/integrate-pkce/
-
-```php
-    public function login()
-    {
-        return Socialite::driver('line-login')
-                        ->setScopes(['profile', 'openid', 'email'])
-                        ->enablePKCE()
+                        ->setScopes(['profile', 'openid'])
                         ->redirect();
     }
 ```
