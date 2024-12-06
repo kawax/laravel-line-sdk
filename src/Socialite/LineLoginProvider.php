@@ -101,7 +101,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
                 'id' => $user['userId'],
                 'nickname' => $user['displayName'] ?? '',
                 'name' => $user['displayName'] ?? '',
-                'email' => '', // ?
+                'email' => '',
                 'avatar' => $user['pictureUrl'] ?? '',
             ]
         );
