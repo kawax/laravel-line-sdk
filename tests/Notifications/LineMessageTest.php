@@ -146,12 +146,12 @@ class LineMessageTest extends TestCase
         $user_target = new UserMentionTarget();
         $user_target->setType(MentioneeType::TYPE_USER);
         $user_target->setUserId('test');
-        dump($user_target->__toString());
+        //dump($user_target->__toString());
 
         $user = new MentionSubstitutionObject();
         $user->setType('mention');
         $user->setMentionee($user_target);
-        dump($user->__toString());
+        //dump($user->__toString());
 
         $emoji = new EmojiSubstitutionObject();
         $emoji->setType('emoji');
@@ -173,12 +173,12 @@ class LineMessageTest extends TestCase
 
         $text_v2->setText('{user} {emoji} {everyone}');
 
-        dump($text_v2->__toString());
+        //dump($text_v2->__toString());
 
         $message = (new LineMessage())
             ->message($text_v2);
 
-        dump($message->toArray());
+        //dump($message->toArray());
 
         $this->assertSame('textV2', $message->toArray()['messages'][0]->getType());
     }
