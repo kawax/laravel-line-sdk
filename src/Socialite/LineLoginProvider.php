@@ -33,6 +33,13 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     protected $encodingType = PHP_QUERY_RFC3986;
 
     /**
+     * Indicates if PKCE should be used.
+     *
+     * @var bool
+     */
+    protected $usesPKCE = true;
+
+    /**
      * @inheritdoc
      */
     protected function getAuthUrl($state): string
