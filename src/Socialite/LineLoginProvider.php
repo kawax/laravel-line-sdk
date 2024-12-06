@@ -2,6 +2,7 @@
 
 namespace Revolution\Line\Socialite;
 
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
 use Laravel\Socialite\Two\User;
@@ -40,6 +41,11 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
     protected $usesPKCE = true;
 
     /**
+     * Permission required to use 'email' scope.
+     */
+    protected ?string $email = null;
+
+    /**
      * @inheritdoc
      */
     protected function getAuthUrl($state): string
@@ -71,7 +77,37 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
             compact('headers', 'form_params')
         );
 
-        return json_decode($response->getBody(), true);
+        $response = json_decode($response->getBody(), true);
+
+        if (Arr::exists($response, 'id_token')) {
+            $this->getEmail($response['id_token']);
+        }
+
+        return $response;
+    }
+
+    /**
+     * email is included in the id_token but cannot be obtained without permission.
+     */
+    protected function getEmail(string $id_token): void
+    {
+        $headers = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ];
+
+        $form_params = [
+            'id_token' => $id_token,
+            'client_id' => $this->clientId,
+        ];
+
+        $response = $this->getHttpClient()->post(
+            'https://api.line.me/oauth2/v2.1/verify',
+            compact('headers', 'form_params')
+        );
+
+        $payload = json_decode($response->getBody(), true);
+
+        $this->email = data_get($payload, 'email');
     }
 
     /**
@@ -101,7 +137,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
                 'id' => $user['userId'],
                 'nickname' => $user['displayName'] ?? '',
                 'name' => $user['displayName'] ?? '',
-                'email' => '',
+                'email' => $this->email ?? '',
                 'avatar' => $user['pictureUrl'] ?? '',
             ]
         );
