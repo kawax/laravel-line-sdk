@@ -32,7 +32,7 @@ class MessageListener
         $message = $event->getMessage();
         $this->token = $event->getReplyToken();
 
-        match (get_class($message)) {
+        match ($message::class) {
             TextMessageContent::class => $this->text($message),
             StickerMessageContent::class => $this->sticker($message),
         };
