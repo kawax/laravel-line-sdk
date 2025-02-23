@@ -6,11 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use LINE\Clients\MessagingApi\Api\MessagingApiApi;
 use LINE\Clients\MessagingApi\Configuration;
 use Revolution\Line\Contracts\BotFactory;
-use Revolution\Line\Contracts\NotifyFactory;
 use Revolution\Line\Contracts\WebhookHandler;
 use Revolution\Line\Messaging\BotClient;
 use Revolution\Line\Messaging\Http\Actions\WebhookEventDispatcher;
-use Revolution\Line\Notifications\LineNotifyClient;
 
 class LineServiceProvider extends ServiceProvider
 {
@@ -25,8 +23,6 @@ class LineServiceProvider extends ServiceProvider
         );
 
         $this->registerBot();
-
-        $this->registerNotify();
 
         $this->registerWebhookHandler();
     }
@@ -43,16 +39,6 @@ class LineServiceProvider extends ServiceProvider
         });
 
         $this->app->scoped(BotFactory::class, BotClient::class);
-    }
-
-    /**
-     * Notify.
-     *
-     * @deprecated
-     */
-    protected function registerNotify(): void
-    {
-        $this->app->scoped(NotifyFactory::class, LineNotifyClient::class);
     }
 
     /**

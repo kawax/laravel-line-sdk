@@ -3,8 +3,6 @@
 ## Available drivers
 - LINE Login `line-login`
   - https://developers.line.biz/en/docs/line-login/
-- LINE Notify `line-notify`
-  - https://notify-bot.line.me/
 ### Unavailable
 - LINE WORKS
   - https://developers.worksmobile.com/
@@ -17,13 +15,6 @@ LINE Login
 LINE_LOGIN_CLIENT_ID=
 LINE_LOGIN_CLIENT_SECRET=
 LINE_LOGIN_REDIRECT=
-```
-
-LINE Notify
-```
-LINE_NOTIFY_CLIENT_ID=
-LINE_NOTIFY_CLIENT_SECRET=
-LINE_NOTIFY_REDIRECT=
 ```
 
 ## Usage(LINE Login)
@@ -104,30 +95,3 @@ https://developers.line.biz/en/docs/line-login/integrate-line-login/#scopes
                         ->redirect();
     }
 ```
-
-## Usage(LINE Notify)
-Almost the same as LINE Login, but the user only has a `token`.
-
-```php
-    public function callback(Request $request)
-    {
-        if ($request->missing('code')) {
-            dd($request);
-        }
-
-        /**
-         * @var \Laravel\Socialite\Two\User
-         */
-        $user = Socialite::driver('line-notify')->user();
-
-        $request->user()
-            ->fill([
-                'notify_token' => $user->token
-            ])->save();
-
-        return redirect()->route('home');
-    }
-```
-
-It can't be used for user registration.  
-Used to add a notification to the authenticated user.

@@ -2,6 +2,11 @@
 
 I'm not going to write all the changes.
 
+## v4.0.0 (2025-02-23)
+- Laravel 12 support
+- Drop Laravel10/PHP8.1 support
+- Remove LINE Notify
+
 ## v3.3.0 (2024-10-07)
 - Add Massaging API version of Notification channel.
 - **Deprecated LINE Notify** (Removed in v4.0)
