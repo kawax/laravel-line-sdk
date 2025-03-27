@@ -13,10 +13,10 @@
         "ext-json": "*",
         "laravel/socialite": "^5.0",
         "illuminate/support": "^11.0||^12.0",
-        "linecorp/line-bot-sdk": "^10.0"
+        "linecorp/line-bot-sdk": "^10.0||^11.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.0"
+        "orchestra/testbench": "^10.0"
     },
     "autoload": {
         "psr-4": {
