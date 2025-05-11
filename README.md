@@ -4,6 +4,7 @@
 ![tests](https://github.com/kawax/laravel-line-sdk/workflows/tests/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/maintainability)](https://codeclimate.com/github/kawax/laravel-line-sdk/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/99eef5006575c054a859/test_coverage)](https://codeclimate.com/github/kawax/laravel-line-sdk/test_coverage)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/kawax/laravel-line-sdk)
 
 ## Features
 - Working with Laravel Event System. Including Webhook routing and controller.
