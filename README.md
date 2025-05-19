@@ -5,7 +5,7 @@
 [![Maintainability](https://qlty.sh/badges/937e8320-9fb3-4cda-bc1b-bd6325325f25/maintainability.svg)](https://qlty.sh/gh/invokable/projects/laravel-line-sdk)
 [![Code Coverage](https://qlty.sh/badges/937e8320-9fb3-4cda-bc1b-bd6325325f25/test_coverage.svg)](https://qlty.sh/gh/invokable/projects/laravel-line-sdk)
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/kawax/laravel-line-sdk)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/invokable/laravel-line-sdk)
 
 ## Features
 - Working with Laravel Event System. Including Webhook routing and controller.
