@@ -19,6 +19,7 @@ class LineChannel
          */
         $message = $notification->toLine($notifiable);
 
+        // @phpstan-ignore-next-line
         if (! $message instanceof Arrayable) {
             return null; // @codeCoverageIgnore
         }

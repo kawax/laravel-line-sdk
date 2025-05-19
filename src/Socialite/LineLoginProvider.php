@@ -80,7 +80,7 @@ class LineLoginProvider extends AbstractProvider implements ProviderInterface
         $response = json_decode($response->getBody(), true);
 
         if (Arr::exists($response, 'id_token')) {
-            $this->getEmail($response['id_token']);
+            $this->getEmail(Arr::string($response, 'id_token'));
         }
 
         return $response;
