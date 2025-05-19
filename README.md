@@ -1,7 +1,10 @@
 # LINE SDK for Laravel
 
 [![packagist](https://badgen.net/packagist/v/revolution/laravel-line-sdk)](https://packagist.org/packages/revolution/laravel-line-sdk)
-![tests](https://github.com/kawax/laravel-line-sdk/workflows/tests/badge.svg)
+[![tests](https://github.com/invokable/laravel-line-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/invokable/laravel-line-sdk/actions/workflows/tests.yml)
+[![Maintainability](https://qlty.sh/badges/937e8320-9fb3-4cda-bc1b-bd6325325f25/maintainability.svg)](https://qlty.sh/gh/invokable/projects/laravel-line-sdk)
+[![Code Coverage](https://qlty.sh/badges/937e8320-9fb3-4cda-bc1b-bd6325325f25/test_coverage.svg)](https://qlty.sh/gh/invokable/projects/laravel-line-sdk)
+
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/kawax/laravel-line-sdk)
 
 ## Features
